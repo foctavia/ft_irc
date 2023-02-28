@@ -1,0 +1,6 @@
+
+STEPS for IRC:
+	- create a server (it will be the starting point of communication)
+		- get address in memory for the socket
+		- bind the socket with the address
+		- have it run in infinite loop to listen to commands
