@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 10:47:14 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:21:44 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ int main(int argc, char **argv)
 		return ft_error(ERR_ARGC);
 		
 	Server server(argv[1], argv[2]);
-	if (server.createServer())
-		return 1;
+
+	try
+	{
+		server.createServer();
+	}
+	catch(const std::exception &e)
+	{
+		std::cerr << "ERROR: " << e.what() << std::endl;
+	}
 	
 	return 0;
 }

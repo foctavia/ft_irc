@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:21:20 by owalsh            #+#    #+#             */
-/*   Updated: 2023/02/28 18:27:03 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/01 11:20:26 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 int ft_error(int type)
 {
 	if (type == ERR_ARGC)
-		std::cout << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;
-	if (type == ERR_GETADDR)
-		perror("getaddrinfo");
-	if (type == ERR_SOCKET_OPENING)
-		std::cout << "Error opening socket" << std::endl;
+		std::cerr << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;
 	
 	return 1;
 }

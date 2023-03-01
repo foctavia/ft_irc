@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 10:51:21 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:21:22 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ Server::~Server( void )
 	clean();
 }
 
-void Server::clean( void )
+void	Server::clean( void )
 {
 	if (_serverInfo)
 		freeaddrinfo(_serverInfo);
 }
 
-int	Server::createServer( void )
+void	Server::createServer( void )
 {
 	struct addrinfo hints;
 	int 			status;
@@ -41,14 +41,23 @@ int	Server::createServer( void )
 
 	status = getaddrinfo(NULL, _port, &hints, &_serverInfo);
 	if (status != 0)
-		return ft_error(ERR_GETADDR);
+		throw std::runtime_error("getaddrinfo()");
 	
 	std::cout << "after getaddrinfo, status = " << status << std::endl;
 	_socketFd = socket(_serverInfo->ai_family, _serverInfo->ai_socktype, _serverInfo->ai_protocol);
 	std::cout << "server fd = " << _socketFd << std::endl;
 	if (_socketFd < 0)
-		return ft_error(ERR_SOCKET_OPENING);
+		throw std::runtime_error("socket opening");
 
 	bind(_socketFd, _serverInfo->ai_addr, _serverInfo->ai_addrlen);
-	return 0;
+}
+
+char	*Server::getPort( void ) const
+{
+	return _port;
+}
+
+char	*Server::getPassword( void ) const
+{
+	return _password;
 }

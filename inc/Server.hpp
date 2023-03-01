@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 10:49:17 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:20:47 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ class Server
 		Server( char *port, char *password );
 		~Server( void );
 
-		int		createServer( void );
+		void	createServer( void );
 		void	clean( void );
+
+		char	*getPort( void ) const;
+		char	*getPassword( void ) const;
 	
 	private:
 		char			*_port;
