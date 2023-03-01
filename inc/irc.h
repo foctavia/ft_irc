@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/02/28 18:24:02 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/01 15:30:48 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <cstdio>
 # include <cstring>
 # include <errno.h>
+# include <stdexcept>
+# include <vector>
+# include <poll.h>
+# include <unistd.h>
+# include <arpa/inet.h>
 
 int ft_error(int type);
 

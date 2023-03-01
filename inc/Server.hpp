@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/02/28 18:20:45 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/01 15:38:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,27 @@
 class Server
 {
 	public:
-		Server();
-		~Server();
+		Server( char *port, char *password );
+		~Server( void );
 
-		int	createServer(char *port, char *password);
-		void clean();
+		int		getListenerSocket( void );
+		void	addSocket( int newFd );
+		void	run( void );
+		void	clean( void );
+
+		char	*getPort( void ) const;
+		char	*getPassword( void ) const;
 	
 	private:
-		struct addrinfo *_serverInfo;
-		int				_socketFd;
-		
+		char				*_port;
+		char				*_password;
 	
+		struct addrinfo 	*_socketInfo;
+		int					_socketFd;
+
+		std::vector<struct pollfd*>	_pollFds;
+		
+		Server( void );
 };
 
 #endif

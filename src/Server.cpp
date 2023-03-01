@@ -3,51 +3,165 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/02/28 18:26:22 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/01 15:38:35 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
-Server::Server(void) { }
+Server::Server( char *port, char *password )
+	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
+{
+	std::cout << "constructing server with port " << _port << " and password " << _password << std::endl;
+}
 
-Server::~Server(void)
+Server::~Server( void )
 {
 	clean();
 }
 
-void Server::clean()
+void	Server::clean( void )
 {
-	if (_serverInfo)
-		freeaddrinfo(_serverInfo);
+	if (_socketInfo)
+		freeaddrinfo(_socketInfo);
+
+	for (size_t	i = 0; i < _pollFds.size();)
+	{
+		close(_pollFds[i]->fd);
+		delete _pollFds[i];
+		i++;
+	}
+	_pollFds.clear();
 }
 
-int	Server::createServer(char *port, char *password)
+int	Server::getListenerSocket( void )
 {
-	struct addrinfo hints;
-	int 			status;
+	int				listenerFd = -1;
+	int				yes = 1;
+	int 			status = 0;
+	struct addrinfo hints, *tmp;
 
-	std::cout << "constructing server with port " << port << " and password " << password << std::endl;
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
-	
-	memset(_serverInfo, 0, sizeof *_serverInfo);
-	_serverInfo = NULL;
-	status = getaddrinfo(NULL, port, &hints, &_serverInfo);
-	if (status != 0)
-		return ft_error(ERR_GETADDR);
-	
-	std::cout << "after getaddrinfo, status = " << status << std::endl;
-	_socketFd = socket(_serverInfo->ai_family, _serverInfo->ai_socktype, _serverInfo->ai_protocol);
-	std::cout << "server fd = " << _socketFd << std::endl;
-	if (_socketFd < 0)
-		return ft_error(ERR_SOCKET_OPENING);
 
-	bind(_socketFd, _serverInfo->ai_addr, _serverInfo->ai_addrlen);
-	return 0;
+	status = getaddrinfo(NULL, _port, &hints, &_socketInfo);
+	if (status != 0)
+		throw std::runtime_error("getaddrinfo()");
+	
+	// loop through all the results and bind to the first we can
+	for (tmp = _socketInfo; tmp != NULL; tmp = tmp->ai_next)
+	{
+		listenerFd = socket(_socketInfo->ai_family, _socketInfo->ai_socktype, _socketInfo->ai_protocol);
+		if (listenerFd < 0)
+			continue ;
+			
+		if (setsockopt(listenerFd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
+			throw std::runtime_error("setsockopt()");
+
+		if (bind(listenerFd, _socketInfo->ai_addr, _socketInfo->ai_addrlen) < 0)
+		{
+			close(listenerFd);
+			listenerFd = -1;
+			continue ;
+		}
+		
+		break ;
+	}
+	
+	freeaddrinfo(_socketInfo);
+	_socketInfo = NULL;
+
+	if (tmp == NULL)
+		throw std::runtime_error("failed to bind the socket");
+
+	if (listen(listenerFd, BACKLOG) == -1)
+		throw std::runtime_error("failed to listen to the socket");
+
+	return listenerFd;
+}
+
+void	Server::addSocket( int newFd )
+{
+	if (newFd == -1)
+		return ;
+
+	struct pollfd	*tmp = new struct pollfd;
+	
+	tmp->fd = newFd;
+	tmp->events = POLLIN;
+	
+	_pollFds.push_back(tmp);
+}
+
+void *get_in_addr(struct sockaddr *sa)
+{
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+    }
+
+    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
+
+void	Server::run( void )
+{
+	try
+	{
+		_socketFd = getListenerSocket();
+	}
+	catch(const std::exception &e)
+	{
+		std::cerr << "ERROR: " << e.what() << std::endl;
+	}
+
+	addSocket(_socketFd);
+
+	struct sockaddr_storage clientAddress;
+	socklen_t				addressLength;
+	int 					newFd;
+ 	char remoteIP[INET6_ADDRSTRLEN];
+	
+	while (1)
+	{
+		int	poll_count = poll(_pollFds[0], _pollFds.size(), TIMEOUT);
+
+		if (poll_count == -1)
+			throw std::runtime_error("poll()");
+
+		for (size_t i = 0; i < _pollFds.size(); i++)
+		{
+			if (_pollFds[i]->revents & POLLIN)
+			{
+				if (_pollFds[i]->fd == _socketFd)
+				{
+					addressLength = sizeof clientAddress;
+					newFd = accept(_socketFd, (struct sockaddr *)&clientAddress, &addressLength);
+					if (newFd == -1)
+						throw std::runtime_error("accept()");
+					else
+					{
+						addSocket(newFd);
+						std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
+                                get_in_addr((struct sockaddr*)&clientAddress),
+                                remoteIP, INET6_ADDRSTRLEN)
+								<< " with fd " << newFd << std::endl;
+					}
+				}
+			}
+		}
+	}
+}
+
+char	*Server::getPort( void ) const
+{
+	return _port;
+}
+
+char	*Server::getPassword( void ) const
+{
+	return _password;
 }
