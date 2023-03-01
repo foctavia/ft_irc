@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 15:38:35 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:09:50 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	Server::run( void )
 	socklen_t				addressLength;
 	int 					newFd;
  	char remoteIP[INET6_ADDRSTRLEN];
+	char buf[256];
 	
 	while (1)
 	{
@@ -132,7 +133,8 @@ void	Server::run( void )
 		if (poll_count == -1)
 			throw std::runtime_error("poll()");
 
-		for (size_t i = 0; i < _pollFds.size(); i++)
+		std::vector<struct pollfd*>::iterator it = _pollFds.begin();
+		for (size_t i = 0; i < _pollFds.size(); i++, it++)
 		{
 			if (_pollFds[i]->revents & POLLIN)
 			{
@@ -150,6 +152,37 @@ void	Server::run( void )
                                 remoteIP, INET6_ADDRSTRLEN)
 								<< " with fd " << newFd << std::endl;
 					}
+				}
+				else
+				{
+					int nbytes = recv(_pollFds[i]->fd, buf, sizeof buf, 0);
+					int sender_fd = _pollFds[i]->fd;
+					if (nbytes <= 0)
+					{
+						if (nbytes == 0)
+							std::cout << "pollserver: socket hung up" << std::endl;
+						else
+							perror("recv");
+						
+						close(_pollFds[i]->fd);
+						
+						_pollFds.erase(it);	
+					}
+					else
+					{
+						for (size_t j = 0; j < _pollFds.size(); j++)
+						{
+							int dest_fd = _pollFds[j]->fd;
+
+							if (dest_fd != _socketFd && dest_fd != sender_fd)
+							{
+								if (send(dest_fd, buf, nbytes, 0) == -1)
+									perror("send");
+							} 
+						}	
+					}
+					
+					
 				}
 			}
 		}
