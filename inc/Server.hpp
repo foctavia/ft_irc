@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 11:20:47 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:29:01 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ class Server
 		char	*getPassword( void ) const;
 	
 	private:
-		char			*_port;
-		char			*_password;
+		char				*_port;
+		char				*_password;
 	
-		struct addrinfo *_serverInfo;
-		int				_socketFd;
+		struct addrinfo 	*_serverInfo;
+		int					_socketFd;
+
+		std::vector<pollfd>	_pollFDs;
 		
 		Server( void );
 };
