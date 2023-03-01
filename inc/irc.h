@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 11:29:28 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:30:48 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <stdexcept>
 # include <vector>
 # include <poll.h>
+# include <unistd.h>
+# include <arpa/inet.h>
 
 int ft_error(int type);
 
