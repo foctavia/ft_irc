@@ -1,4 +1,13 @@
-o INTRODUCTION OF NETWORK PROGRAMMING
+o INTRODUCTION OF INTERNET RELAY CHAT
+
+--> http://chi.cs.uchicago.edu/chirc/irc.html
+Introduction on IRC
+
+--> http://chi.cs.uchicago.edu/chirc/irc_examples.html
+Example of IRC communications
+
+--> https://modern.ircdocs.horse/#irc-concepts
+explanation on IRC concept
 
 --> https://beej.us/guide/bgnet/html/
 guide on Network Programming with some examples of code implementation
