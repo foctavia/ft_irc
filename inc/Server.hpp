@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 11:29:01 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:53:54 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ class Server
 		Server( char *port, char *password );
 		~Server( void );
 
-		void	createServer( void );
+		// void	createSocket( void );
+		void	getListenerSocket( void );
+		void	addSocket( void );
+		void	run( void );
 		void	clean( void );
 
 		char	*getPort( void ) const;
@@ -31,10 +34,10 @@ class Server
 		char				*_port;
 		char				*_password;
 	
-		struct addrinfo 	*_serverInfo;
+		struct addrinfo 	*_socketInfo;
 		int					_socketFd;
 
-		std::vector<pollfd>	_pollFDs;
+		std::vector<pollfd>	_pollFds;
 		
 		Server( void );
 };

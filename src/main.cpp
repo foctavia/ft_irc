@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 11:21:44 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:24:13 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
 	try
 	{
-		server.createServer();
+		server.createSocket();
 	}
 	catch(const std::exception &e)
 	{
