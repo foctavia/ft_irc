@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 12:47:04 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:17:12 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,18 +131,7 @@ void	Server::run( void )
 				if (_pollFds[i].fd == _socketFd)
 					connect();
 				else
-				{
-					char buf[256];
-					
-					int nbytes = recv(_pollFds[i].fd, buf, sizeof buf, 0);
-					int sender_fd = _pollFds[i].fd;
-					if (nbytes == 0)
-						disconnect(_pollFds[i]);
-					else if (nbytes < 0)
-						throw std::runtime_error("recv()");
-					else
-						getMessage(sender_fd, buf, nbytes);
-				}
+					online(_pollFds[i]);
 			}
 		}
 	}
@@ -153,7 +142,7 @@ void	Server::connect( void )
 	struct sockaddr_storage clientAddress;
 	socklen_t				addressLength;
 	int 					newFd;
-	char remoteIP[INET6_ADDRSTRLEN];
+	char 					remoteIP[INET6_ADDRSTRLEN];
 
 
 	addressLength = sizeof clientAddress;
@@ -170,16 +159,30 @@ void	Server::connect( void )
 	}
 }
 
-void	Server::getMessage( int sender_fd, char *buf, int nbytes )
+void	Server::online( struct pollfd pfd )
 {
+	char buffer[256];
+					
+	int nbytes = recv(pfd.fd, buffer, sizeof buffer, 0);
+	int senderFd = pfd.fd;
 	
+	if (nbytes == 0)
+		disconnect(pfd);
+	else if (nbytes < 0)
+		throw std::runtime_error("recv()");
+	else
+		getMessage(senderFd, buffer, nbytes);
+}
+
+void	Server::getMessage( int senderFd, char *buffer, int nbytes )
+{
  	for (size_t j = 0; j < _pollFds.size(); j++)
 	{
 		int dest_fd = _pollFds[j].fd;
 
-		if (dest_fd != _socketFd && dest_fd != sender_fd)
+		if (dest_fd != _socketFd && dest_fd != senderFd)
 		{
-			if (send(dest_fd, buf, nbytes, 0) == -1)
+			if (send(dest_fd, buffer, nbytes, 0) == -1)
 				perror("send");
 		} 
 	}	
