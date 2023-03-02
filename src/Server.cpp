@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 12:17:09 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:22:29 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	Server::clean( void )
 	for (size_t	i = 0; i < _pollFds.size();)
 	{
 		close(_pollFds[i].fd);
-		// delete _[i];
 		i++;
 	}
 	_pollFds.clear();
@@ -87,8 +86,8 @@ int	Server::getListenerSocket( void )
 
 void	Server::addSocket( int newFd )
 {
-	// if (newFd == -1)
-	// 	return ;
+	if (newFd == -1)
+		return ;
 
 	struct pollfd	tmp;
 	
@@ -128,8 +127,6 @@ void	Server::run( void )
 	
 	while (1)
 	{
-
-
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT) == -1)
 			throw std::runtime_error("poll()");
 
@@ -165,8 +162,7 @@ void	Server::run( void )
 							perror("recv");
 						
 						close(_pollFds[i].fd);
-						
-						_pollFds.erase(it);	
+						_pollFds[i].fd = -1;
 					}
 					else
 					{
