@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 14:32:58 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/02 11:45:28 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # define ERR_SOCKET_OPENING -4
 
 # define BACKLOG 10
-# define TIMEOUT -1
+# define TIMEOUT -1  // timeout -1 means wait forever
 
 #endif

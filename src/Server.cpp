@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 16:09:50 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/02 11:46:28 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	Server::clean( void )
 	if (_socketInfo)
 		freeaddrinfo(_socketInfo);
 
-	for (size_t	i = 0; i < _pollFds.size();)
+	for (size_t	i = 0; i < _pollFds.size(); )
 	{
 		close(_pollFds[i]->fd);
 		delete _pollFds[i];
@@ -116,6 +116,7 @@ void	Server::run( void )
 	catch(const std::exception &e)
 	{
 		std::cerr << "ERROR: " << e.what() << std::endl;
+		return ;
 	}
 
 	addSocket(_socketFd);
@@ -128,17 +129,16 @@ void	Server::run( void )
 	
 	while (1)
 	{
-		int	poll_count = poll(_pollFds[0], _pollFds.size(), TIMEOUT);
+		int	poll_count = poll(*_pollFds.begin(), _pollFds.size(), TIMEOUT);
 
 		if (poll_count == -1)
 			throw std::runtime_error("poll()");
 
-		std::vector<struct pollfd*>::iterator it = _pollFds.begin();
-		for (size_t i = 0; i < _pollFds.size(); i++, it++)
+		for (std::vector<struct pollfd*>::iterator it = _pollFds.begin(); it != _pollFds.end(); it++)
 		{
-			if (_pollFds[i]->revents & POLLIN)
+			if ((*it)->revents & POLLIN)
 			{
-				if (_pollFds[i]->fd == _socketFd)
+				if ((*it)->fd == _socketFd)
 				{
 					addressLength = sizeof clientAddress;
 					newFd = accept(_socketFd, (struct sockaddr *)&clientAddress, &addressLength);
@@ -155,8 +155,8 @@ void	Server::run( void )
 				}
 				else
 				{
-					int nbytes = recv(_pollFds[i]->fd, buf, sizeof buf, 0);
-					int sender_fd = _pollFds[i]->fd;
+					int nbytes = recv((*it)->fd, buf, sizeof buf, 0);
+					int sender_fd = (*it)->fd;
 					if (nbytes <= 0)
 					{
 						if (nbytes == 0)
@@ -164,9 +164,10 @@ void	Server::run( void )
 						else
 							perror("recv");
 						
-						close(_pollFds[i]->fd);
+						close((*it)->fd);
+						 (*it)->fd = -1;
 						
-						_pollFds.erase(it);	
+						// _pollFds.erase(it);	
 					}
 					else
 					{
@@ -181,8 +182,6 @@ void	Server::run( void )
 							} 
 						}	
 					}
-					
-					
 				}
 			}
 		}
