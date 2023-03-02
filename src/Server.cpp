@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 12:22:29 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:47:04 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,71 +118,79 @@ void	Server::run( void )
 	}
 
 	addSocket(_socketFd);
-
-	struct sockaddr_storage clientAddress;
-	socklen_t				addressLength;
-	int 					newFd;
- 	char remoteIP[INET6_ADDRSTRLEN];
-	char buf[256];
 	
 	while (1)
 	{
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT) == -1)
 			throw std::runtime_error("poll()");
-
-		std::vector<struct pollfd>::iterator it = _pollFds.begin();
-		for (size_t i = 0; i < _pollFds.size(); i++, it++)
+			
+		for (size_t i = 0; i < _pollFds.size(); i++)
 		{
 			if (_pollFds[i].revents & POLLIN)
 			{
 				if (_pollFds[i].fd == _socketFd)
-				{
-					addressLength = sizeof clientAddress;
-					newFd = accept(_socketFd, (struct sockaddr *)&clientAddress, &addressLength);
-					if (newFd == -1)
-						throw std::runtime_error("accept()");
-					else
-					{
-						addSocket(newFd);
-						std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
-                                get_in_addr((struct sockaddr*)&clientAddress),
-                                remoteIP, INET6_ADDRSTRLEN)
-								<< " with fd " << newFd << std::endl;
-					}
-				}
+					connect();
 				else
 				{
+					char buf[256];
+					
 					int nbytes = recv(_pollFds[i].fd, buf, sizeof buf, 0);
 					int sender_fd = _pollFds[i].fd;
-					if (nbytes <= 0)
-					{
-						if (nbytes == 0)
-							std::cout << "pollserver: socket hung up" << std::endl;
-						else
-							perror("recv");
-						
-						close(_pollFds[i].fd);
-						_pollFds[i].fd = -1;
-					}
+					if (nbytes == 0)
+						disconnect(_pollFds[i]);
+					else if (nbytes < 0)
+						throw std::runtime_error("recv()");
 					else
-					{
-						for (size_t j = 0; j < _pollFds.size(); j++)
-						{
-							int dest_fd = _pollFds[j].fd;
-
-							if (dest_fd != _socketFd && dest_fd != sender_fd)
-							{
-								if (send(dest_fd, buf, nbytes, 0) == -1)
-									perror("send");
-							} 
-						}	
-					}
-					
-					
+						getMessage(sender_fd, buf, nbytes);
 				}
 			}
 		}
 	}
+}
+
+void	Server::connect( void )
+{
+	struct sockaddr_storage clientAddress;
+	socklen_t				addressLength;
+	int 					newFd;
+	char remoteIP[INET6_ADDRSTRLEN];
+
+
+	addressLength = sizeof clientAddress;
+	newFd = accept(_socketFd, (struct sockaddr *)&clientAddress, &addressLength);
+	if (newFd == -1)
+		throw std::runtime_error("accept()");
+	else
+	{
+		addSocket(newFd);
+		std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
+				get_in_addr((struct sockaddr*)&clientAddress),
+				remoteIP, INET6_ADDRSTRLEN)
+				<< " with fd " << newFd << std::endl;
+	}
+}
+
+void	Server::getMessage( int sender_fd, char *buf, int nbytes )
+{
+	
+ 	for (size_t j = 0; j < _pollFds.size(); j++)
+	{
+		int dest_fd = _pollFds[j].fd;
+
+		if (dest_fd != _socketFd && dest_fd != sender_fd)
+		{
+			if (send(dest_fd, buf, nbytes, 0) == -1)
+				perror("send");
+		} 
+	}	
+}
+
+void	Server::disconnect( struct pollfd pfd )
+{
+	std::cout << "pollserver: socket hung up" << std::endl;
+	
+	close(pfd.fd);
+	pfd.fd = -1;
 }
 
 char	*Server::getPort( void ) const
