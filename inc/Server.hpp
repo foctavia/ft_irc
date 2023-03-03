@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 14:15:29 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:27:08 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ class Server
 		void	addSocket( int newFd );
 		void	run( void );
 		void	connect( void );
-		void	online( struct pollfd pfd );
-		void	getMessage( int senderFd, char *buffer, int nbytes );
+		void	online( struct pollfd pfd, std::string &message );
+		void	getMessage( int senderFd, std::string &message );
 		void	disconnect( struct pollfd pfd );
 		void	clean( void );
 

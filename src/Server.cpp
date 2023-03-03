@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 14:17:12 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:33:17 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,13 @@ void	Server::run( void )
 	catch(const std::exception &e)
 	{
 		std::cerr << "ERROR: " << e.what() << std::endl;
+		return ;
 	}
 
 	addSocket(_socketFd);
+	std::string message;
+
+	// char	buffer[512];
 	
 	while (1)
 	{
@@ -131,7 +135,7 @@ void	Server::run( void )
 				if (_pollFds[i].fd == _socketFd)
 					connect();
 				else
-					online(_pollFds[i]);
+					online(_pollFds[i], message);
 			}
 		}
 	}
@@ -149,43 +153,66 @@ void	Server::connect( void )
 	newFd = accept(_socketFd, (struct sockaddr *)&clientAddress, &addressLength);
 	if (newFd == -1)
 		throw std::runtime_error("accept()");
-	else
-	{
-		addSocket(newFd);
-		std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
-				get_in_addr((struct sockaddr*)&clientAddress),
-				remoteIP, INET6_ADDRSTRLEN)
-				<< " with fd " << newFd << std::endl;
-	}
+
+	addSocket(newFd);
+	std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
+			get_in_addr((struct sockaddr*)&clientAddress),
+			remoteIP, INET6_ADDRSTRLEN)
+			<< " with fd " << newFd << std::endl;
 }
 
-void	Server::online( struct pollfd pfd )
+std::string	checkBuffer(char *buffer, int fd)
 {
-	char buffer[256];
-					
+	std::string message(buffer);
+	char newBuffer[512];
+
+	if (message.find("\r\n") == std::string::npos)
+	{
+		recv(fd, newBuffer, sizeof newBuffer, 0);
+		message.append(newBuffer);
+	}
+	else
+		std::cout << "found a pair of carriage and newline" << std::endl;
+	return message;
+}
+
+void	Server::online( struct pollfd pfd, std::string &message )
+{
+	char buffer[512];
+	memset(buffer, 0, sizeof buffer);
+
 	int nbytes = recv(pfd.fd, buffer, sizeof buffer, 0);
 	int senderFd = pfd.fd;
-	
+	std::cout << "[RECEIVE] from " << senderFd << ", message: " << buffer << std::endl; 
+
+	message.append(buffer);
+	if (nbytes && message.find('\n') == std::string::npos)
+	{
+		return ;
+	}
 	if (nbytes == 0)
 		disconnect(pfd);
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
-		getMessage(senderFd, buffer, nbytes);
+		getMessage(senderFd, message);
 }
 
-void	Server::getMessage( int senderFd, char *buffer, int nbytes )
+void	Server::getMessage( int senderFd, std::string &message )
 {
+	
+	std::cout << "[SEND] from " << senderFd << ", message: " << message << std::endl; 
  	for (size_t j = 0; j < _pollFds.size(); j++)
 	{
 		int dest_fd = _pollFds[j].fd;
 
 		if (dest_fd != _socketFd && dest_fd != senderFd)
 		{
-			if (send(dest_fd, buffer, nbytes, 0) == -1)
+			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
 				perror("send");
 		} 
 	}	
+	message.clear();
 }
 
 void	Server::disconnect( struct pollfd pfd )
