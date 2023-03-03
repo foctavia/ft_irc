@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 12:33:17 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:36:43 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Server::Server( char *port, char *password )
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
 {
-	std::cout << "constructing server with port " << _port << " and password " << _password << std::endl;
+	std::cout << "[SERVER]: welcome on port " << port << "!" << std::endl;
 }
 
 Server::~Server( void )
@@ -97,13 +97,12 @@ void	Server::addSocket( int newFd )
 	_pollFds.push_back(tmp);
 }
 
-void *get_in_addr(struct sockaddr *sa)
+void *getIpAddress(struct sockaddr *socketAddress)
 {
-    if (sa->sa_family == AF_INET) {
-        return &(((struct sockaddr_in*)sa)->sin_addr);
-    }
+    if (socketAddress->sa_family == AF_INET)
+        return &(((struct sockaddr_in*)socketAddress)->sin_addr);
 
-    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+    return &(((struct sockaddr_in6*)socketAddress)->sin6_addr);
 }
 
 void	Server::run( void )
@@ -121,8 +120,6 @@ void	Server::run( void )
 	addSocket(_socketFd);
 	std::string message;
 
-	// char	buffer[512];
-	
 	while (1)
 	{
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT) == -1)
@@ -133,18 +130,19 @@ void	Server::run( void )
 			if (_pollFds[i].revents & POLLIN)
 			{
 				if (_pollFds[i].fd == _socketFd)
-					connect();
+					newConnection();
 				else
-					online(_pollFds[i], message);
+					receiveMessage(_pollFds[i], message);
 			}
 		}
 	}
 }
 
-void	Server::connect( void )
+void	Server::newConnection( void )
 {
 	struct sockaddr_storage clientAddress;
 	socklen_t				addressLength;
+	const char				*client;
 	int 					newFd;
 	char 					remoteIP[INET6_ADDRSTRLEN];
 
@@ -155,59 +153,56 @@ void	Server::connect( void )
 		throw std::runtime_error("accept()");
 
 	addSocket(newFd);
-	std::cout << "pollserver: new connection from " << inet_ntop(clientAddress.ss_family,
-			get_in_addr((struct sockaddr*)&clientAddress),
-			remoteIP, INET6_ADDRSTRLEN)
-			<< " with fd " << newFd << std::endl;
+
+	client = inet_ntop(clientAddress.ss_family, getIpAddress((struct sockaddr*)&clientAddress), remoteIP, INET6_ADDRSTRLEN);
+
+	User	*newUser = new User(newFd, client);
+	
+	_users.insert(std::make_pair<int, User*>(newFd, newUser));	
+
+	
 }
 
-std::string	checkBuffer(char *buffer, int fd)
+void	Server::receiveMessage( struct pollfd pfd, std::string &message )
 {
-	std::string message(buffer);
-	char newBuffer[512];
-
-	if (message.find("\r\n") == std::string::npos)
-	{
-		recv(fd, newBuffer, sizeof newBuffer, 0);
-		message.append(newBuffer);
-	}
-	else
-		std::cout << "found a pair of carriage and newline" << std::endl;
-	return message;
-}
-
-void	Server::online( struct pollfd pfd, std::string &message )
-{
+	// Message message;
+	
 	char buffer[512];
 	memset(buffer, 0, sizeof buffer);
 
 	int nbytes = recv(pfd.fd, buffer, sizeof buffer, 0);
 	int senderFd = pfd.fd;
-	std::cout << "[RECEIVE] from " << senderFd << ", message: " << buffer << std::endl; 
 
+	
+	std::string copy(buffer);
+	if (nbytes && copy.find('\n') != std::string::npos)
+		copy = copy.substr(0, nbytes - 1);
+
+	std::cout << "[SERVER]: receive " << copy << " from " << senderFd << std::endl;
+	
 	message.append(buffer);
+	 
 	if (nbytes && message.find('\n') == std::string::npos)
-	{
 		return ;
-	}
 	if (nbytes == 0)
 		disconnect(pfd);
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
-		getMessage(senderFd, message);
+		sendMessage(senderFd, message);
 }
 
-void	Server::getMessage( int senderFd, std::string &message )
+void	Server::sendMessage( int senderFd, std::string &message )
 {
 	
-	std::cout << "[SEND] from " << senderFd << ", message: " << message << std::endl; 
  	for (size_t j = 0; j < _pollFds.size(); j++)
 	{
 		int dest_fd = _pollFds[j].fd;
 
 		if (dest_fd != _socketFd && dest_fd != senderFd)
 		{
+			std::string msg = message.substr(0, message.size() - 1);
+			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << std::endl; 
 			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
 				perror("send");
 		} 

@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:29:09 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/02 16:30:23 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 14:59:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@
 
 class Message
 {
-		
+	public:
+	
+		Message() { }
+		~Message() { }
+
+	private:
+		// int				_sender;
+		// int				_receiver;
+		std::string 	_content;
+		std::string		_buffer;
+		std::string		_command;
 };
 
 #endif

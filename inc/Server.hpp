@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 12:27:08 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 14:35:08 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ class Server
 		int		getListenerSocket( void );
 		void	addSocket( int newFd );
 		void	run( void );
-		void	connect( void );
-		void	online( struct pollfd pfd, std::string &message );
-		void	getMessage( int senderFd, std::string &message );
+		void	newConnection( void );
+		void	receiveMessage( struct pollfd pfd, std::string &message );
+		void	sendMessage( int senderFd, std::string &message );
 		void	disconnect( struct pollfd pfd );
 		void	clean( void );
 
@@ -41,6 +41,7 @@ class Server
 		int					_socketFd;
 
 		std::vector<struct pollfd>	_pollFds;
+		std::map<int, User *>		_users;
 		
 		Server( void );
 };
