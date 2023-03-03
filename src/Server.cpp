@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 16:03:26 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 18:01:39 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ void	Server::clean( void )
 		i++;
 	}
 	_pollFds.clear();
+
+	for (size_t	i = 0; i < _users.size();)
+	{
+		delete _users[i];
+		i++;
+	}
+	_users.clear();
 }
 
 int	Server::getListenerSocket( void )
@@ -118,7 +125,6 @@ void	Server::run( void )
 	}
 
 	addSocket(_socketFd);
-	std::string message;
 
 	while (1)
 	{
@@ -132,7 +138,7 @@ void	Server::run( void )
 				if (_pollFds[i].fd == _socketFd)
 					newConnection();
 				else
-					receiveMessage(_pollFds[i], message);
+					receiveMessage(_pollFds[i]);
 			}
 		}
 	}
@@ -163,32 +169,33 @@ void	Server::newConnection( void )
 	
 }
 
-void	Server::receiveMessage( struct pollfd pfd, std::string &message )
+void	Server::receiveMessage( struct pollfd pfd )
 {
-
 	User *user = (*_users.find(pfd.fd)).second;
 	
 	char buffer[512];
 	memset(buffer, 0, sizeof buffer);
 
 	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
-
-
+	
 	std::string copy(buffer);
 	if (nbytes && copy.find('\n') != std::string::npos)
 		copy = copy.substr(0, nbytes - 1);
 
 	std::cout << "[SERVER]: receive " << copy << " from " << user->getFd() << std::endl;
-	message.append(buffer);
+	user->input.append(buffer);
 	 
-	if (nbytes && message.find('\n') == std::string::npos)
+	if (nbytes && user->input.find('\n') == std::string::npos)
 		return ;
 	if (nbytes == 0)
 		disconnect(user->getPollFd());
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
-		sendMessage(user->getFd(), message);
+	{
+		user->parseMessage();
+		sendMessage(user->getFd(), user->input);
+	}
 }
 
 void	Server::sendMessage( int senderFd, std::string &message )

@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 16:01:56 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 16:22:42 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Server
 		void	addSocket( int newFd );
 		void	run( void );
 		void	newConnection( void );
-		void	receiveMessage( struct pollfd pfd, std::string &message );
+		void	receiveMessage( struct pollfd pfd );
 		void	sendMessage( int senderFd, std::string &message );
 		void	disconnect( struct pollfd pfd );
 		void	clean( void );
