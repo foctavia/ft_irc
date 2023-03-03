@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 15:36:43 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 16:03:26 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	Server::newConnection( void )
 
 	client = inet_ntop(clientAddress.ss_family, getIpAddress((struct sockaddr*)&clientAddress), remoteIP, INET6_ADDRSTRLEN);
 
-	User	*newUser = new User(newFd, client);
+	User	*newUser = new User(_pollFds.back(), client);
 	
 	_users.insert(std::make_pair<int, User*>(newFd, newUser));	
 
@@ -165,31 +165,30 @@ void	Server::newConnection( void )
 
 void	Server::receiveMessage( struct pollfd pfd, std::string &message )
 {
-	// Message message;
+
+	User *user = (*_users.find(pfd.fd)).second;
 	
 	char buffer[512];
 	memset(buffer, 0, sizeof buffer);
 
-	int nbytes = recv(pfd.fd, buffer, sizeof buffer, 0);
-	int senderFd = pfd.fd;
+	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
 
-	
+
 	std::string copy(buffer);
 	if (nbytes && copy.find('\n') != std::string::npos)
 		copy = copy.substr(0, nbytes - 1);
 
-	std::cout << "[SERVER]: receive " << copy << " from " << senderFd << std::endl;
-	
+	std::cout << "[SERVER]: receive " << copy << " from " << user->getFd() << std::endl;
 	message.append(buffer);
 	 
 	if (nbytes && message.find('\n') == std::string::npos)
 		return ;
 	if (nbytes == 0)
-		disconnect(pfd);
+		disconnect(user->getPollFd());
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
-		sendMessage(senderFd, message);
+		sendMessage(user->getFd(), message);
 }
 
 void	Server::sendMessage( int senderFd, std::string &message )

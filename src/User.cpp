@@ -6,22 +6,26 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 15:09:56 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/03 16:02:42 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "User.hpp"
 
-User::User( int fd, const char *address ) : _fd(fd), _valid(false), _address(address), _username(), _nickname()
+
+User::User( struct pollfd pfd, const char *address )
+	: _valid(false), _address(address), _username(), _nickname(), _pfd(pfd)
 {
 	std::cout << "[SERVER]: accept new connection from " << _address
-			<< " with fd " << _fd << std::endl;
+			<< " with fd " << _pfd.fd << std::endl;
 }
 
 User::~User()
 {
 	
 }
+
+/* GETTERS AND SETTERS */ 
 
 std::string User::getUsername() const
 {
@@ -31,6 +35,31 @@ std::string User::getUsername() const
 std::string User::getNickname() const
 {
 	return _nickname;
+}
+
+Message User::getMessage() const
+{
+	return _message;
+}
+
+int User::getFd() const
+{
+	return _pfd.fd;
+}
+
+struct pollfd User::getPollFd() const
+{
+	return _pfd;
+}
+
+void User::setMessage(Message message)
+{
+	_message = message;	
+}
+
+void User::setPollFd(struct pollfd pfd)
+{
+	_pfd = pfd;	
 }
 
 void User::setUsername(std::string username)
