@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 15:39:12 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:25:41 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 User::User( struct pollfd pfd, const char *address, Server *server )
-	: _valid(false), _address(address), _username(), _nickname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server)
+	: _address(address), _username(), _nickname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server), _status(STATUS_NEW)
 {
 	std::cout << "[SERVER]: accept new connection from " << _address
 			<< " with fd " << _pfd.fd << std::endl;
@@ -47,10 +47,15 @@ struct pollfd User::getPollFd() const
 	return _pfd;
 }
 
-Server*	User::getServer() const
+Server*	User::getServer() const { return _server; }
+
+int	User::getStatus() const { return _status; }
+
+void	User::setStatus(int status)
 {
-	return _server;
+	_status = status;
 }
+
 
 void User::setPollFd(struct pollfd pfd)
 {
@@ -72,18 +77,15 @@ void User::setNickname (std::string nickname)
 
 void User::parseMessage()
 {	
-	std::cout << "PARSEMESSAGE: input is " << input << std::endl;
 	std::string raw_message = input;
-	// raw_message.append("\r\n");
 	std::string delimiter = " ";
-	std::cout << "PARSEMESSAGE: raw_message is " << raw_message << std::endl;
 	
 	size_t pos = 0;
 	
 	pos = raw_message.find(delimiter);
 	if (pos == std::string::npos)
 	{
-		_message->setCommand(raw_message.substr(0, raw_message.length() - 1));
+		_message->setCommand(raw_message.substr(0, raw_message.length()));
 		std::cout << "[PARSING]: message only contains one command: " << _message->getCommand() << std::endl;
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/13 15:40:28 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:40:11 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,32 @@ void	helloWorld(User *user)
 
 void	nick(User *user)
 {
-	(void)user;
+	std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
+
+	size_t pos = 0;
+	std::string param = user->getMessage()->getParameters();
+	
+	if ((pos = param.find(" ")) != std::string::npos)
+		param.substr(0, pos);
+	if (user->getStatus() == STATUS_PASS)
+		user->setStatus(STATUS_NICK);
+	else if (user->getStatus() == STATUS_USER)
+		user->setStatus(STATUS_VALID);
+}
+
+void	user(User *user)
+{
+	std::cout << "\033[1;32minside USER\033[0m;" << std::endl;
+
+	size_t pos = 0;
+	std::string param = user->getMessage()->getParameters();
+	
+	if ((pos = param.find(" ")) != std::string::npos)
+		param.substr(0, pos);
+	if (user->getStatus() == STATUS_PASS)
+		user->setStatus(STATUS_USER);
+	else if (user->getStatus() == STATUS_NICK)
+		user->setStatus(STATUS_VALID);
 }
 
 void	pass(User *user)
@@ -33,8 +58,11 @@ void	pass(User *user)
 	if ((pos = param.find(" ")) != std::string::npos)
 		param.substr(0, pos);
 	if (param == user->getServer()->getPassword())
+	{
 		std::cout << "\033[1;32mPassword is correct\033[0m;" << std::endl;
-		
+		if (user->getStatus() == STATUS_NEW)
+			user->setStatus(STATUS_PASS);
+	}	
 }
 
 Command::Command(void) 
@@ -42,6 +70,8 @@ Command::Command(void)
    	_cmd.insert(std::make_pair("HELLOW", &helloWorld));
    	_cmd.insert(std::make_pair("NICK", &nick));
    	_cmd.insert(std::make_pair("PASS", &pass));
+   	_cmd.insert(std::make_pair("USER", &user));
+
 }
 
 Command::~Command(void) 

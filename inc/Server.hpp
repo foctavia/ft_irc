@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 15:18:54 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:50:12 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class Server
 		void	run( void );
 		void	newConnection( void );
 		void	receiveMessage( struct pollfd pfd );
-		void	sendMessage( int senderFd, std::string &message );
+		void	sendMessage( User *user );
 		void	disconnect( struct pollfd pfd );
 		void	clean( void );
 

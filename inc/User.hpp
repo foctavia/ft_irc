@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 15:17:58 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:39:58 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 # define USER_HPP
 
 # include "irc.h"
-// # include "Message.hpp"
-// # include "Server.hpp"
+
+// USER STATUS
+enum status
+{
+	STATUS_NEW,
+	STATUS_PASS,
+	STATUS_NICK,
+	STATUS_USER,
+	STATUS_VALID
+};
 
 class Message;
 class Server;
@@ -39,17 +47,19 @@ class User
 		void 			setPollFd(struct pollfd pfd);
 		void 			buildMessage();
 		Message*		getMessage() const;
+		int				getStatus() const;
+		void			setStatus(int status);
 
 		void 			parseMessage();
 		
 	private:
-		bool			_valid;
 		const char		*_address;
 		std::string 	_username;
 		std::string 	_nickname;
 		struct pollfd	_pfd;
 		Message*		_message;
 		Server*			_server;
+		int				_status;
 		
 		
 		User();

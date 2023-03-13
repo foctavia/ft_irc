@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 15:37:06 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:38:09 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,37 +190,57 @@ void	Server::receiveMessage( struct pollfd pfd )
 	else
 	{
 		std::string copy(buffer);
+		if (copy.find("\r\n") == std::string::npos)
+		{
+			copy.erase(copy.end() - 1);
+			copy.append("\r\n");
+		}
 		size_t pos;
 		while ((pos = copy.find("\r\n")) != std::string::npos)
 		{
 			std::string cmd = copy.substr(0, pos);
 			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			copy.erase(0, pos + 2);
+			user->input.clear();
 			user->input.append(cmd);
 			user->parseMessage();
 			_cmd->execute(user);
-			sendMessage(user->getFd(), user->input);	
+			sendMessage(user);	
 		}
 		
 	}
 }
 
-void	Server::sendMessage( int senderFd, std::string &message )
+// void	Server::sendMessage( int senderFd, std::string &message )
+// {
+	
+//  	for (size_t j = 0; j < _pollFds.size(); j++)
+// 	{
+// 		int dest_fd = _pollFds[j].fd;
+
+// 		if (dest_fd != _socketFd && dest_fd != senderFd)
+// 		{
+// 			std::string msg = message.substr(0, message.size() - 1);
+// 			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << "\r\n"; 
+// 			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
+// 				perror("send");
+// 		} 
+// 	}	
+// 	message.clear();
+// }
+
+void	Server::sendMessage( User *user )
 {
 	
- 	for (size_t j = 0; j < _pollFds.size(); j++)
+	if (user->getStatus() == STATUS_VALID)
 	{
-		int dest_fd = _pollFds[j].fd;
-
-		if (dest_fd != _socketFd && dest_fd != senderFd)
-		{
-			std::string msg = message.substr(0, message.size() - 1);
-			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << "\r\n"; 
-			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
-				perror("send");
-		} 
-	}	
-	message.clear();
+		std::cout << "[SERVER]: user " << user->getFd() << " is valid" << std::endl; 
+		if (send(user->getFd(), "Welcome to IRC", 14, MSG_NOSIGNAL) == -1)
+			perror("send");
+	}
+		
+				
+	// message.clear();
 }
 
 void	Server::disconnect( struct pollfd pfd )
