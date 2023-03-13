@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 12:06:32 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/13 14:18:45 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,6 @@ void	Server::newConnection( void )
 	User	*newUser = new User(_pollFds.back(), client);
 	
 	_users.insert(std::make_pair<int, User*>(newFd, newUser));	
-
-	
 }
 
 void	Server::receiveMessage( struct pollfd pfd )
@@ -180,25 +178,26 @@ void	Server::receiveMessage( struct pollfd pfd )
 	memset(buffer, 0, sizeof buffer);
 
 	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
-	
-	std::string copy(buffer);
-	if (nbytes && copy.find("\r\n") != std::string::npos)
-		copy = copy.substr(0, nbytes - 2);
 
-	std::cout << "[SERVER]: receive " << copy << " from " << user->getFd() << std::endl;
-	user->input.append(buffer);
-	 
-	if (nbytes && user->input.find("\n") == std::string::npos)
-		return ;
 	if (nbytes == 0)
 		disconnect(user->getPollFd());
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
 	{
-		user->parseMessage();
-		_cmd->execute(user);
-		sendMessage(user->getFd(), user->input);
+		std::string copy(buffer);
+		size_t pos;
+		while ((pos = copy.find("\r\n")) != std::string::npos)
+		{
+			std::string cmd = copy.substr(0, pos);
+			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
+			copy.erase(0, pos + 2);
+			user->input.append(copy);
+			user->parseMessage();
+			_cmd->execute(user);
+			sendMessage(user->getFd(), user->input);	
+		}
+		
 	}
 }
 

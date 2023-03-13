@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 11:48:46 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/13 13:52:41 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void User::setNickname (std::string nickname)
 void User::parseMessage()
 {	
 	
-	std::string raw_message = input;
+	std::string raw_message = input.substr(0, input.length() -1);
+	raw_message.append("\r\n");
 	std::string delimiter = " ";
 	
 	size_t pos = 0;
