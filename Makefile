@@ -15,7 +15,7 @@ OBJ_DIR			=	obj/
 SRC_DIR			= 	src/
 
 SRC				=	main.cpp error.cpp \
-					Server.cpp User.cpp Message.cpp
+					Server.cpp User.cpp Message.cpp Command.cpp
 
 OBJ				=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 

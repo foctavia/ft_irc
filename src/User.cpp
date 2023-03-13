@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 18:03:52 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/13 11:48:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void User::parseMessage()
 	pos = raw_message.find(delimiter);
 	if (pos == std::string::npos)
 	{
-		_message->setCommand(raw_message);
-		std::cout << "message only contains one command: " << _message->getCommand() << std::endl;
+		_message->setCommand(raw_message.substr(0, raw_message.length() - 1));
+		std::cout << "[PARSING]: message only contains one command: " << _message->getCommand() << std::endl;
 		return ;
 	}
 
@@ -86,7 +86,14 @@ void User::parseMessage()
 	raw_message.erase(0, pos + delimiter.length());
 	_message->setParameters(raw_message);
 	
-	std::cout << "message command: " << _message->getCommand();
+	std::cout << "[PARSING]: message command: " << _message->getCommand();
 	std::cout << " parameters: " << _message->getParameters() << std::endl;
+
 	
+	
+}
+
+Message* User::getMessage() const
+{
+	return _message;
 }

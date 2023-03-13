@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 15:21:50 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/13 11:58:25 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@
 # include <unistd.h>
 # include <arpa/inet.h>
 # include <iomanip>
+# include <utility>
 
 # include "User.hpp"
 # include "Message.hpp"
+# include "Command.hpp"
 
 int ft_error(int type);
 

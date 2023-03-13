@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 18:01:39 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/13 12:06:32 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
+
 Server::Server( char *port, char *password )
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
 {
 	std::cout << "[SERVER]: welcome on port " << port << "!" << std::endl;
+	_cmd = new Command;
 }
 
 Server::~Server( void )
@@ -41,6 +43,7 @@ void	Server::clean( void )
 		i++;
 	}
 	_users.clear();
+	delete _cmd;
 }
 
 int	Server::getListenerSocket( void )
@@ -179,13 +182,13 @@ void	Server::receiveMessage( struct pollfd pfd )
 	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
 	
 	std::string copy(buffer);
-	if (nbytes && copy.find('\n') != std::string::npos)
-		copy = copy.substr(0, nbytes - 1);
+	if (nbytes && copy.find("\r\n") != std::string::npos)
+		copy = copy.substr(0, nbytes - 2);
 
 	std::cout << "[SERVER]: receive " << copy << " from " << user->getFd() << std::endl;
 	user->input.append(buffer);
 	 
-	if (nbytes && user->input.find('\n') == std::string::npos)
+	if (nbytes && user->input.find("\n") == std::string::npos)
 		return ;
 	if (nbytes == 0)
 		disconnect(user->getPollFd());
@@ -194,6 +197,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 	else
 	{
 		user->parseMessage();
+		_cmd->execute(user);
 		sendMessage(user->getFd(), user->input);
 	}
 }
@@ -208,7 +212,7 @@ void	Server::sendMessage( int senderFd, std::string &message )
 		if (dest_fd != _socketFd && dest_fd != senderFd)
 		{
 			std::string msg = message.substr(0, message.size() - 1);
-			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << std::endl; 
+			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << "\r\n"; 
 			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
 				perror("send");
 		} 
@@ -233,3 +237,4 @@ char	*Server::getPassword( void ) const
 {
 	return _password;
 }
+

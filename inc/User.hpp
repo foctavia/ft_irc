@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 17:57:22 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/13 11:38:15 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class User
 		void 			setNickname (std::string nickname);
 		void 			setPollFd(struct pollfd pfd);
 		void 			buildMessage();
+		Message*		getMessage() const;
 
 		void 			parseMessage();
 		

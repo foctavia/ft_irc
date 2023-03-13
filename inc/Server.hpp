@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/03 16:22:42 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/13 12:01:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Server
 		void	disconnect( struct pollfd pfd );
 		void	clean( void );
 
+
 		char	*getPort( void ) const;
 		char	*getPassword( void ) const;
 	
@@ -42,6 +43,8 @@ class Server
 
 		std::vector<struct pollfd>	_pollFds;
 		std::map<int, User *>		_users;
+		// std::map<std::string, CallCmd> _cmd;
+		Command*	_cmd;
 		
 		Server( void );
 };
