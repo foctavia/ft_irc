@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 11:58:25 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/13 15:18:43 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <iomanip>
 # include <utility>
 
+# include "Server.hpp"
 # include "User.hpp"
 # include "Message.hpp"
 # include "Command.hpp"

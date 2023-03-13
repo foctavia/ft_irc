@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 11:38:15 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/13 15:17:58 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 # define USER_HPP
 
 # include "irc.h"
-# include "Message.hpp"
+// # include "Message.hpp"
+// # include "Server.hpp"
 
 class Message;
+class Server;
 
 class User
 {
 	public:
 		std::string		input;
 		
-		User( struct pollfd pfd, const char *address );
+		User( struct pollfd pfd, const char *address, Server *server);
 		~User();
 		
 		std::string 	getUsername() const;
 		std::string		getNickname() const;
 		struct pollfd 	getPollFd() const;
 		int 			getFd() const;
+		Server*			getServer() const;
 		
 		void 			setUsername(std::string username);
 		void 			setNickname (std::string nickname);
@@ -46,6 +49,8 @@ class User
 		std::string 	_nickname;
 		struct pollfd	_pfd;
 		Message*		_message;
+		Server*			_server;
+		
 		
 		User();
 };

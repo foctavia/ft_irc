@@ -6,15 +6,15 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 13:52:41 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:39:12 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "User.hpp"
 
 
-User::User( struct pollfd pfd, const char *address )
-	: _valid(false), _address(address), _username(), _nickname(), _pfd(pfd), _message(new Message(pfd.fd))
+User::User( struct pollfd pfd, const char *address, Server *server )
+	: _valid(false), _address(address), _username(), _nickname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server)
 {
 	std::cout << "[SERVER]: accept new connection from " << _address
 			<< " with fd " << _pfd.fd << std::endl;
@@ -47,6 +47,11 @@ struct pollfd User::getPollFd() const
 	return _pfd;
 }
 
+Server*	User::getServer() const
+{
+	return _server;
+}
+
 void User::setPollFd(struct pollfd pfd)
 {
 	_pfd = pfd;	
@@ -67,10 +72,11 @@ void User::setNickname (std::string nickname)
 
 void User::parseMessage()
 {	
-	
-	std::string raw_message = input.substr(0, input.length() -1);
-	raw_message.append("\r\n");
+	std::cout << "PARSEMESSAGE: input is " << input << std::endl;
+	std::string raw_message = input;
+	// raw_message.append("\r\n");
 	std::string delimiter = " ";
+	std::cout << "PARSEMESSAGE: raw_message is " << raw_message << std::endl;
 	
 	size_t pos = 0;
 	

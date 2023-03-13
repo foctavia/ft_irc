@@ -6,12 +6,16 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 14:18:45 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:37:06 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
+Server::Server()
+{
+	
+}
 
 Server::Server( char *port, char *password )
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
@@ -165,7 +169,7 @@ void	Server::newConnection( void )
 
 	client = inet_ntop(clientAddress.ss_family, getIpAddress((struct sockaddr*)&clientAddress), remoteIP, INET6_ADDRSTRLEN);
 
-	User	*newUser = new User(_pollFds.back(), client);
+	User	*newUser = new User(_pollFds.back(), client, this);
 	
 	_users.insert(std::make_pair<int, User*>(newFd, newUser));	
 }
@@ -192,7 +196,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 			std::string cmd = copy.substr(0, pos);
 			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			copy.erase(0, pos + 2);
-			user->input.append(copy);
+			user->input.append(cmd);
 			user->parseMessage();
 			_cmd->execute(user);
 			sendMessage(user->getFd(), user->input);	
@@ -236,4 +240,3 @@ char	*Server::getPassword( void ) const
 {
 	return _password;
 }
-

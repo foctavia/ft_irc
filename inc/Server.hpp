@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 12:01:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/13 15:18:54 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 # include "irc.h"
 
+class User;
+class Command;
 class Server
 {
 	public:
+		Server();
 		Server( char *port, char *password );
 		~Server( void );
 
@@ -46,7 +49,8 @@ class Server
 		// std::map<std::string, CallCmd> _cmd;
 		Command*	_cmd;
 		
-		Server( void );
+		// Server( void );
 };
+
 
 #endif
