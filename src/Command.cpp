@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/13 17:40:11 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:29:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	nick(User *user)
 	std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
 
 	size_t pos = 0;
-	std::string param = user->getMessage()->getParameters();
-	
+	std::string param = user->getMessage()->getParameters();	
 	if ((pos = param.find(" ")) != std::string::npos)
 		param.substr(0, pos);
+	user->setNickname(param);
+
 	if (user->getStatus() == STATUS_PASS)
 		user->setStatus(STATUS_NICK);
 	else if (user->getStatus() == STATUS_USER)
@@ -42,6 +43,8 @@ void	user(User *user)
 	
 	if ((pos = param.find(" ")) != std::string::npos)
 		param.substr(0, pos);
+	user->setUsername(param);
+	
 	if (user->getStatus() == STATUS_PASS)
 		user->setStatus(STATUS_USER);
 	else if (user->getStatus() == STATUS_NICK)
@@ -65,12 +68,21 @@ void	pass(User *user)
 	}	
 }
 
+void	quit(User *user)
+{
+	std::cout << "\033[1;32minside QUIT\033[0m;" << std::endl;
+	if (send(user->getFd(), "\n", 2, MSG_NOSIGNAL) == -1)
+		perror("send");
+	user->getServer()->disconnect(user->getPollFd());
+}
+
 Command::Command(void) 
 {
    	_cmd.insert(std::make_pair("HELLOW", &helloWorld));
    	_cmd.insert(std::make_pair("NICK", &nick));
    	_cmd.insert(std::make_pair("PASS", &pass));
    	_cmd.insert(std::make_pair("USER", &user));
+   	_cmd.insert(std::make_pair("QUIT", &quit));
 
 }
 
