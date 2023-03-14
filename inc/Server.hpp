@@ -29,8 +29,8 @@ class Server
 		void	run( void );
 		void	newConnection( void );
 		void	receiveMessage( struct pollfd pfd );
-		void	sendMessage( User *user );
-		void	disconnect( struct pollfd pfd );
+		// void	sendMessage( User *user );
+		void	disconnect( User* user );
 		void	clean( void );
 
 

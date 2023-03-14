@@ -114,6 +114,15 @@ std::string		User::formattedMessage(std::string command, std::string argument)
 	return formatted;
 }
 
+void	User::sendMessage(std::string message)
+{
+	if (_status == STATUS_VALID)
+	{
+		if (send(getFd(), message.c_str(), message.length(), MSG_NOSIGNAL) == -1)
+			perror("send");
+	}
+}
+
 
 Message* User::getMessage() const
 {

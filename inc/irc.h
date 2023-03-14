@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 15:18:43 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:00:51 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,15 @@
 # include "Command.hpp"
 
 int ft_error(int type);
+void	USER(User *user);
+void	PASS(User *user);
+void	NICK(User *user);
+void	QUIT(User *user);
+
+std::string ERR_UNKNOWNCOMMAND(std::string command);
+std::string ERR_ERRONEUSNICKNAME(std::string nickname);
+std::string	ERR_NONICKNAMEGIVEN(void);
+
+std::string RPL_WELCOME(User *user);
 
 #endif

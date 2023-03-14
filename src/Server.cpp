@@ -184,7 +184,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
 
 	if (nbytes == 0)
-		disconnect(user->getPollFd());
+		disconnect(user);
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
 	else
@@ -205,7 +205,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 			user->input.append(cmd);
 			user->parseMessage();
 			_cmd->execute(user);
-			sendMessage(user);
+			// sendMessage(user);
 		}
 		
 	}
@@ -229,26 +229,16 @@ void	Server::receiveMessage( struct pollfd pfd )
 // 	message.clear();
 // }
 
-void	Server::sendMessage( User *user )
-{
-	
-	if (user->getStatus() == STATUS_VALID)
-	{
-		std::cout << "[SERVER]: user " << user->getFd() << " is valid" << std::endl; 
-		if (send(user->getFd(), "Welcome to IRC", 14, MSG_NOSIGNAL) == -1)
-			perror("send");
-	}
-		
-				
-	// message.clear();
-}
 
-void	Server::disconnect( struct pollfd pfd )
+
+void	Server::disconnect( User* user)
 {
 	std::cout << "pollserver: socket hung up" << std::endl;
-	
-	close(pfd.fd);
-	pfd.fd = -1;
+
+	close(user->getFd());
+	// pfd.fd = -1;
+	_users.erase(user->getFd());
+	delete user;
 }
 
 char	*Server::getPort( void ) const

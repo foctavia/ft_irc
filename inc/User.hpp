@@ -50,6 +50,9 @@ class User
 		int				getStatus() const;
 		void			setStatus(int status);
 
+		void			sendMessage(std::string message);
+
+
 		void 			parseMessage();
 		std::string		formattedMessage(std::string command, std::string argument);
 		

@@ -25,8 +25,8 @@ class Command
         Command();
         ~Command();
 
-        void execute(User *user);
-		
+        void    execute(User *user);
+
     private:
 		std::map<std::string, callCommand> _cmd;
 
