@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 17:39:58 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:18:57 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ class User
 		void			setStatus(int status);
 
 		void 			parseMessage();
+		std::string		formattedMessage(std::string command, std::string argument);
 		
 	private:
 		const char		*_address;

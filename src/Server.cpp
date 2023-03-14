@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 17:38:09 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:14:09 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 			user->input.append(cmd);
 			user->parseMessage();
 			_cmd->execute(user);
-			sendMessage(user);	
+			sendMessage(user);
 		}
 		
 	}

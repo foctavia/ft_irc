@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/13 18:29:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:24:43 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,64 @@ void	helloWorld(User *user)
 	std::cout << "Hello world!" << std::endl;
 }
 
+std::string ERR_ERRONEUSNICKNAME(std::string nickname)
+{
+	return nickname + " :Erroneus nickname";
+}
+
+std::string	ERR_NONICKNAMEGIVEN(void)
+{
+	return ":No nickname given";
+}
+
+std::string	CORRECT_NICK(std::string nickname)
+{
+	return ": NICK :" + nickname;
+}
+
 void	nick(User *user)
 {
 	std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
 
 	size_t pos = 0;
-	std::string param = user->getMessage()->getParameters();	
-	if ((pos = param.find(" ")) != std::string::npos)
-		param.substr(0, pos);
-	user->setNickname(param);
+	std::string nickname = user->getMessage()->getParameters();	
+	if ((pos = nickname.find(" ")) != std::string::npos)
+		nickname.substr(0, pos);
+
+	if (nickname.empty())
+	{
+		std::cout << ERR_NONICKNAMEGIVEN() << std::endl;
+		return ;
+	}
+		
+	std::string special_characters("[]\\`_^{|}");
+	if (!isalpha(nickname[0])
+		&& (special_characters.find(nickname[0]) == std::string::npos))
+	{
+		std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+		return ;
+	}
+	
+	if (nickname.length() > 9)
+	{
+		std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+		return ;
+	}
+		
+	for (std::string::iterator it = nickname.begin() + 1; it != nickname.end(); ++it)
+	{
+		if (!isalpha(*it)
+			&& !isdigit(*it)
+			&& (special_characters.find(*it) == std::string::npos)
+			&& *it != '-')
+		{
+			std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+			return ;
+		}
+	}	
+	
+	user->setNickname(nickname);
+	std::cout << CORRECT_NICK(nickname) << std::endl;
 
 	if (user->getStatus() == STATUS_PASS)
 		user->setStatus(STATUS_NICK);
@@ -97,6 +146,7 @@ void	Command::execute(User *user)
     {
         std::cout << "[SERVER]: found command!" << std::endl;
         _cmd[user->getMessage()->getCommand()](user);
+		std::cout << user->formattedMessage(user->getMessage()->getCommand(), user->getMessage()->getParameters()) << std::endl;
     }
     else
         std::cout << "[SERVER]: command " << user->getMessage()->getCommand() << " not found!" << std::endl;

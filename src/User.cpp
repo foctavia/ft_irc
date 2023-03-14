@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 17:25:41 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:24:29 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,19 @@ void User::parseMessage()
 	
 	
 }
+
+std::string		User::formattedMessage(std::string command, std::string argument)
+{
+	std::string formatted;
+
+	formatted += ":";
+	
+	if (_status == STATUS_VALID)
+		formatted += _nickname + "!" + _username + "@localhost ";
+	formatted += command + " :" + argument;
+	return formatted;
+}
+
 
 Message* User::getMessage() const
 {
