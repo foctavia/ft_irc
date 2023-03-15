@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:26 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 12:49:13 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:38:08 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "irc.hpp"
 
 void	PASS(User *user)
 {
@@ -18,13 +18,13 @@ void	PASS(User *user)
 	
 	if (user->getStatus() > STATUS_NEW)
 	{
-		std::cout << ERR_ALREADYREGISTRED() << std::endl;
+		user->sendMessage(user->formattedMessage("462", ERR_ALREADYREGISTRED(), OPT_CODE));
 		return ;
 	}
 
 	if (user->getCommand()->getParameters().empty())
 	{
-		std::cout << ERR_NEEDMOREPARAMS(user->getCommand()->getName()) << std::endl;
+		user->sendMessage(user->formattedMessage("461", ERR_NEEDMOREPARAMS(user->getCommand()->getName()), OPT_CODE));
 		return ;
 	}
 

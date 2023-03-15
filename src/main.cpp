@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 12:13:53 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "irc.h"
+# include "irc.hpp"
 # include "Server.hpp"
 
 int main(int argc, char **argv)

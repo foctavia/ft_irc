@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 12:40:05 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:46:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 Command::Command(void) 
 {
-   	_cmd.insert(std::make_pair("NICK", &NICK));
-   	_cmd.insert(std::make_pair("PASS", &PASS));
-   	_cmd.insert(std::make_pair("USER", &USER));
-   	_cmd.insert(std::make_pair("QUIT", &QUIT));
+   	availableCommands.insert(std::make_pair("NICK", &NICK));
+   	availableCommands.insert(std::make_pair("PASS", &PASS));
+   	availableCommands.insert(std::make_pair("USER", &USER));
+   	availableCommands.insert(std::make_pair("PRIVMSG", &PRIVMSG));
+   	availableCommands.insert(std::make_pair("QUIT", &QUIT));
+
 
 }
 
@@ -46,14 +48,7 @@ void						Command::setParameters(std::vector<std::string> parameters)
 	_parameters = parameters;
 }
 
-void	Command::execute(User *user)
-{
-    if (_cmd.find(user->getCommand()->getName()) != _cmd.end())
-    {
-        std::cout << "[SERVER]: found command!" << std::endl;
-        _cmd[user->getCommand()->getName()](user);
-		// std::cout << user->formattedMessage(user->getMessage()->getCommand(), user->getMessage()->getParameters()) << std::endl;
-    }
-    else
-        std::cout << "[SERVER]: command " << user->getCommand()->getName() << " not found!" << std::endl;
-}
+// std::map<std::string, callCommand>	Command::getAvailableCommands(void) const
+// {
+// 	return _availableCommands;
+// }

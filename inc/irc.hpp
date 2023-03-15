@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   irc.h                                              :+:      :+:    :+:   */
+/*   irc.hpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 13:02:23 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:10:11 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 
 # include "Server.hpp"
 # include "User.hpp"
-# include "Message.hpp"
 # include "Command.hpp"
 
 std::vector<std::string> split(std::string str, std::string delimiter);
@@ -44,6 +43,7 @@ std::vector<std::string> split(std::string str, std::string delimiter);
 void	USER(User *user);
 void	PASS(User *user);
 void	NICK(User *user);
+void	PRIVMSG(User *user);
 void	QUIT(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
@@ -51,6 +51,7 @@ std::string ERR_ERRONEUSNICKNAME(std::string nickname);
 std::string	ERR_NONICKNAMEGIVEN(void);
 std::string	ERR_NEEDMOREPARAMS(std::string command);
 std::string	ERR_ALREADYREGISTRED(void);
+std::string	ERR_NOSUCHNICK(std::string name);
 
 
 std::string RPL_WELCOME(User *user);

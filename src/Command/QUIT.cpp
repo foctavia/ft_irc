@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:59:56 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 17:00:31 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "irc.hpp"
 
 void	QUIT(User *user)
 {

@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 12:52:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:33:30 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "irc.hpp"
 
 void	NICK(User *user)
 {
@@ -18,7 +18,7 @@ void	NICK(User *user)
 
 	if (user->getCommand()->getParameters().empty())
 	{
-		std::cout << ERR_NONICKNAMEGIVEN() << std::endl;
+		user->sendMessage(user->formattedMessage("431", ERR_NONICKNAMEGIVEN(), OPT_CODE));
 		return ;
 	}
 		
@@ -28,13 +28,13 @@ void	NICK(User *user)
 	if (!isalpha(nickname[0])
 		&& (special_characters.find(nickname[0]) == std::string::npos))
 	{
-		std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+		user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
 		return ;
 	}
 	
 	if (nickname.length() > 9)
 	{
-		std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+		user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
 		return ;
 	}
 		
@@ -45,7 +45,7 @@ void	NICK(User *user)
 			&& (special_characters.find(*it) == std::string::npos)
 			&& *it != '-')
 		{
-			std::cout << ERR_ERRONEUSNICKNAME(nickname) << std::endl;
+			user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
 			return ;
 		}
 	}	

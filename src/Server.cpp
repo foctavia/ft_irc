@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 12:49:59 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:27:47 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,43 +201,30 @@ void	Server::receiveMessage( struct pollfd pfd )
 			std::string cmd = copy.substr(0, pos);
 			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			copy.erase(0, pos + 2);
-			// user->input.clear();
-			// user->input.append(cmd);
 			user->parseMessage(cmd);
-			user->getCommand()->execute(user);
-			// _cmd->execute(user);
-			// sendMessage(user);
+			user->execute();
 		}
-		
 	}
 }
 
-// void	Server::sendMessage( int senderFd, std::string &message )
-// {
-	
-//  	for (size_t j = 0; j < _pollFds.size(); j++)
-// 	{
-// 		int dest_fd = _pollFds[j].fd;
-
-// 		if (dest_fd != _socketFd && dest_fd != senderFd)
-// 		{
-// 			std::string msg = message.substr(0, message.size() - 1);
-// 			std::cout << "[SERVER]: send " << msg << " to " << dest_fd << "\r\n"; 
-// 			if (send(dest_fd, message.c_str(), message.size(), MSG_NOSIGNAL) == -1)
-// 				perror("send");
-// 		} 
-// 	}	
-// 	message.clear();
-// }
-
-
+User		*Server::checkUser(std::string nickname)
+{
+	std::map<int, User *>::iterator it = _users.begin();
+	for (; it != _users.end(); ++it)
+	{
+		if (it->second->getNickname() == nickname)
+		{
+			return it->second;
+		}
+	}
+	return NULL;
+}
 
 void	Server::disconnect( User* user)
 {
-	std::cout << "pollserver: socket hung up" << std::endl;
+	std::cout << "[SERVER]: user with fd " << user->getFd() << " disconnected" << std::endl;
 
 	close(user->getFd());
-	// pfd.fd = -1;
 	_users.erase(user->getFd());
 	delete user;
 }

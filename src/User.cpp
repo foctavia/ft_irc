@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 12:52:05 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:13:30 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,17 @@ void			User::setRealname(std::string realname)
 	_realname = realname;
 }
 
-/* MODIFIERS */ 
+Command* User::getCommand() const
+{
+	return _command;
+}
+
+/* MODIFIERS */
 
 void User::parseMessage(std::string input)
 {	
 	std::vector<std::string> values = split(input, " ");
-
+	
 	_command->setName(values[0]);
 	std::cout << "[PARSING]: command name: " << _command->getName() << std::endl;
 
@@ -116,12 +121,8 @@ void User::parseMessage(std::string input)
 		values.erase(values.begin());
 		_command->setParameters(values);
 	}
-	
-	std::cout << "[PARSING]: command parameters: ";
-	std::vector<std::string>::iterator it;
-	for (it = _command->getParameters().begin(); it != _command->getParameters().end(); ++it)
-		std::cout << " " << *it;
-	std::cout << std::endl;	
+	// std::cout << "[PARSING]: command parameters: ";
+	// printVector(_command->getParameters());
 }
 
 std::string		User::formattedMessage(std::string command, std::string argument, int option)
@@ -157,7 +158,14 @@ void	User::sendMessage(std::string message)
 	}
 }
 
-Command* User::getCommand() const
+void	User::execute()
 {
-	return _command;
+    if (_command->availableCommands.find(_command->getName()) != _command->availableCommands.end())
+    {
+        std::cout << "[SERVER]: found command!" << std::endl;
+        _command->availableCommands[_command->getName()](this);
+		// std::cout << user->formattedMessage(user->getMessage()->getCommand(), user->getMessage()->getParameters()) << std::endl;
+    }
+    else
+        std::cout << "[SERVER]: command " << _command->getName() << " not found!" << std::endl;
 }

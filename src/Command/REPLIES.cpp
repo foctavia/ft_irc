@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 10:59:06 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "irc.hpp"
 
 std::string RPL_WELCOME(User *user) 
 {

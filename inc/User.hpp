@@ -6,14 +6,14 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 12:41:20 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef USER_HPP
 # define USER_HPP
 
-# include "irc.h"
+# include "irc.hpp"
 
 // USER STATUS
 enum status
@@ -31,6 +31,7 @@ class Command;
 
 class User
 {
+
 	public:
 		std::string		input;
 		
@@ -60,6 +61,7 @@ class User
 		void 			setPollFd(struct pollfd pfd);
 		void			sendMessage(std::string message);
 		std::string		formattedMessage(std::string command, std::string argument, int option);
+		void			execute();
 		
 	private:
 		const char		*_address;

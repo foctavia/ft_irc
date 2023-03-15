@@ -6,11 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 13:06:04 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:39:15 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "irc.hpp"
 
 // USER sbeylot sbeylot localhost :Simon BEYLOT
 // USER sbeylot sbeylot localhost :Simon BEYLOT
@@ -22,7 +22,8 @@ void	USER(User *user)
 
 	if (user->getStatus() == STATUS_VALID)
 	{
-		std::cout << ERR_ALREADYREGISTRED() << std::endl;
+		user->sendMessage(user->formattedMessage("462", ERR_ALREADYREGISTRED(), OPT_CODE));
+
 		return ;
 	}
 	
@@ -30,7 +31,7 @@ void	USER(User *user)
 
 	if (args.size() < 5 && args.at(3)[0] != ':')
 	{
-		std::cout << ERR_NEEDMOREPARAMS("USER") << std::endl;
+		user->sendMessage(user->formattedMessage("461", ERR_NEEDMOREPARAMS(user->getCommand()->getName()), OPT_CODE));
 		return ;
 	}
 

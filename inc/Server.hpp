@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/13 16:50:12 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/15 16:23:02 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-# include "irc.h"
+# include "irc.hpp"
 
 class User;
 class Command;
@@ -32,6 +32,7 @@ class Server
 		// void	sendMessage( User *user );
 		void	disconnect( User* user );
 		void	clean( void );
+		User	*checkUser(std::string nickname);
 
 
 		char	*getPort( void ) const;
