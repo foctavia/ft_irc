@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/14 13:14:09 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/15 12:49:59 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,11 @@ void	Server::receiveMessage( struct pollfd pfd )
 			std::string cmd = copy.substr(0, pos);
 			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			copy.erase(0, pos + 2);
-			user->input.clear();
-			user->input.append(cmd);
-			user->parseMessage();
-			_cmd->execute(user);
+			// user->input.clear();
+			// user->input.append(cmd);
+			user->parseMessage(cmd);
+			user->getCommand()->execute(user);
+			// _cmd->execute(user);
 			// sendMessage(user);
 		}
 		

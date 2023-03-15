@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 12:13:53 by sbeylot          ###   ########.fr       */
+/*   Created: 2023/03/15 12:06:08 by sbeylot           #+#    #+#             */
+/*   Updated: 2023/03/15 12:12:45 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "irc.h"
-# include "Server.hpp"
+#include "irc.h"
 
-int main(int argc, char **argv)
+std::vector<std::string> split(std::string str, std::string delimiter)
 {
-	if (argc != 3)
-	{
-		std::cerr << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;
-		return EXIT_FAILURE;
-	}
-		
-	Server server(argv[1], argv[2]);
-	try
-	{
-		server.run();
-	}
-	catch(const std::exception &e)
-	{
-		std::cerr << "ERROR: " << e.what() << std::endl;
-	}
-	
-	return EXIT_SUCCESS;
+    std::vector<std::string>	values;
+    std::string					value;
+
+    size_t pos = 0;
+    while ((pos = str.find(delimiter)) != std::string::npos)
+    {
+        value = str.substr(0, pos);
+		str.erase(0, pos + delimiter.length());
+		values.push_back(value);
+    }
+	values.push_back(str);
+	return values;	
 }

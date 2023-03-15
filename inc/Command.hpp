@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:51:40 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 13:04:39 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/15 12:30:51 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@ class Command
         Command();
         ~Command();
 
-        void    execute(User *user);
+		std::string					getName(void) const;
+		std::vector<std::string>	getParameters(void) const;
+		void						setName(std::string name);
+		void						setParameters(std::vector<std::string> parameters);
 
+        void    execute(User *user);
+		
     private:
-		std::map<std::string, callCommand> _cmd;
+		std::map<std::string, callCommand>	_cmd;
+		std::string							_name;
+		std::vector<std::string>			_parameters;
 
 };
 

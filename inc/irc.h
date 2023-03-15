@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 11:46:20 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 13:02:23 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "defines.h"
 
+# include <stdlib.h>
 # include <iostream>
 # include <string>
 # include <sys/types.h>
@@ -31,13 +32,15 @@
 # include <arpa/inet.h>
 # include <iomanip>
 # include <utility>
+# include <numeric>
 
 # include "Server.hpp"
 # include "User.hpp"
 # include "Message.hpp"
 # include "Command.hpp"
 
-int ft_error(int type);
+std::vector<std::string> split(std::string str, std::string delimiter);
+
 void	USER(User *user);
 void	PASS(User *user);
 void	NICK(User *user);

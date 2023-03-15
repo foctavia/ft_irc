@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:26 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 16:59:08 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 12:49:13 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 void	PASS(User *user)
 {
+	std::cout << "\033[1;32minside PASS\033[0m;" << std::endl;
+	
 	if (user->getStatus() > STATUS_NEW)
 	{
-		std::cout << ERR_UNKNOWNCOMMAND(user->getMessage()->getCommand()) << std::endl;
+		std::cout << ERR_ALREADYREGISTRED() << std::endl;
 		return ;
 	}
-	std::cout << "\033[1;32minside PASS\033[0m;" << std::endl;
 
-	size_t pos = 0;
-	std::string param = user->getMessage()->getParameters();
-	
-	if ((pos = param.find(" ")) != std::string::npos)
-		param.substr(0, pos);
+	if (user->getCommand()->getParameters().empty())
+	{
+		std::cout << ERR_NEEDMOREPARAMS(user->getCommand()->getName()) << std::endl;
+		return ;
+	}
+
+	std::string param = user->getCommand()->getParameters()[0];
 	if (param == user->getServer()->getPassword())
 	{
 		std::cout << "\033[1;32mPassword is correct\033[0m;" << std::endl;

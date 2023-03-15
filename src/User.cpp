@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 11:41:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 12:52:05 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 User::User( struct pollfd pfd, const char *address, Server *server )
-	: _address(address), _username(), _nickname(), _realname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server), _status(STATUS_NEW)
+	: _address(address), _username(), _nickname(), _realname(), _pfd(pfd), _command(new Command()), _server(server), _status(STATUS_NEW)
 {
 	std::cout << "[SERVER]: accept new connection from " << _address
 			<< " with fd " << _pfd.fd << std::endl;
@@ -22,7 +22,7 @@ User::User( struct pollfd pfd, const char *address, Server *server )
 
 User::~User()
 {
-	delete _message;
+	delete _command;
 }
 
 /* GETTERS AND SETTERS */ 
@@ -104,31 +104,24 @@ void			User::setRealname(std::string realname)
 
 /* MODIFIERS */ 
 
-void User::parseMessage()
+void User::parseMessage(std::string input)
 {	
-	std::string raw_message = input;
-	std::string delimiter = " ";
-	
-	size_t pos = 0;
-	
-	pos = raw_message.find(delimiter);
-	if (pos == std::string::npos)
+	std::vector<std::string> values = split(input, " ");
+
+	_command->setName(values[0]);
+	std::cout << "[PARSING]: command name: " << _command->getName() << std::endl;
+
+	if (values.size() > 1)
 	{
-		_message->setCommand(raw_message.substr(0, raw_message.length()));
-		std::cout << "[PARSING]: message only contains one command: " << _message->getCommand() << std::endl;
-		return ;
+		values.erase(values.begin());
+		_command->setParameters(values);
 	}
-
-	// command = raw_message.substr(0, pos);
-	_message->setCommand(raw_message.substr(0, pos));
-	raw_message.erase(0, pos + delimiter.length());
-	_message->setParameters(raw_message);
 	
-	std::cout << "[PARSING]: message command: " << _message->getCommand();
-	std::cout << " parameters: " << _message->getParameters() << std::endl;
-
-	
-	
+	std::cout << "[PARSING]: command parameters: ";
+	std::vector<std::string>::iterator it;
+	for (it = _command->getParameters().begin(); it != _command->getParameters().end(); ++it)
+		std::cout << " " << *it;
+	std::cout << std::endl;	
 }
 
 std::string		User::formattedMessage(std::string command, std::string argument, int option)
@@ -155,7 +148,6 @@ std::string		User::updatedId()
 	return formatted;
 }
 
-
 void	User::sendMessage(std::string message)
 {
 	if (_status > STATUS_PASS)
@@ -165,8 +157,7 @@ void	User::sendMessage(std::string message)
 	}
 }
 
-
-Message* User::getMessage() const
+Command* User::getCommand() const
 {
-	return _message;
+	return _command;
 }

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 10:52:48 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 12:52:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ void	NICK(User *user)
 {
 	std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
 
-	size_t pos = 0;
-	std::string nickname = user->getMessage()->getParameters();	
-	if ((pos = nickname.find(" ")) != std::string::npos)
-		nickname.substr(0, pos);
-
-	if (nickname.empty())
+	if (user->getCommand()->getParameters().empty())
 	{
 		std::cout << ERR_NONICKNAMEGIVEN() << std::endl;
 		return ;
 	}
 		
+	std::string nickname = user->getCommand()->getParameters()[0];	
+	
 	std::string special_characters("[]\\`_^{|}");
 	if (!isalpha(nickname[0])
 		&& (special_characters.find(nickname[0]) == std::string::npos))

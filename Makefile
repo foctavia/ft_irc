@@ -15,7 +15,7 @@ OBJ_DIR			=	obj/
 SRC_DIR			= 	src/
 SRC_CMD			=	Command/
 
-SRC				=	main.cpp error.cpp \
+SRC				=	main.cpp utils.cpp \
 					Server.cpp User.cpp Message.cpp Command.cpp \
 					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp) \
 					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp)

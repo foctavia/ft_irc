@@ -6,12 +6,13 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 12:01:11 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 13:06:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.h"
 
+// USER sbeylot sbeylot localhost :Simon BEYLOT
 // USER sbeylot sbeylot localhost :Simon BEYLOT
 // USER <username> <hostname> <servername> <realname>
 
@@ -25,30 +26,21 @@ void	USER(User *user)
 		return ;
 	}
 	
-	size_t pos = 0;
-	std::string param = user->getMessage()->getParameters();
-	std::string arg;
-	int arg_count = 0;
-	while ((pos = param.find(" ")) != std::string::npos && arg_count < 3)
-	{
-		arg = param.substr(0, pos);
-		param.erase(0, pos + 1);
-		if (arg_count == 0)
-			user->setUsername(arg);
-		if (arg_count == 1)
-			user->setHostname(arg);
-		if (arg_count == 2)
-			user->setServername(arg);
-		arg_count++;
-	}
-	if (arg_count != 3 && (pos = param.find(":")) == std::string::npos)
+	std::vector<std::string> args = user->getCommand()->getParameters();
+
+	if (args.size() < 5 && args.at(3)[0] != ':')
 	{
 		std::cout << ERR_NEEDMOREPARAMS("USER") << std::endl;
 		return ;
 	}
-	arg = param.substr(1, param.length() - 1);
-	user->setRealname(arg);
-	
+
+	user->setUsername(args.at(0));
+	user->setHostname(args.at(1));
+	user->setServername(args.at(2));
+
+	std::string realname = std::accumulate(args.begin() + 3, args.end(), std::string(" "));
+	realname.substr(1, realname.length());
+	user->setRealname(realname);
 	
 	if (user->getStatus() == STATUS_PASS)
 		user->setStatus(STATUS_USER);
