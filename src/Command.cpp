@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 17:00:35 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 10:48:27 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	Command::execute(User *user)
     {
         std::cout << "[SERVER]: found command!" << std::endl;
         _cmd[user->getMessage()->getCommand()](user);
-		std::cout << user->formattedMessage(user->getMessage()->getCommand(), user->getMessage()->getParameters()) << std::endl;
+		// std::cout << user->formattedMessage(user->getMessage()->getCommand(), user->getMessage()->getParameters()) << std::endl;
     }
     else
         std::cout << "[SERVER]: command " << user->getMessage()->getCommand() << " not found!" << std::endl;

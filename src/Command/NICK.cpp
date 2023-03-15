@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 16:59:02 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 10:52:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ void	NICK(User *user)
 	}	
 	
 	user->setNickname(nickname);
-	// std::cout << CORRECT_NICK(nickname) << std::endl;
+	user->sendMessage(user->formattedMessage("NICK" , nickname, OPT_COMMAND));
+	
 
 	if (user->getStatus() == STATUS_PASS)
 		user->setStatus(STATUS_NICK);
 	else if (user->getStatus() == STATUS_USER)
 	{
 		user->setStatus(STATUS_VALID);
-		user->sendMessage(RPL_WELCOME(user));
+		user->sendMessage(user->formattedMessage("001", RPL_WELCOME(user), OPT_CODE));
 	}
 }

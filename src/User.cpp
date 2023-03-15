@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/14 13:24:29 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/15 11:41:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 User::User( struct pollfd pfd, const char *address, Server *server )
-	: _address(address), _username(), _nickname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server), _status(STATUS_NEW)
+	: _address(address), _username(), _nickname(), _realname(), _pfd(pfd), _message(new Message(pfd.fd)), _server(server), _status(STATUS_NEW)
 {
 	std::cout << "[SERVER]: accept new connection from " << _address
 			<< " with fd " << _pfd.fd << std::endl;
@@ -72,6 +72,35 @@ void User::setNickname (std::string nickname)
 	_nickname = nickname;
 }
 
+std::string		User::getHostname(void) const
+{
+	return _hostname;
+}
+
+void			User::setHostname(std::string hostname)
+{
+	_hostname = hostname;
+}
+
+std::string		User::getServername(void) const
+{
+	return _servername;
+}
+
+void			User::setServername(std::string servername)
+{
+	_servername = servername;
+}
+
+std::string		User::getRealname(void) const
+{
+	return _realname;
+}
+
+void			User::setRealname(std::string realname)
+{
+	_realname = realname;
+}
 
 /* MODIFIERS */ 
 
@@ -102,21 +131,34 @@ void User::parseMessage()
 	
 }
 
-std::string		User::formattedMessage(std::string command, std::string argument)
+std::string		User::formattedMessage(std::string command, std::string argument, int option)
+{
+	std::string formatted;
+	
+	if (_status > STATUS_PASS) {
+		formatted += updatedId();
+		if (option == OPT_COMMAND)
+			formatted += command + " :" + argument + "\r\n";
+		else if (option == OPT_CODE)
+			formatted += command + " " + _nickname + " " + argument + "\r\n";
+	}
+	return formatted;
+}
+
+std::string		User::updatedId()
 {
 	std::string formatted;
 
 	formatted += ":";
-	
-	if (_status == STATUS_VALID)
+	if (_status > STATUS_PASS)
 		formatted += _nickname + "!" + _username + "@localhost ";
-	formatted += command + " :" + argument;
 	return formatted;
 }
 
+
 void	User::sendMessage(std::string message)
 {
-	if (_status == STATUS_VALID)
+	if (_status > STATUS_PASS)
 	{
 		if (send(getFd(), message.c_str(), message.length(), MSG_NOSIGNAL) == -1)
 			perror("send");

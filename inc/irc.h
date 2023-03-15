@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:25:15 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/14 17:00:51 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 11:46:20 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	QUIT(User *user);
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
 std::string	ERR_NONICKNAMEGIVEN(void);
+std::string	ERR_NEEDMOREPARAMS(std::string command);
+std::string	ERR_ALREADYREGISTRED(void);
+
 
 std::string RPL_WELCOME(User *user);
 

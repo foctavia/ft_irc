@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 14:32:58 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/15 10:45:25 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,8 @@
 
 # define BACKLOG 10
 # define TIMEOUT -1
+
+# define OPT_COMMAND 1
+# define OPT_CODE 2
 
 #endif

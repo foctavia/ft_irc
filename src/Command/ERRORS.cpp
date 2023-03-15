@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ERROR.cpp                                          :+:      :+:    :+:   */
+/*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/14 16:38:15 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/15 11:46:06 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,14 @@ std::string ERR_ERRONEUSNICKNAME(std::string nickname)
 std::string	ERR_NONICKNAMEGIVEN(void)
 {
 	return ":No nickname given";
+}
+
+std::string	ERR_NEEDMOREPARAMS(std::string command)
+{
+	return command + ":Not enough parameters";
+}
+
+std::string	ERR_ALREADYREGISTRED(void)
+{
+	return ":You may not reregister";
 }

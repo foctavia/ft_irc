@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/14 13:18:57 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/15 11:40:38 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,28 @@ class User
 		Message*		getMessage() const;
 		int				getStatus() const;
 		void			setStatus(int status);
+		std::string		getHostname(void) const;
+		void			setHostname(std::string hostname);
+		std::string		getServername(void) const;
+		void			setServername(std::string servername);
+		std::string		getRealname(void) const;
+		void			setRealname(std::string realname);
 
 		void			sendMessage(std::string message);
 
 
 		void 			parseMessage();
-		std::string		formattedMessage(std::string command, std::string argument);
+		std::string		updatedId();
+		std::string		formattedMessage(std::string command, std::string argument, int option);
 		
 	private:
 		const char		*_address;
 		std::string 	_username;
 		std::string 	_nickname;
+		std::string 	_realname;
+		std::string 	_hostname;
+		std::string		_servername;
+		
 		struct pollfd	_pfd;
 		Message*		_message;
 		Server*			_server;
