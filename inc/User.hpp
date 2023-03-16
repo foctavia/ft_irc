@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/16 11:07:10 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:36:49 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class User
 	public:
 		std::string		input;
 		
-		User( struct pollfd pfd, const char *address, Server *server);
+		User(struct pollfd pfd, const char *address, Server *server);
 		~User();
 		
 		std::string 	getUsername(void) const;
@@ -48,12 +48,16 @@ class User
 		std::string		getHostname(void) const;
 		std::string		getServername(void) const;
 		std::string		getRealname(void) const;
+		struct timeval	getLastConnection(void) const;
+		bool			isConnected(void) const;
 		void			setStatus(int status);
 		void			setHostname(std::string hostname);
 		void			setServername(std::string servername);
 		void			setRealname(std::string realname);
 		void 			setUsername(std::string username);
 		void 			setNickname (std::string nickname);
+		void			setLastConnection(struct timeval connection);
+		void			setConnected(bool value);
 		
 		std::string		updatedId(void);
 		void 			buildMessage(void);
@@ -74,13 +78,13 @@ class User
 		std::string		_servername;
 		
 		struct pollfd	_pfd;
-		// Message*		_message;
+		struct timeval	_lastConnection;
 		Command*		_command;
 		Server*			_server;
 		int				_status;
+		bool			_connected;
 		
-		
-		User();
+		User(void);
 };
 
 #endif

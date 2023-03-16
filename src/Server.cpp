@@ -3,33 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 16:27:47 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 19:08:21 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
-Server::Server()
-{
-	
-}
-
-Server::Server( char *port, char *password )
+Server::Server(char *port, char *password)
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
 {
+	// displayActivity(NULL, "welcome on port " + port + "!", NONE);
 	std::cout << "[SERVER]: welcome on port " << port << "!" << std::endl;
 	_cmd = new Command;
+	gettimeofday(&_start, NULL);
 }
 
-Server::~Server( void )
+Server::~Server(void)
 {
 	clean();
 }
 
-void	Server::clean( void )
+void	Server::clean(void)
 {
 	if (_socketInfo)
 		freeaddrinfo(_socketInfo);
@@ -50,7 +47,7 @@ void	Server::clean( void )
 	delete _cmd;
 }
 
-int	Server::getListenerSocket( void )
+int	Server::getListenerSocket(void)
 {
 	int				listenerFd = -1;
 	int				yes = 1;
@@ -98,7 +95,7 @@ int	Server::getListenerSocket( void )
 	return listenerFd;
 }
 
-void	Server::addSocket( int newFd )
+void	Server::addSocket(int newFd)
 {
 	if (newFd == -1)
 		return ;
@@ -111,15 +108,60 @@ void	Server::addSocket( int newFd )
 	_pollFds.push_back(tmp);
 }
 
-void *getIpAddress(struct sockaddr *socketAddress)
+void	Server::checkConnection(void)
 {
-    if (socketAddress->sa_family == AF_INET)
-        return &(((struct sockaddr_in*)socketAddress)->sin_addr);
+	struct timeval	current;
 
-    return &(((struct sockaddr_in6*)socketAddress)->sin6_addr);
+	gettimeofday(&current, NULL);
+	std::map<int, User *>::iterator it = _users.begin();
+
+	for (; it != _users.end(); ++it)
+	{
+		
+		User *user = it->second;
+		if (user->getStatus()  == STATUS_VALID)
+		{
+			if (user->isConnected())
+			{
+				user->sendMessage("PING " + user->getNickname());
+				// displayActivity(user, "PING", SEND);
+				std::cout << "[SERVER]: send PING to " << user->getFd() << std::endl;
+			
+				user->setConnected(false);
+				user->setLastConnection(current); 
+			}
+			else
+			{
+				long seconds = (current.tv_sec - user->getLastConnection().tv_sec);
+				
+				std::cout << "seconds = " << seconds << " since user get ping" << std::endl;
+
+				if (seconds > 5)
+					disconnect(user);
+			}
+		}
+	}
 }
 
-void	Server::run( void )
+void	Server::checkTime(void)
+{
+	struct timeval	current;
+
+	gettimeofday(&current, NULL);
+	
+	long	seconds = (current.tv_sec - _start.tv_sec);
+	
+	std::cout << "seconds = " << seconds << " since start" << std::endl;
+	
+	if (seconds >= TIMEOUT)
+	{
+		if (!_users.empty())
+			checkConnection();
+		_start = current;
+	}
+}
+
+void	Server::run(void)
 {
 	try
 	{
@@ -135,12 +177,14 @@ void	Server::run( void )
 
 	while (1)
 	{
-		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT) == -1)
+		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT * 1000) == -1)
 			throw std::runtime_error("poll()");
-			
+		
+		checkTime();
+		
 		for (size_t i = 0; i < _pollFds.size(); i++)
 		{
-			if (_pollFds[i].revents & POLLIN)
+			if (_pollFds[i].revents & POLLIN || _pollFds[i].revents & POLLOUT)
 			{
 				if (_pollFds[i].fd == _socketFd)
 					newConnection();
@@ -151,7 +195,7 @@ void	Server::run( void )
 	}
 }
 
-void	Server::newConnection( void )
+void	Server::newConnection(void)
 {
 	struct sockaddr_storage clientAddress;
 	socklen_t				addressLength;
@@ -174,7 +218,7 @@ void	Server::newConnection( void )
 	_users.insert(std::make_pair<int, User*>(newFd, newUser));	
 }
 
-void	Server::receiveMessage( struct pollfd pfd )
+void	Server::receiveMessage(struct pollfd pfd)
 {
 	User *user = (*_users.find(pfd.fd)).second;
 	
@@ -199,6 +243,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 		while ((pos = copy.find("\r\n")) != std::string::npos)
 		{
 			std::string cmd = copy.substr(0, pos);
+			// displayActivity(user, cmd, RECEIVE);
 			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			copy.erase(0, pos + 2);
 			user->parseMessage(cmd);
@@ -207,7 +252,7 @@ void	Server::receiveMessage( struct pollfd pfd )
 	}
 }
 
-User		*Server::checkUser(std::string nickname)
+User	*Server::checkUser(std::string nickname)
 {
 	std::map<int, User *>::iterator it = _users.begin();
 	for (; it != _users.end(); ++it)
@@ -220,21 +265,30 @@ User		*Server::checkUser(std::string nickname)
 	return NULL;
 }
 
-void	Server::disconnect( User* user)
+void	Server::disconnect(User* user)
 {
+	// displayActivity(user, "disconnection", SEND);
 	std::cout << "[SERVER]: user with fd " << user->getFd() << " disconnected" << std::endl;
 
+	std::vector<struct pollfd>::iterator it = _pollFds.begin();
+	for (; it != _pollFds.end(); ++it)
+	{
+		if ((*it).fd == user->getFd())
+			break;
+	}
+	
+	_pollFds.erase(it);
 	close(user->getFd());
 	_users.erase(user->getFd());
 	delete user;
 }
 
-char	*Server::getPort( void ) const
+char	*Server::getPort(void) const
 {
 	return _port;
 }
 
-char	*Server::getPassword( void ) const
+char	*Server::getPassword(void) const
 {
 	return _password;
 }

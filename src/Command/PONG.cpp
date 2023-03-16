@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   QUIT.cpp                                           :+:      :+:    :+:   */
+/*   PONG.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:59:56 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:25:41 by foctavia         ###   ########.fr       */
+/*   Created: 2023/03/16 17:04:12 by foctavia          #+#    #+#             */
+/*   Updated: 2023/03/16 17:24:58 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.hpp"
+# include "irc.hpp"
 
 /*
-	Command: QUIT
-	Parameters: [<reason>]
+	Command: PONG
+	Parameters: [<server>] <token>
 */
 
-void	QUIT(User *user)
+void	PONG(User *user)
 {
-	std::cout << "\033[1;32minside QUIT\033[0m;" << std::endl;
+	std::cout << "\033[1;32minside PONG\033[0m;" << std::endl;
 	
-	if (send(user->getFd(), "\n", 2, MSG_NOSIGNAL) == -1)
-		perror("send");
-		
-	user->getServer()->disconnect(user);
+	user->setConnected(true);
 }

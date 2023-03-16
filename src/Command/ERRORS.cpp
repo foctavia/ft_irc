@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 16:04:25 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 17:20:10 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
 
-std::string ERR_UNKNOWNCOMMAND(std::string command)
+std::string	ERR_UNKNOWNCOMMAND(std::string command)
 {
 	return command + " :Unknown command";
 }
 
-std::string ERR_ERRONEUSNICKNAME(std::string nickname)
+std::string	ERR_ERRONEUSNICKNAME(std::string nickname)
 {
 	return nickname + " :Erroneus nickname";
 }
@@ -40,4 +40,9 @@ std::string	ERR_ALREADYREGISTRED(void)
 std::string	ERR_NOSUCHNICK(std::string name)
 {
 	return name + ":No such nick/channel";
+}
+
+std::string	ERR_NOORIGIN(std::string name)
+{
+	return name + ":No origin specified";
 }

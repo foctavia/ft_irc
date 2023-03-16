@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 10:45:25 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 18:30:31 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# define ERR_ARGC -2
-# define ERR_GETADDR -3
-# define ERR_SOCKET_OPENING -4
-
 # define BACKLOG 10
-# define TIMEOUT -1
+# define TIMEOUT 60
 
-# define OPT_COMMAND 1
-# define OPT_CODE 2
+# define SEND 11
+# define RECEIVE 12
+# define NONE 13
 
 #endif

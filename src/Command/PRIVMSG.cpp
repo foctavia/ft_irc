@@ -6,13 +6,16 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 11:09:03 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/16 19:09:37 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
 
-// PRIVMSG <receiver>{,<receiver>} :<text to be sent>
+/*
+	Command: PRIVMSG
+	Parameters: <target>{,<target>} <text to be sent>
+*/
 
 void	PRIVMSG(User *user)
 {
@@ -28,8 +31,8 @@ void	PRIVMSG(User *user)
 	std::string	message = accumulate(args, " ", 1);
 	message = message.substr(1, message.length() - 1);
 
-	std::vector<std::string>	recipients = split(args.at(0), ",");
-	for (std::vector<std::string>::iterator it = recipients.begin(); it != recipients.end(); ++it)
+	std::vector<std::string>	nicknames = split(args.at(0), ",");
+	for (std::vector<std::string>::iterator it = nicknames.begin(); it != nicknames.end(); ++it)
 	{
 		User	*target = user->getServer()->checkUser(*it);
 		if (target == NULL)
@@ -38,6 +41,7 @@ void	PRIVMSG(User *user)
 			return ;
 		}
 
+		// displayActivity(user, user->formattedMessage("PRIVMSG", message, target->getNickname()), SEND);
 		std::cout << user->formattedMessage("PRIVMSG", message, target->getNickname()) << std::endl;
 		target->sendMessage(user->formattedMessage("PRIVMSG", message, target->getNickname()));
 		

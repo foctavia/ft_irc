@@ -6,11 +6,16 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 11:05:14 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:21:16 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
+
+/*
+	Command: NICK
+	Parameters: <nickname>
+*/
 
 void	NICK(User *user)
 {
@@ -60,5 +65,6 @@ void	NICK(User *user)
 	{
 		user->setStatus(STATUS_VALID);
 		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
+		user->setConnected(true);
 	}
 }

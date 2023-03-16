@@ -10,10 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IRC_H
-# define IRC_H
-
-# include "defines.h"
+#ifndef IRC_HPP
+# define IRC_HPP
 
 # include <stdlib.h>
 # include <iostream>
@@ -33,19 +31,28 @@
 # include <iomanip>
 # include <utility>
 # include <numeric>
+# include <sys/time.h>
+# include <ctime>
+
+# include "defines.h"
 
 # include "Server.hpp"
 # include "User.hpp"
 # include "Command.hpp"
 
-std::vector<std::string> split(std::string str, std::string delimiter);
-std::string accumulate(std::vector<std::string> vec, std::string delimiter, int pos);
+void						displayActivity(User *user, std::string arg, int option);
+void						*getIpAddress(struct sockaddr *socketAddress);
+std::vector<std::string>	split(std::string str, std::string delimiter);
+std::string					accumulate(std::vector<std::string> vec, std::string delimiter, int pos);
+
 
 void	USER(User *user);
 void	PASS(User *user);
 void	NICK(User *user);
 void	PRIVMSG(User *user);
 void	QUIT(User *user);
+void	PING(User *user);
+void	PONG(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -53,7 +60,7 @@ std::string	ERR_NONICKNAMEGIVEN(void);
 std::string	ERR_NEEDMOREPARAMS(std::string command);
 std::string	ERR_ALREADYREGISTRED(void);
 std::string	ERR_NOSUCHNICK(std::string name);
-
+std::string	ERR_NOORIGIN(std::string name);
 
 std::string RPL_WELCOME(User *user);
 

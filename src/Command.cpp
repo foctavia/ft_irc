@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:46:48 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 17:27:32 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("USER", &USER));
    	availableCommands.insert(std::make_pair("PRIVMSG", &PRIVMSG));
    	availableCommands.insert(std::make_pair("QUIT", &QUIT));
-
+   	availableCommands.insert(std::make_pair("PING", &PING));
+   	availableCommands.insert(std::make_pair("PONG", &PONG));
 
 }
 
@@ -28,7 +29,7 @@ Command::~Command(void)
 
 }
 
-std::string					Command::getName(void) const
+std::string	Command::getName(void) const
 {
 	return _name;
 }
@@ -38,17 +39,12 @@ std::vector<std::string>	Command::getParameters(void) const
 	return _parameters;
 }
 
-void						Command::setName(std::string name)
+void	Command::setName(std::string name)
 {
 	_name = name;
 }
 
-void						Command::setParameters(std::vector<std::string> parameters)
+void	Command::setParameters(std::vector<std::string> parameters)
 {
 	_parameters = parameters;
 }
-
-// std::map<std::string, callCommand>	Command::getAvailableCommands(void) const
-// {
-// 	return _availableCommands;
-// }
