@@ -39,6 +39,7 @@
 # include "Command.hpp"
 
 std::vector<std::string> split(std::string str, std::string delimiter);
+std::string accumulate(std::vector<std::string> vec, std::string delimiter, int pos);
 
 void	USER(User *user);
 void	PASS(User *user);

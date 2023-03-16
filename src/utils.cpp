@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:06:08 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 10:48:37 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ std::vector<std::string> split(std::string str, std::string delimiter)
 	return values;	
 }
 
+std::string accumulate(std::vector<std::string> vec, std::string delimiter, int pos)
+{
+	std::string str;
+	
+	for (std::vector<std::string>::iterator it = vec.begin() + pos; it != vec.end(); ++it)
+	{
+		str.append(*it);
+		if (it != vec.end() - 1)
+			str.append(delimiter);
+	}
+	return str;
+}
+	
 template <typename T>
 void	printVector(T container)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 15:13:30 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 11:00:54 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,16 +125,25 @@ void User::parseMessage(std::string input)
 	// printVector(_command->getParameters());
 }
 
-std::string		User::formattedMessage(std::string command, std::string argument, int option)
+std::string		User::formattedReply(std::string code, std::string argument)
+{
+	std::string reply;
+	
+	if (_status == STATUS_VALID)
+		reply += updatedId() + code + " " + _nickname + " " + argument + "\r\n";
+	return reply;
+}
+
+std::string		User::formattedMessage(std::string command, std::string argument, std::string target)
 {
 	std::string formatted;
 	
-	if (_status > STATUS_PASS) {
-		formatted += updatedId();
-		if (option == OPT_COMMAND)
-			formatted += command + " :" + argument + "\r\n";
-		else if (option == OPT_CODE)
-			formatted += command + " " + _nickname + " " + argument + "\r\n";
+	if (_status > STATUS_PASS)
+	{
+		formatted += updatedId() + command;
+		if (!target.empty())
+			formatted += " " + target;
+		formatted += " :" + argument + "\r\n";
 	}
 	return formatted;
 }

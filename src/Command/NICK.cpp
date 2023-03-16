@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:33:30 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 11:05:14 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	NICK(User *user)
 
 	if (user->getCommand()->getParameters().empty())
 	{
-		user->sendMessage(user->formattedMessage("431", ERR_NONICKNAMEGIVEN(), OPT_CODE));
+		user->sendMessage(user->formattedReply("431", ERR_NONICKNAMEGIVEN()));
 		return ;
 	}
 		
@@ -28,13 +28,13 @@ void	NICK(User *user)
 	if (!isalpha(nickname[0])
 		&& (special_characters.find(nickname[0]) == std::string::npos))
 	{
-		user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
+		user->sendMessage(user->formattedReply("432", ERR_ERRONEUSNICKNAME(nickname)));
 		return ;
 	}
 	
 	if (nickname.length() > 9)
 	{
-		user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
+		user->sendMessage(user->formattedReply("432", ERR_ERRONEUSNICKNAME(nickname)));
 		return ;
 	}
 		
@@ -45,13 +45,13 @@ void	NICK(User *user)
 			&& (special_characters.find(*it) == std::string::npos)
 			&& *it != '-')
 		{
-			user->sendMessage(user->formattedMessage("432", ERR_ERRONEUSNICKNAME(nickname), OPT_CODE));
+			user->sendMessage(user->formattedReply("432", ERR_ERRONEUSNICKNAME(nickname)));
 			return ;
 		}
 	}	
 	
 	user->setNickname(nickname);
-	user->sendMessage(user->formattedMessage("NICK" , nickname, OPT_COMMAND));
+	user->sendMessage(user->formattedMessage("NICK" , nickname, ""));
 	
 
 	if (user->getStatus() == STATUS_PASS)
@@ -59,6 +59,6 @@ void	NICK(User *user)
 	else if (user->getStatus() == STATUS_USER)
 	{
 		user->setStatus(STATUS_VALID);
-		user->sendMessage(user->formattedMessage("001", RPL_WELCOME(user), OPT_CODE));
+		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
 	}
 }

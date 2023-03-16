@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PASS.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:26 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:38:08 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 11:05:31 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	PASS(User *user)
 	
 	if (user->getStatus() > STATUS_NEW)
 	{
-		user->sendMessage(user->formattedMessage("462", ERR_ALREADYREGISTRED(), OPT_CODE));
+		user->sendMessage(user->formattedReply("462", ERR_ALREADYREGISTRED()));
 		return ;
 	}
 
 	if (user->getCommand()->getParameters().empty())
 	{
-		user->sendMessage(user->formattedMessage("461", ERR_NEEDMOREPARAMS(user->getCommand()->getName()), OPT_CODE));
+		user->sendMessage(user->formattedReply("461", ERR_NEEDMOREPARAMS(user->getCommand()->getName())));
 		return ;
 	}
 

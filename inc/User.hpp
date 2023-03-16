@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/16 11:07:10 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ class User
 		void 			parseMessage(std::string input);
 		void 			setPollFd(struct pollfd pfd);
 		void			sendMessage(std::string message);
-		std::string		formattedMessage(std::string command, std::string argument, int option);
+		std::string		formattedMessage(std::string command, std::string argument, std::string target);
+		std::string		formattedReply(std::string code, std::string argument);
+
 		void			execute();
 		
 	private:
