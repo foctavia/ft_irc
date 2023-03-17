@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 11:15:36 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/17 19:00:15 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ enum mode
 class Message;
 class Server;
 class Command;
+class Channel;
 
 class User
 {
 
 	public:
-		std::string		input;
+		std::string				input;
+		std::vector<Channel *>	channels;
 		
 		User(struct pollfd pfd, const char *address, Server *server);
 		~User();

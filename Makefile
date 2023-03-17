@@ -16,8 +16,8 @@ SRC_DIR			= 	src/
 SRC_CMD			=	Command/
 
 SRC				=	main.cpp utils.cpp \
-					Server.cpp User.cpp Command.cpp \
-					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp KILL.cpp) \
+					Server.cpp User.cpp Command.cpp Channel.cpp \
+					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp KILL.cpp JOIN.cpp) \
 					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp)
 
 OBJ				=	$(addprefix ${OBJ_DIR}, ${SRC:.cpp=.o})

@@ -39,6 +39,7 @@
 # include "Server.hpp"
 # include "User.hpp"
 # include "Command.hpp"
+# include "Channel.hpp"
 
 void						displayActivity(User *user, std::string arg, int option);
 void						displayTime(void);
@@ -56,6 +57,7 @@ void	PING(User *user);
 void	PONG(User *user);
 void	KILL(User *user);
 void	OPER(User *user);
+void	JOIN(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -68,6 +70,8 @@ std::string ERR_NOPRIVILEGES(std::string name);
 std::string	ERR_PASSWDMISMATCH(void);
 std::string	ERR_NOOPERHOST(void);
 std::string	ERR_NICKNAMEINUSE(std::string nickname);
+std::string	ERR_BADCHANMASK(std::string channel);
+std::string	ERR_BADCHANNELKEY(std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();

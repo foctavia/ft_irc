@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 16:03:45 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:42:14 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ void	Server::receiveMessage(struct pollfd pfd)
 	}
 }
 
-User	*Server::findUserNickname(std::string nickname)
+User*		Server::findUserNickname(std::string nickname)
 {
 	std::map<int, User *>::iterator it = _users.begin();
 	for (; it != _users.end(); ++it)
@@ -244,6 +244,17 @@ User	*Server::findUserNickname(std::string nickname)
 		{
 			return it->second;
 		}
+	}
+	return NULL;
+}
+
+Channel*	Server::findChannel(std::string name)
+{
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		if ((*it)->getName() == name)
+			return *it;
 	}
 	return NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 13:40:19 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:01:26 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("PONG", &PONG));
    	availableCommands.insert(std::make_pair("KILL", &KILL));
    	availableCommands.insert(std::make_pair("OPER", &OPER));
+   	availableCommands.insert(std::make_pair("JOIN", &JOIN));
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 16:03:34 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:59:56 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,27 @@
 
 class User;
 class Command;
+class Channel;
 
 class Server
 {
 	public:
+		std::vector<Channel *>	channels;
+		
 		Server(char *port, char *password);
 		~Server(void);
 
-		int		getListenerSocket(void);
-		void	addSocket(int newFd);
-		void	run(void);
-		void	newConnection(void);
-		void	receiveMessage(struct pollfd pfd);
-		void	disconnect(User* user);
-		void	clean(void);
-		void	checkConnection(void);
-		User	*findUserNickname(std::string nickname);
+		int			getListenerSocket(void);
+		void		addSocket(int newFd);
+		void		run(void);
+		void		newConnection(void);
+		void		receiveMessage(struct pollfd pfd);
+		void		disconnect(User* user);
+		void		clean(void);
+		void		checkConnection(void);
+		User*		findUserNickname(std::string nickname);
+		Channel*	findChannel(std::string name);
+
 
 		char					*getPort(void) const;
 		char					*getPassword(void) const;

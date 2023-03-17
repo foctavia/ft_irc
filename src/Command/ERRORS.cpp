@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 16:07:37 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:55:11 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ std::string	ERR_NICKNAMEINUSE(std::string nickname)
 
 std::string	ERR_NONICKNAMEGIVEN(void)
 {
-	return " :No nickname given";
+	return ":No nickname given";
 }
 
 std::string	ERR_NEEDMOREPARAMS(std::string command)
@@ -39,7 +39,7 @@ std::string	ERR_NEEDMOREPARAMS(std::string command)
 
 std::string	ERR_ALREADYREGISTRED(void)
 {
-	return " :You may not reregister";
+	return ":You may not reregister";
 }
 
 std::string	ERR_NOSUCHNICK(std::string name)
@@ -67,4 +67,12 @@ std::string	ERR_NOOPERHOST(void)
 	return ":No O-lines for your host";
 }
 
+std::string	ERR_BADCHANMASK(std::string channel)
+{
+	return channel + " :Bad Channel Mask";
+}
 
+std::string	ERR_BADCHANNELKEY(std::string channel)
+{
+	return channel + " :Cannot join channel (+k)";
+}
