@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 11:15:41 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:03:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	PRIVMSG(User *user)
 	std::vector<std::string>	nicknames = split(args.at(0), ",");
 	for (std::vector<std::string>::iterator it = nicknames.begin(); it != nicknames.end(); ++it)
 	{
-		User	*target = user->getServer()->checkUser(*it);
+		User	*target = user->getServer()->findUserNickname(*it);
 		if (target == NULL)
 		{
 			user->sendMessage(user->formattedReply("401", ERR_NOSUCHNICK("")));

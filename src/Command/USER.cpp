@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 11:52:25 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:47:17 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ void	USER(User *user)
 
 	if (user->getStatus() == STATUS_VALID)
 	{
+		displayActivity(user, "462: ERR_ALREADYREGISTRED", SEND);
 		user->sendMessage(user->formattedReply("462", ERR_ALREADYREGISTRED()));
 		return ;
 	}
 	
 	std::vector<std::string> args = user->getCommand()->getParameters();
-// there's something weird here------>
-	if (args.size() < 5 && args.at(3)[0] != ':')
+	if (args.size() < 4 || args.at(3)[0] != ':' || (args.at(3)[0] && !args.at(3)[1]))
 	{
+		displayActivity(user, "461: ERR_NEEDMOREPARAMS", SEND);
 		user->sendMessage(user->formattedReply("461", ERR_NEEDMOREPARAMS(user->getCommand()->getName())));
 		return ;
 	}
@@ -52,6 +53,6 @@ void	USER(User *user)
 		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
 		user->setConnected(true);
 
-		displayActivity(user, "Welcome message", SEND);
+		displayActivity(user, "001: RPL_WELCOME", SEND);
 	}
 }

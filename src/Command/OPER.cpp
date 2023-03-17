@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OPER.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:08:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 12:16:43 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/17 15:52:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 
 void	OPER(User *user)
 {
-	std::cout << GREEN << "inside OPER" << RESET << std::endl;
+	// std::cout << GREEN << "inside OPER" << RESET << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
-	std::cout << "username = " << args[0] << " password = " << args[1] << std::endl;
 	
 	if (args.size() < 2)
 	{
+		displayActivity(user, "461: ERR_NEEDMOREPARAMS", SEND);
 		user->sendMessage(user->formattedReply("461", ERR_NEEDMOREPARAMS("OPER")));
 		return ;
 	}
@@ -46,9 +46,7 @@ void	OPER(User *user)
 	
 	if (args[1] != OPER_PASSWORD)
 	{
-		std::cout << "passwords do not match" << std::endl;
-		displayActivity(userOper, user->formattedReply("464", ERR_PASSWDMISMATCH()), SEND);
-		
+		displayActivity(user, "464: ERR_PASSWDMISMATCH", SEND);
 		user->sendMessage(user->formattedReply("464", ERR_PASSWDMISMATCH()));
 		return ;
 	}
@@ -59,7 +57,7 @@ void	OPER(User *user)
 		--> Do we want to add an O-line configuration ?
 	*/
 	userOper->setUserMode(OPERATOR);
+	displayActivity(userOper, "381: RPL_YOUREOPER", SEND);
 	userOper->sendMessage(userOper->formattedReply("381", RPL_YOUREOPER()));
-	displayActivity(userOper, userOper->formattedReply("381", RPL_YOUREOPER()), SEND);
 	
 }

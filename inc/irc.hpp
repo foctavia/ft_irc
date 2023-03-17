@@ -67,6 +67,7 @@ std::string	ERR_NOORIGIN(std::string name);
 std::string ERR_NOPRIVILEGES(std::string name);
 std::string	ERR_PASSWDMISMATCH(void);
 std::string	ERR_NOOPERHOST(void);
+std::string	ERR_NICKNAMEINUSE(std::string nickname);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();

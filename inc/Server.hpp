@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 11:40:21 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:03:34 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ class Server
 		void	disconnect(User* user);
 		void	clean(void);
 		void	checkConnection(void);
-		User	*checkUser(std::string nickname);
+		User	*findUserNickname(std::string nickname);
 
 		char					*getPort(void) const;
 		char					*getPassword(void) const;

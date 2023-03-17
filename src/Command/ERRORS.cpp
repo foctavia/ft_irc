@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 13:40:04 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:07:37 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ std::string	ERR_UNKNOWNCOMMAND(std::string command)
 std::string	ERR_ERRONEUSNICKNAME(std::string nickname)
 {
 	return nickname + " :Erroneus nickname";
+}
+
+std::string	ERR_NICKNAMEINUSE(std::string nickname)
+{
+	return nickname + " :Nickname is already in use";
 }
 
 std::string	ERR_NONICKNAMEGIVEN(void)

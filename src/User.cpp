@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 11:16:31 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/17 17:11:33 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ User::User(struct pollfd pfd, const char *address, Server *server)
 	: _address(address), _username(), _nickname(), _realname(), _pfd(pfd), _command(new Command()), _server(server), _status(STATUS_NEW)
 {
 	displayTime();
-	std::cout << "[SERVER]: accept new connection from " << _address
-			<< " with fd " << _pfd.fd << std::endl;
+	std::cout << "[SERVER] " << BOLD << ITALIC << "accept new connection from " << _address
+			<< " with fd " << _pfd.fd << RESET << std::endl;
 }
 
 User::~User(void)
@@ -164,9 +164,7 @@ std::string	User::formattedReply(std::string code, std::string argument)
 {
 	std::string reply;
 	
-	if (_status == STATUS_VALID)
-		reply += updatedId() + code + " " + _nickname + " " + argument + "\r\n";
-		
+	reply += updatedId() + code + " " + _nickname + " " + argument + "\r\n";
 	return reply;
 }
 
@@ -174,7 +172,7 @@ std::string	User::formattedMessage(std::string command, std::string argument, st
 {
 	std::string formatted;
 	
-	if (_status > STATUS_PASS)
+	if (_status >= STATUS_PASS)
 	{
 		formatted += updatedId() + command;
 		if (!target.empty())
@@ -198,11 +196,8 @@ std::string	User::updatedId(void)
 
 void	User::sendMessage(std::string message)
 {
-	if (_status > STATUS_PASS)
-	{
-		if (send(getFd(), message.c_str(), message.length(), MSG_NOSIGNAL) == -1)
-			perror("send");
-	}
+	if (send(getFd(), message.c_str(), message.length(), MSG_NOSIGNAL) == -1)
+		perror("send");
 }
 
 void	User::execute()

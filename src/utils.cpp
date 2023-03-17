@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:06:08 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 10:33:49 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:13:04 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,38 @@ void	displayTime(void)
 	std::time_t	now = std::time(0);
 	std::tm		*currentTime = std::localtime(&now);
 	
-	std::cout << "[" << 1900 + currentTime->tm_year << "-"
-		<< 1 + currentTime->tm_mon << "-"
-		<< currentTime->tm_mday << " "
+	std::cout << "["
 		<< currentTime->tm_hour << ":"
-		<< currentTime->tm_min << ":"
-		<< currentTime->tm_sec << "]"; 
+		<< currentTime->tm_min << ":";
+	if (currentTime->tm_sec < 10)
+		std::cout << "0";
+	std::cout << currentTime->tm_sec << "] "; 
 }
 
 void	displayActivity(User *user, std::string arg, int option)
 {
 	displayTime();
 	
-	std::cout << "[SERVER]:";
-	
 	if (option != NONE)
 	{
 		if (option == SEND)
-			std::cout << " send " << GREEN << arg << RESET << " to ";
+		{
+			std::cout << ITALIC << "from " << RESET << "[SERVER] " << ITALIC << "to" << RESET " [" << user->getFd();
+			if (!user->getNickname().empty())
+				std::cout << " " << ITALIC << user->getNickname() << RESET;
+			std::cout << "]";
+		}
 		else
-			std::cout << " receive " << GREEN << arg << RESET << " from ";
-		std::cout << "[" << user->getFd() << "." << user->getNickname() << "]" << std::endl;
+		{
+			std::cout << ITALIC << "from" << RESET << " [" << user->getFd(); 
+			if (!user->getNickname().empty())
+				std::cout << " " << ITALIC << user->getNickname() << RESET;
+			std::cout << "] " << ITALIC << "to" RESET << " [SERVER]";
+		}
+		std::cout << " " << BOLD << ITALIC << arg << RESET << std::endl;
 	}
 	else
 		std::cout << " " << arg << std::endl;
-		
 }
 	
 template <typename T>

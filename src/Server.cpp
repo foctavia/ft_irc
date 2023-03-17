@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 13:40:28 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:03:45 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Server::Server(char *port, char *password)
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
 {
 	displayTime();
-	std::cout << "[SERVER]: welcome on port " << port << "!" << std::endl;
+	std::cout << "[SERVER] " << BOLD << ITALIC << "welcome on port " << port << "!" << RESET << std::endl;
 	_cmd = new Command;
 	gettimeofday(&_start, NULL);
 }
@@ -227,7 +227,6 @@ void	Server::receiveMessage(struct pollfd pfd)
 		{
 			std::string cmd = copy.substr(0, pos);
 			displayActivity(user, cmd, RECEIVE);
-			// std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			
 			copy.erase(0, pos + 2);
 			user->parseMessage(cmd);
@@ -236,7 +235,7 @@ void	Server::receiveMessage(struct pollfd pfd)
 	}
 }
 
-User	*Server::checkUser(std::string nickname)
+User	*Server::findUserNickname(std::string nickname)
 {
 	std::map<int, User *>::iterator it = _users.begin();
 	for (; it != _users.end(); ++it)
@@ -251,7 +250,7 @@ User	*Server::checkUser(std::string nickname)
 
 void	Server::disconnect(User* user)
 {
-	displayActivity(user, "disconnection", SEND);
+	displayActivity(user, "DISCONNECT", SEND);
 
 	std::vector<struct pollfd>::iterator it = _pollFds.begin();
 	for (; it != _pollFds.end(); ++it)
