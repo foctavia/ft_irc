@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:00:00 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:58:20 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,46 +113,33 @@ void	Server::checkConnection(void)
 	struct timeval	current;
 
 	gettimeofday(&current, NULL);
+	
+						
 	std::map<int, User *>::iterator it = _users.begin();
-
 	for (; it != _users.end(); ++it)
 	{
-		
 		User *user = it->second;
 		if (user->getStatus()  == STATUS_VALID)
 		{
-			if (user->isConnected())
+			long	lastPing = (current.tv_sec - _start.tv_sec);
+			
+			if (user->isConnected() == true && (lastPing >= PINGTIME))
 			{
 				user->sendMessage("PING " + user->getNickname());
 				displayActivity(user, "PING", SEND);
 				
 				user->setConnected(false);
-				user->setLastConnection(current); 
+				user->setLastConnection(current);
+				_start = current;
 			}
 			else
 			{
-				long seconds = (current.tv_sec - user->getLastConnection().tv_sec);
+				lastPing = (current.tv_sec - user->getLastConnection().tv_sec);
 
-				if (seconds > TIMEOUT)
+				if (user->isConnected() == false && lastPing >= TIMEOUT)
 					disconnect(user);
 			}
 		}
-	}
-}
-
-void	Server::checkTime(void)
-{
-	struct timeval	current;
-
-	gettimeofday(&current, NULL);
-	
-	long	seconds = (current.tv_sec - _start.tv_sec);
-	
-	if (seconds >= PINGTIME)
-	{
-		if (!_users.empty())
-			checkConnection();
-		_start = current;
 	}
 }
 
@@ -174,8 +161,9 @@ void	Server::run(void)
 	{
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT * 1000) == -1)
 			throw std::runtime_error("poll()");
-		
-		checkTime();
+			
+		if (!_users.empty())
+			checkConnection();
 		
 		for (size_t i = 0; i < _pollFds.size(); i++)
 		{
@@ -239,6 +227,7 @@ void	Server::receiveMessage(struct pollfd pfd)
 		{
 			std::string cmd = copy.substr(0, pos);
 			displayActivity(user, cmd, RECEIVE);
+			// std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
 			
 			copy.erase(0, pos + 2);
 			user->parseMessage(cmd);

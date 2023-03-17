@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 09:57:32 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:32:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 # define DEFINES_H
 
 # define BACKLOG 10
-# define TIMEOUT 5 // in second
-# define PINGTIME 20 // in second
+# define TIMEOUT 15 // in second
+# define PINGTIME 30 // in second
 
 # define SEND 11
 # define RECEIVE 12
 # define NONE 13
+
+# define GREEN "\033[1;32m"
+# define RESET "\033[0m"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/16 17:17:52 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:16:19 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ class Server
 		void	receiveMessage(struct pollfd pfd);
 		void	disconnect(User* user);
 		void	clean(void);
-		void	checkTime(void);
 		void	checkConnection(void);
 		User	*checkUser(std::string nickname);
 

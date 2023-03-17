@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:06:08 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 09:59:15 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:33:49 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,18 @@ void	displayActivity(User *user, std::string arg, int option)
 {
 	displayTime();
 	
-	std::cout << "[SERVER]";
+	std::cout << "[SERVER]:";
 	
 	if (option != NONE)
 	{
 		if (option == SEND)
-			std::cout << " >> " << arg << " >> ";
+			std::cout << " send " << GREEN << arg << RESET << " to ";
 		else
-			std::cout << " << " << arg << " << ";
+			std::cout << " receive " << GREEN << arg << RESET << " from ";
 		std::cout << "[" << user->getFd() << "." << user->getNickname() << "]" << std::endl;
 	}
 	else
-		std::cout << arg << std::endl;
+		std::cout << " " << arg << std::endl;
 		
 }
 	
