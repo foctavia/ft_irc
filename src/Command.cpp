@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:27:32 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:12:35 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("QUIT", &QUIT));
    	availableCommands.insert(std::make_pair("PING", &PING));
    	availableCommands.insert(std::make_pair("PONG", &PONG));
+   	availableCommands.insert(std::make_pair("KILL", &KILL));
 
 }
 

@@ -54,6 +54,7 @@ void	PRIVMSG(User *user);
 void	QUIT(User *user);
 void	PING(User *user);
 void	PONG(User *user);
+void	KILL(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -62,6 +63,7 @@ std::string	ERR_NEEDMOREPARAMS(std::string command);
 std::string	ERR_ALREADYREGISTRED(void);
 std::string	ERR_NOSUCHNICK(std::string name);
 std::string	ERR_NOORIGIN(std::string name);
+std::string ERR_NOPRIVILEGES(std::string name);
 
 std::string RPL_WELCOME(User *user);
 

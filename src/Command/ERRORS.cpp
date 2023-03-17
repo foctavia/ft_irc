@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:20:10 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:08:23 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,30 @@ std::string	ERR_ERRONEUSNICKNAME(std::string nickname)
 
 std::string	ERR_NONICKNAMEGIVEN(void)
 {
-	return ":No nickname given";
+	return " :No nickname given";
 }
 
 std::string	ERR_NEEDMOREPARAMS(std::string command)
 {
-	return command + ":Not enough parameters";
+	return command + " :Not enough parameters";
 }
 
 std::string	ERR_ALREADYREGISTRED(void)
 {
-	return ":You may not reregister";
+	return " :You may not reregister";
 }
 
 std::string	ERR_NOSUCHNICK(std::string name)
 {
-	return name + ":No such nick/channel";
+	return name + " :No such nick/channel";
 }
 
 std::string	ERR_NOORIGIN(std::string name)
 {
-	return name + ":No origin specified";
+	return name + " :No origin specified";
+}
+
+std::string ERR_NOPRIVILEGES(std::string name)
+{
+	return name + " :Permission Denied- You're not an IRC operator";
 }
