@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 19:09:37 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:00:33 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	PRIVMSG(User *user)
 			return ;
 		}
 
-		// displayActivity(user, user->formattedMessage("PRIVMSG", message, target->getNickname()), SEND);
-		std::cout << user->formattedMessage("PRIVMSG", message, target->getNickname()) << std::endl;
+		displayActivity(user, user->formattedMessage("PRIVMSG", message, target->getNickname()), SEND);
 		target->sendMessage(user->formattedMessage("PRIVMSG", message, target->getNickname()));
 		
 	}

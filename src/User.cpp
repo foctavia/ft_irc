@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/16 19:08:44 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:00:14 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 User::User(struct pollfd pfd, const char *address, Server *server)
 	: _address(address), _username(), _nickname(), _realname(), _pfd(pfd), _command(new Command()), _server(server), _status(STATUS_NEW)
 {
-	// displayActivity(NULL, "accept new connection from " + _address + " with fd " + _pfd.fd, NONE);
+	displayTime();
 	std::cout << "[SERVER]: accept new connection from " << _address
 			<< " with fd " << _pfd.fd << std::endl;
 }
@@ -199,6 +199,5 @@ void	User::execute()
 	if (_command->availableCommands.find(_command->getName()) != _command->availableCommands.end())
 		_command->availableCommands[_command->getName()](this);
 	else
-		// displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
-		std::cout << "[SERVER]: command " << _command->getName() << " not found!" << std::endl;
+		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
 }

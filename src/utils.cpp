@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:06:08 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 19:05:08 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 09:59:15 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,32 @@ std::string	accumulate(std::vector<std::string> vec, std::string delimiter, int 
 	return str;
 }
 
+void	displayTime(void)
+{
+	std::time_t	now = std::time(0);
+	std::tm		*currentTime = std::localtime(&now);
+	
+	std::cout << "[" << 1900 + currentTime->tm_year << "-"
+		<< 1 + currentTime->tm_mon << "-"
+		<< currentTime->tm_mday << " "
+		<< currentTime->tm_hour << ":"
+		<< currentTime->tm_min << ":"
+		<< currentTime->tm_sec << "]"; 
+}
+
 void	displayActivity(User *user, std::string arg, int option)
 {
-	const std::time_t	current = std::time(NULL);
+	displayTime();
 	
-	std::cout << "[" << std::asctime(std::localtime(&current)) << "\b][SERVER]:";
+	std::cout << "[SERVER]";
 	
 	if (option != NONE)
 	{
 		if (option == SEND)
-			std::cout << " receive " << arg << " from ";
+			std::cout << " >> " << arg << " >> ";
 		else
-			std::cout << " send " << arg << " to ";
-		std::cout << "[" << user->getFd() << "]" << user->getNickname() << std::endl;
+			std::cout << " << " << arg << " << ";
+		std::cout << "[" << user->getFd() << "." << user->getNickname() << "]" << std::endl;
 	}
 	else
 		std::cout << arg << std::endl;

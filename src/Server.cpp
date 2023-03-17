@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/16 19:08:21 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:00:00 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Server::Server(char *port, char *password)
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
 {
-	// displayActivity(NULL, "welcome on port " + port + "!", NONE);
+	displayTime();
 	std::cout << "[SERVER]: welcome on port " << port << "!" << std::endl;
 	_cmd = new Command;
 	gettimeofday(&_start, NULL);
@@ -124,19 +124,16 @@ void	Server::checkConnection(void)
 			if (user->isConnected())
 			{
 				user->sendMessage("PING " + user->getNickname());
-				// displayActivity(user, "PING", SEND);
-				std::cout << "[SERVER]: send PING to " << user->getFd() << std::endl;
-			
+				displayActivity(user, "PING", SEND);
+				
 				user->setConnected(false);
 				user->setLastConnection(current); 
 			}
 			else
 			{
 				long seconds = (current.tv_sec - user->getLastConnection().tv_sec);
-				
-				std::cout << "seconds = " << seconds << " since user get ping" << std::endl;
 
-				if (seconds > 5)
+				if (seconds > TIMEOUT)
 					disconnect(user);
 			}
 		}
@@ -151,9 +148,7 @@ void	Server::checkTime(void)
 	
 	long	seconds = (current.tv_sec - _start.tv_sec);
 	
-	std::cout << "seconds = " << seconds << " since start" << std::endl;
-	
-	if (seconds >= TIMEOUT)
+	if (seconds >= PINGTIME)
 	{
 		if (!_users.empty())
 			checkConnection();
@@ -243,8 +238,8 @@ void	Server::receiveMessage(struct pollfd pfd)
 		while ((pos = copy.find("\r\n")) != std::string::npos)
 		{
 			std::string cmd = copy.substr(0, pos);
-			// displayActivity(user, cmd, RECEIVE);
-			std::cout << "[SERVER]: receive " << cmd << " from " << user->getFd() << std::endl;
+			displayActivity(user, cmd, RECEIVE);
+			
 			copy.erase(0, pos + 2);
 			user->parseMessage(cmd);
 			user->execute();
@@ -267,8 +262,7 @@ User	*Server::checkUser(std::string nickname)
 
 void	Server::disconnect(User* user)
 {
-	// displayActivity(user, "disconnection", SEND);
-	std::cout << "[SERVER]: user with fd " << user->getFd() << " disconnected" << std::endl;
+	displayActivity(user, "disconnect", SEND);
 
 	std::vector<struct pollfd>::iterator it = _pollFds.begin();
 	for (; it != _pollFds.end(); ++it)

@@ -41,6 +41,7 @@
 # include "Command.hpp"
 
 void						displayActivity(User *user, std::string arg, int option);
+void						displayTime(void);
 void						*getIpAddress(struct sockaddr *socketAddress);
 std::vector<std::string>	split(std::string str, std::string delimiter);
 std::string					accumulate(std::vector<std::string> vec, std::string delimiter, int pos);

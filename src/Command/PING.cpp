@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:10:47 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/16 19:09:29 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:00:26 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	PING(User *user)
 		return ;
 	}
 	
-	// displayActivity(user, "PONG", SEND);
-	std::cout << "[SERVER]: send PONG to " << user->getFd << std::endl;
+	displayActivity(user, "PONG", SEND);
 	user->sendMessage(user->formattedMessage("PONG", user->getNickname(), ""));
 }
