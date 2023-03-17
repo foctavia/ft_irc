@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:16:19 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:40:21 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ class Server
 		void	checkConnection(void);
 		User	*checkUser(std::string nickname);
 
-		char	*getPort(void) const;
-		char	*getPassword(void) const;
-	
+		char					*getPort(void) const;
+		char					*getPassword(void) const;
+		std::map<int, User *>	getUsers(void) const;
+			
 	private:
 		char						*_port;
 		char						*_password;

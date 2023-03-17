@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:20:10 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:29:47 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,15 @@ std::string	ERR_NOORIGIN(std::string name)
 {
 	return name + ":No origin specified";
 }
+
+std::string	ERR_PASSWDMISMATCH(void)
+{
+	return ":Password incorrect";
+}
+
+std::string	ERR_NOOPERHOST(void)
+{
+	return ":No O-lines for your host";
+}
+
+

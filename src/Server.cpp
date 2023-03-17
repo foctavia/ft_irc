@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:58:20 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:41:20 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,12 +266,17 @@ void	Server::disconnect(User* user)
 	delete user;
 }
 
-char	*Server::getPort(void) const
+char*					Server::getPort(void) const
 {
 	return _port;
 }
 
-char	*Server::getPassword(void) const
+char*					Server::getPassword(void) const
 {
 	return _password;
+}
+
+std::map<int, User *>	Server::getUsers(void) const
+{
+	return _users;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:32:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:24:19 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 
 # define GREEN "\033[1;32m"
 # define RESET "\033[0m"
+
+# define OPER_PASSWORD "operpassword"
 
 #endif

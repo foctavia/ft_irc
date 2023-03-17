@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:04:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:16:31 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,17 @@ void	User::setConnected(bool value)
 {
 	_connected = value;	
 }
+
+int		User::getUserMode(void) const
+{
+	return _mode;
+}
+
+void	User::setUserMode(int mode)
+{
+	_mode = mode;
+}
+
 
 /* MODIFIERS */
 
