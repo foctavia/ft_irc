@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 12:08:23 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:40:04 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,15 @@ std::string ERR_NOPRIVILEGES(std::string name)
 {
 	return name + " :Permission Denied- You're not an IRC operator";
 }
+
+std::string	ERR_PASSWDMISMATCH(void)
+{
+	return ":Password incorrect";
+}
+
+std::string	ERR_NOOPERHOST(void)
+{
+	return ":No O-lines for your host";
+}
+
+

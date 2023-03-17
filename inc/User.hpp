@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/16 17:36:49 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:15:36 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ enum status
 	STATUS_NICK,
 	STATUS_USER,
 	STATUS_VALID
+};
+
+enum mode
+{
+	AWAY,
+	INVISIBLE,
+	WALLOPS,
+	RESTRICTED,
+	OPERATOR,
+	LOCAL_OPERATOR
 };
 
 class Message;
@@ -49,6 +59,7 @@ class User
 		std::string		getServername(void) const;
 		std::string		getRealname(void) const;
 		struct timeval	getLastConnection(void) const;
+		int				getUserMode(void) const;
 		bool			isConnected(void) const;
 		void			setStatus(int status);
 		void			setHostname(std::string hostname);
@@ -58,6 +69,7 @@ class User
 		void 			setNickname (std::string nickname);
 		void			setLastConnection(struct timeval connection);
 		void			setConnected(bool value);
+		void			setUserMode(int mode);
 		
 		std::string		updatedId(void);
 		void 			buildMessage(void);
@@ -83,6 +95,7 @@ class User
 		Server*			_server;
 		int				_status;
 		bool			_connected;
+		int				_mode;
 		
 		User(void);
 };
