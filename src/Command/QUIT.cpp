@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.cpp                                          :+:      :+:    :+:   */
+/*   QUIT.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 14:21:20 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/01 11:20:26 by foctavia         ###   ########.fr       */
+/*   Created: 2023/03/14 16:59:56 by sbeylot           #+#    #+#             */
+/*   Updated: 2023/03/17 11:15:45 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "irc.h"
+#include "irc.hpp"
 
-int ft_error(int type)
+/*
+	Command: QUIT
+	Parameters: [<reason>]
+*/
+
+void	QUIT(User *user)
 {
-	if (type == ERR_ARGC)
-		std::cerr << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;
+	// std::cout << "\033[1;32minside QUIT\033[0m;" << std::endl;
 	
-	return 1;
+	if (send(user->getFd(), "\n", 2, MSG_NOSIGNAL) == -1)
+		perror("send");
+		
+	user->getServer()->disconnect(user);
 }

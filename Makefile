@@ -8,15 +8,19 @@ END				= \e[0m
 # Variables
 NAME			=	ircserv
 CXX				=	c++ -std=c++98
-CXXFLAGS		=	-Wall -Wextra -Werror
+CXXFLAGS		=	-Wall -Wextra -Werror -g3
 
 OBJ_DIR			=	obj/
 
 SRC_DIR			= 	src/
+SRC_CMD			=	Command/
 
-SRC				=	main.cpp error.cpp Server.cpp
+SRC				=	main.cpp utils.cpp \
+					Server.cpp User.cpp Command.cpp Channel.cpp \
+					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp KILL.cpp JOIN.cpp) \
+					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp)
 
-OBJ				=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
+OBJ				=	$(addprefix ${OBJ_DIR}, ${SRC:.cpp=.o})
 
 INC				=	-I./inc/
 

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   replies.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
+/*   Created: 2023/03/14 10:22:54 by sbeylot           #+#    #+#             */
+/*   Updated: 2023/03/14 11:19:13 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "irc.hpp"
-# include "Server.hpp"
+#include <map>
+#include <iostream>
 
-int main(int argc, char **argv)
-{
-	if (argc != 3)
-	{
-		std::cerr << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;
-		return EXIT_FAILURE;
-	}
+typedef void(*RPL)(std::string arg);
+/* Client Server connections */
+//	001
+std::string RPL_WELCOME(std::string user);
+
+//	002
+std::string RPL_YOURHOST(std::string servername);
+
+int main(void) {
+
+	std::map<int, RPL> rpl;
+
+	rpl.insert(std::make_pair(001, &RPL_WELCOME));
 		
-	Server server(argv[1], argv[2]);
-	try
-	{
-		server.run();
-	}
-	catch(const std::exception &e)
-	{
-		std::cerr << "ERROR: " << e.what() << std::endl;
-	}
-	
-	return EXIT_SUCCESS;
+	return (0);
 }
+
