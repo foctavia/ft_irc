@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:04:12 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 10:46:24 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:26:51 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@
 
 void	PONG(User *user)
 {
-	std::cout << "\033[1;32minside PONG\033[0m;" << std::endl;
-	
-	struct timeval	current;
-	gettimeofday(&current, NULL);
+	// std::cout << "\033[1;32minside PONG\033[0m;" << std::endl;
 	
 	user->setConnected(true);
-	// user->setLastConnection(current);
-
 }

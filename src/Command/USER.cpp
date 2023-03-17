@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:34:15 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:15:52 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 void	USER(User *user)
 {
-	std::cout << "\033[1;32minside USER\033[0m;" << std::endl;
+	// std::cout << "\033[1;32minside USER\033[0m;" << std::endl;
 
 	if (user->getStatus() == STATUS_VALID)
 	{
@@ -51,5 +51,7 @@ void	USER(User *user)
 		user->setStatus(STATUS_VALID);
 		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
 		user->setConnected(true);
+
+		displayActivity(user, "Welcome message", SEND);
 	}
 }

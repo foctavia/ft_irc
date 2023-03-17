@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 10:58:20 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:31:28 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ void	Server::checkConnection(void)
 			
 			if (user->isConnected() == true && (lastPing >= PINGTIME))
 			{
-				user->sendMessage("PING " + user->getNickname());
 				displayActivity(user, "PING", SEND);
+				user->sendMessage(user->formattedMessage("PING", user->getNickname(), ""));
 				
 				user->setConnected(false);
 				user->setLastConnection(current);
@@ -251,7 +251,7 @@ User	*Server::checkUser(std::string nickname)
 
 void	Server::disconnect(User* user)
 {
-	displayActivity(user, "disconnect", SEND);
+	displayActivity(user, "disconnection", SEND);
 
 	std::vector<struct pollfd>::iterator it = _pollFds.begin();
 	for (; it != _pollFds.end(); ++it)

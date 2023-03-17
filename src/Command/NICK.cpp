@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:21:16 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:15:22 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	NICK(User *user)
 {
-	std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
+	// std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
 
 	if (user->getCommand()->getParameters().empty())
 	{
