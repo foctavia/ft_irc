@@ -6,21 +6,40 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/20 12:53:44 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 19:05:37 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Channel.hpp"
 
-Channel::Channel(void) { }
-
-Channel::Channel(std::string name)
-	: _name(name)
+Channel::Channel(void)
 {
-	
+	modes.insert(std::make_pair('O', ""));
+	modes.insert(std::make_pair('o', ""));
+	modes.insert(std::make_pair('v', ""));
+	modes.insert(std::make_pair('a', ""));
+	modes.insert(std::make_pair('i', ""));
+	modes.insert(std::make_pair('m', ""));
+	modes.insert(std::make_pair('n', "n"));
+	modes.insert(std::make_pair('q', ""));
+	modes.insert(std::make_pair('p', ""));
+	modes.insert(std::make_pair('s', ""));
+	modes.insert(std::make_pair('r', ""));
+	modes.insert(std::make_pair('t', ""));
+	modes.insert(std::make_pair('k', ""));
+	modes.insert(std::make_pair('l', ""));
+	modes.insert(std::make_pair('b', ""));
+	modes.insert(std::make_pair('e', ""));
+	modes.insert(std::make_pair('I', ""));
 }
 
-Channel::~Channel(void) { }
+Channel::~Channel(void)
+{
+	members.clear();
+	invites.clear();
+	operators.clear();
+	modes.clear();
+}
 
 std::string	Channel::getName(void) const
 {
@@ -44,6 +63,7 @@ void		Channel::setName(std::string name)
 
 void		Channel::setKey(std::string key)
 {
+	modes.at('k') = key;
 	_key = key;
 }
 

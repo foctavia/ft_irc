@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OPER.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:08:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 15:52:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:48:29 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	OPER(User *user)
 		the server replies with an ERR_NOOPERHOST message and the request is not successful.
 		--> Do we want to add an O-line configuration ?
 	*/
-	userOper->setUserMode(OPERATOR);
+	userOper->modes.at('o') = true;
 	displayActivity(userOper, "381: RPL_YOUREOPER", SEND);
 	userOper->sendMessage(userOper->formattedReply("381", RPL_YOUREOPER()));
 	

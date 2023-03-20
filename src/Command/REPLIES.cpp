@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 13:28:15 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:02:25 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,38 @@ std::string RPL_CREATED(User *user)
 	return "This server was created " + time;
 }
 
-std::string RPL_MYINFO(User *user)
+std::string RPL_MYINFO(void)
 {
-	return "localhost 1.0 <available user modes>
-            	<available channel modes>";
+	return "localhost 1.0 aiwroO OovaimnqpsrtklbeI";
 }
 
 std::string RPL_YOUREOPER() 
 {
 	return ":You are now an IRC operator ";
+}
+
+std::string RPL_UMODEIS(User *user)
+{
+	std::string mode = "+";
+
+	std::map<char, bool>::iterator it = user->modes.begin();
+	for (; it != user->modes.end(); ++it)
+	{
+		if (it->second == true)
+			mode += it->first;
+	}
+	return mode;
+}
+
+std::string RPL_CHANNELMODEIS(Channel *channel)
+{
+	std::string mode = channel->getName() + " +";
+
+	std::map<char, std::string>::iterator it = channel->modes.begin();
+	for (; it != channel->modes.end(); ++it)
+	{
+		if (!it->second.empty())
+			mode += it->first;
+	}
+	return mode;
 }

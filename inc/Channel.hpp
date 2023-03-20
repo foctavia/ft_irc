@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/20 12:26:40 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 17:59:16 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,38 @@
 
 class User;
 
+
 class Channel
 {
+	// enum channelMode
+	// {
+	// 	CREATOR,		// O
+	// 	OPERATOR,		// o
+	// 	VOICE,			// v
+	// 	ANONYMOUS,		// a
+	// 	INVITE_ONLY,	// i
+	// 	MODERATED,		// m
+	// 	NO_MESSAGES, 	// n
+	// 	QUIET,			// q
+	// 	PRIVATE,		// p
+	// 	SECRET,			// s
+	// 	SERVER_REOP,	// r
+	// 	TOPIC,			// t
+	// 	KEY,			// k
+	// 	LIMIT,			// l
+	// 	BAN_MASK,		// b
+	// 	EXCEPTION_MASK,	// e
+	// 	INVITATION_MASK	// I
+	// };
+
+	
 	public:
-		std::vector<User *>	members;
-		std::vector<User *>	invites;
-		std::vector<User *>	operators;
+		std::vector<User *>			members;
+		std::vector<User *>			invites;
+		std::vector<User *>			operators;
+		std::map<char, std::string>	modes;
 		
 		Channel(void);
-		Channel(std::string name);
 		~Channel(void);
 
 		std::string	getName(void) const;

@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 13:27:03 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:32:26 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	USER(User *user)
 		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
 		user->sendMessage(user->formattedReply("002", RPL_YOURHOST()));
 		user->sendMessage(user->formattedReply("003", RPL_CREATED(user)));
+		user->sendMessage(user->formattedReply("004", RPL_MYINFO()));
 
 		user->setConnected(true);
 
 		displayActivity(user, "001: RPL_WELCOME", SEND);
 		displayActivity(user, "002: RPL_YOURHOST", SEND);
 		displayActivity(user, "003: RPL_CREATED", SEND);
+		displayActivity(user, "004: RPL_MYINFO", SEND);
 	}
 }

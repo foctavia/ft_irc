@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 17:11:33 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:22:20 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ User::User(struct pollfd pfd, const char *address, Server *server)
 	displayTime();
 	std::cout << "[SERVER] " << BOLD << ITALIC << "accept new connection from " << _address
 			<< " with fd " << _pfd.fd << RESET << std::endl;
+	modes.insert(std::make_pair('a', false));
+	modes.insert(std::make_pair('i', false));
+	modes.insert(std::make_pair('w', true));
+	modes.insert(std::make_pair('r', false));
+	modes.insert(std::make_pair('o', false));
+	modes.insert(std::make_pair('O', false));
 }
 
 User::~User(void)
@@ -134,16 +140,6 @@ void	User::setConnected(bool value)
 	_connected = value;	
 }
 
-int		User::getUserMode(void) const
-{
-	return _mode;
-}
-
-void	User::setUserMode(int mode)
-{
-	_mode = mode;
-}
-
 
 /* MODIFIERS */
 
@@ -166,6 +162,21 @@ std::string	User::formattedReply(std::string code, std::string argument)
 	
 	reply += updatedId() + code + " " + _nickname + " " + argument + "\r\n";
 	return reply;
+}
+
+std::string	User::anonymousMessage(std::string command, std::string argument, std::string target)
+{
+	std::string formatted;
+	
+	if (_status >= STATUS_PASS)
+	{
+		formatted += "anonymous!anonymous@anonymous " + command;
+		if (!target.empty())
+			formatted += " " + target;
+		formatted += " :" + argument + "\r\n";
+	}
+	
+	return formatted;
 }
 
 std::string	User::formattedMessage(std::string command, std::string argument, std::string target)

@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 12:46:49 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 17:17:54 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	PRIVMSG(User *user)
 				user->sendMessage(user->formattedReply("401", ERR_NOSUCHNICK("")));
 				return ;
 			}
+			else if (channel != NULL && channel->isMember(user) && !channel->modes.at('a').empty())
+				channel->sendAll(user, user->anonymousMessage("PRIVMSG", message, *it));
 			else if (channel != NULL && channel->isMember(user))
 				channel->sendAll(user, user->formattedMessage("PRIVMSG", message, *it));
 		}

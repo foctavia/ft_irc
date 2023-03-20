@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 13:22:48 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/20 19:07:29 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Server::Server(char *port, char *password)
 
 Server::~Server(void)
 {
+	
 	clean();
 }
 
@@ -46,6 +47,12 @@ void	Server::clean(void)
 		i++;
 	}
 	_users.clear();
+	for (size_t	i = 0; i < channels.size();)
+	{
+		delete channels[i];
+		i++;
+	}
+	channels.clear();
 	delete _cmd;
 }
 

@@ -58,6 +58,7 @@ void	PONG(User *user);
 void	KILL(User *user);
 void	OPER(User *user);
 void	JOIN(User *user);
+void	MODE(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -72,10 +73,17 @@ std::string	ERR_NOOPERHOST(void);
 std::string	ERR_NICKNAMEINUSE(std::string nickname);
 std::string	ERR_BADCHANMASK(std::string channel);
 std::string	ERR_BADCHANNELKEY(std::string channel);
+std::string	ERR_USERSDONTMATCH(void);
+std::string ERR_UMODEUNKNOWNFLAG(void);
+std::string	ERR_NOSUCHCHANNEL(std::string channel);
+std::string ERR_UNKNOWNMODE(char c, std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
 std::string RPL_YOURHOST(void);
 std::string RPL_CREATED(User *user); 
+std::string RPL_MYINFO(void);
+std::string RPL_UMODEIS(User *user);
+std::string RPL_CHANNELMODEIS(Channel *channel);
 
 #endif
