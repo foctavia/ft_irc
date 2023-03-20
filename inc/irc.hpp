@@ -75,5 +75,7 @@ std::string	ERR_BADCHANNELKEY(std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
+std::string RPL_YOURHOST(void);
+std::string RPL_CREATED(User *user); 
 
 #endif

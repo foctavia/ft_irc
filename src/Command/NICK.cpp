@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 16:09:22 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:25:44 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void	NICK(User *user)
 	{
 		user->setStatus(STATUS_VALID);
 		user->sendMessage(user->formattedReply("001", RPL_WELCOME(user)));
+		user->sendMessage(user->formattedReply("002", RPL_YOURHOST()));
+		user->sendMessage(user->formattedReply("003", RPL_CREATED(user)));
 		user->setConnected(true);
+		
 	}
 }

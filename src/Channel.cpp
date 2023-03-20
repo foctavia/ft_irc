@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 18:27:23 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:53:44 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,24 @@ void		Channel::setKey(std::string key)
 void		Channel::setMask(std::string mask)
 {
 	_mask = mask;
+}
+
+void		Channel::sendAll(User *user, std::string message)
+{
+	displayActivity(user, message, SEND);
+	for (std::vector<User *>::iterator it = members.begin(); it != members.end(); ++it)
+	{
+		if (*it != user)
+			(*it)->sendMessage(message);
+	}
+}
+
+bool		Channel::isMember(User *user)
+{
+	for (std::vector<User *>::iterator it = members.begin(); it != members.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:31:08 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 18:59:16 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:51:37 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,12 @@ void	JOIN(User *user)
 					return ;
 				}
 			}
+			
+			
+			channelExists->sendAll(user, user->formattedMessage("JOIN", channelExists->getName(), ""));
 			user->channels.push_back(channelExists);
 			channelExists->members.push_back(user);
+			
 		}
 	}
 

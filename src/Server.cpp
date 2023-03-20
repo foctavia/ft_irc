@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 17:42:14 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:22:48 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ Server::Server(char *port, char *password)
 	std::cout << "[SERVER] " << BOLD << ITALIC << "welcome on port " << port << "!" << RESET << std::endl;
 	_cmd = new Command;
 	gettimeofday(&_start, NULL);
+	std::time_t	now = std::time(0);
+	_startingTime = ctime(&now);
 }
 
 Server::~Server(void)
@@ -290,3 +292,8 @@ std::map<int, User *>	Server::getUsers(void) const
 {
 	return _users;
 }
+
+char*					Server::getStartingTime(void) const
+{
+	return _startingTime;
+}	

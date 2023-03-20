@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 19:00:07 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:26:40 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ class Channel
 		void		setName(std::string name);
 		void		setKey(std::string key);
 		void		setMask(std::string mask);
-		
+
+		void		sendAll(User *user, std::string message);
+		bool		isMember(User *user);
 	
 	private:
 		std::string	_name;
