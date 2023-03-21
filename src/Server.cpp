@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 19:07:29 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:52:17 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ void	Server::disconnect(User* user)
 	}
 	
 	_pollFds.erase(it);
-	close(user->getFd());
+	// close(user->getFd());
 	_users.erase(user->getFd());
 	delete user;
 }

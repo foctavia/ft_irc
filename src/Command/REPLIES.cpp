@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 14:35:51 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:36:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,26 @@ std::string RPL_TOPIC(Channel *channel)
 std::string RPL_NOTOPIC(std::string channel)
 {
 	return channel + " :No topic is set";
+}
+
+std::string RPL_LIST(Channel *channel)
+{
+	std::string reply;
+	
+	reply += channel->getName() + " ";
+	
+	std::stringstream stream;
+    stream << channel->members.size();
+	std::string client_count;
+    stream >> client_count;
+
+	reply += client_count;
+	reply += " :";
+	reply += channel->getTopic();
+	return reply;	
+}
+
+std::string RPL_LISTEND(void)
+{
+	return " :End of /LIST";	
 }

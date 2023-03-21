@@ -33,6 +33,8 @@
 # include <numeric>
 # include <sys/time.h>
 # include <ctime>
+# include <string> 
+# include <sstream>
 
 # include "defines.h"
 
@@ -98,5 +100,7 @@ std::string RPL_NAMREPLY(Channel *channel);
 std::string RPL_ENDOFNAMES(std::string channel);
 std::string RPL_TOPIC(Channel *channel);
 std::string RPL_NOTOPIC(std::string channel);
+std::string RPL_LIST(Channel *channel);
+std::string RPL_LISTEND(void);
 
 #endif

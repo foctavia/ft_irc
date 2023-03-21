@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 17:29:43 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 19:29:39 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ User::User(struct pollfd pfd, const char *address, Server *server)
 
 User::~User(void)
 {
-	delete _command;
 
 	std::vector<Channel *>::iterator it = channels.begin();
 	for (; it != channels.end(); ++it)
 	{
-		std::cout << "hey\n";
 		(*it)->removeMember(this);
 		(*it)->removeOperator(this);
 		(*it)->removeInvite(this);
-		leaveChannel(*it);
 		sendMessage(formattedMessage("PART", "", (*it)->getName()));
 		(*it)->sendAll(this, formattedMessage("PART", "", (*it)->getName()));
 	}
+	channels.clear();
+	close(_pfd.fd);
+	delete _command;
 }
 
 /* GETTERS AND SETTERS */ 
@@ -157,6 +157,9 @@ void	User::setConnected(bool value)
 
 void	User::parseMessage(std::string input)
 {	
+	_command->setName("");
+	_command->getParameters().clear();
+	
 	std::vector<std::string> values = split(input, " ");
 	
 	_command->setName(values[0]);
@@ -232,6 +235,8 @@ void	User::execute()
 		_command->availableCommands[_command->getName()](this);
 	else
 		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
+	
+	_command->clear();
 }
 
 bool	User::isChannelOperator(Channel *channel)
