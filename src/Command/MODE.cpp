@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:31:43 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 10:58:26 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 14:22:36 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,6 @@ void	channelMode(User *user)
 			sign = true;
 		else if (c == '-')
 			sign = false;
-		else if (c == 'a' && user->isChannelOperator(target))
-		{
-			if (sign == true)
-				target->modes[c] = std::string(1, c);
-			else
-				target->modes[c].clear();	
-		}
 		else if (c == 'p' || c == 's')
 		{
 			if (sign == true)
@@ -150,6 +143,20 @@ void	channelMode(User *user)
 				if ((c == 'p' && target->modes['s'].empty())
 					|| (c == 's' && target->modes['p'].empty()))
 					target->modes[c] = std::string(1, c);
+			}
+			else
+				target->modes[c].clear();
+		}
+		else if (c == 'i')
+		{
+			
+		}
+		else if (c == 'l')
+		{
+			if (sign == true)
+			{
+				target->modes[c] = std::string(1, c);
+				target->setMaxUsers(99);
 			}
 			else
 				target->modes[c].clear();

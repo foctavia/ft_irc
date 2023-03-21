@@ -42,7 +42,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cpp
 	@printf	"\033[2K\r${BLUE}[Building - $<] $(END)"
 
 $(NAME): $(OBJ)
-	@printf "Compiling $(NAME)"; \
+	@printf "\nCompiling $(NAME)"; \
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $@; \
 	echo $(GREEN) " OK" $(RESET)
 

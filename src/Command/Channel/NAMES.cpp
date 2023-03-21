@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:32 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 11:36:10 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 13:26:40 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	NAMES(User *user)
 	for (; it != channels.end(); ++it)
 	{
 		Channel *channel = user->getServer()->findChannel(*it);
-		if (channel != NULL)
+		if (channel != NULL && channel->modes['s'].empty())
 		{
 			user->sendMessage(user->formattedReply("353", RPL_NAMREPLY(channel)));
 			displayActivity(user, "353: RPL_NAMREPLY", SEND);

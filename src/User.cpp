@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 10:32:23 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:29:43 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ User::User(struct pollfd pfd, const char *address, Server *server)
 User::~User(void)
 {
 	delete _command;
+
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		std::cout << "hey\n";
+		(*it)->removeMember(this);
+		(*it)->removeOperator(this);
+		(*it)->removeInvite(this);
+		leaveChannel(*it);
+		sendMessage(formattedMessage("PART", "", (*it)->getName()));
+		(*it)->sendAll(this, formattedMessage("PART", "", (*it)->getName()));
+	}
 }
 
 /* GETTERS AND SETTERS */ 
@@ -188,7 +200,10 @@ std::string	User::formattedMessage(std::string command, std::string argument, st
 		formatted += updatedId() + command;
 		if (!target.empty())
 			formatted += " " + target;
-		formatted += " :" + argument + "\r\n";
+		if (!argument.empty())
+			formatted += " :" + argument;
+		formatted += "\r\n";
+			
 	}
 	
 	return formatted;
@@ -239,4 +254,17 @@ bool	User::isChannelMember(Channel *channel)
 			return true;
 	}
 	return false;
+}
+
+void	User::leaveChannel(Channel *toLeave)
+{
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		if (*it == toLeave)
+		{
+			channels.erase(it);
+			break ;
+		}
+	}
 }

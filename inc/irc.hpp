@@ -85,6 +85,7 @@ std::string ERR_UMODEUNKNOWNFLAG(void);
 std::string	ERR_NOSUCHCHANNEL(std::string channel);
 std::string ERR_UNKNOWNMODE(char c, std::string channel);
 std::string	ERR_NOTONCHANNEL(std::string channel);
+std::string ERR_CHANOPRIVSNEEDED(std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
@@ -95,5 +96,7 @@ std::string RPL_UMODEIS(User *user);
 std::string RPL_CHANNELMODEIS(Channel *channel);
 std::string RPL_NAMREPLY(Channel *channel);
 std::string RPL_ENDOFNAMES(std::string channel);
+std::string RPL_TOPIC(Channel *channel);
+std::string RPL_NOTOPIC(std::string channel);
 
 #endif

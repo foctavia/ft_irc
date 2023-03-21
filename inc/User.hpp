@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 09:53:32 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:06:14 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ class User
 		bool			isChannelMember(Channel *channel);
 
 		void			execute();
+		void			leaveChannel(Channel *toLeave);
 		
 	private:
 		const char		*_address;

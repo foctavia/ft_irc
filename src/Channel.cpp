@@ -6,13 +6,14 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/20 19:05:37 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:17:14 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Channel.hpp"
 
 Channel::Channel(void)
+	: _topic(""), _max_users(0)
 {
 	modes.insert(std::make_pair('O', ""));
 	modes.insert(std::make_pair('o', ""));
@@ -56,6 +57,16 @@ std::string Channel::getMask(void) const
 	return _mask;
 }
 
+int			Channel::getMaxUsers(void) const
+{
+	return _max_users;
+}
+
+std::string	Channel::getTopic(void) const
+{
+	return _topic;
+}
+
 void		Channel::setName(std::string name)
 {
 	_name = name;
@@ -71,6 +82,17 @@ void		Channel::setMask(std::string mask)
 {
 	_mask = mask;
 }
+
+void		Channel::setMaxUsers(int max)
+{
+	_max_users = max;
+}
+
+void		Channel::setTopic(std::string topic)
+{
+	_topic = topic;
+}
+
 
 void		Channel::sendAll(User *user, std::string message)
 {
@@ -90,4 +112,43 @@ bool		Channel::isMember(User *user)
 			return true;
 	}
 	return false;
+}
+
+void		Channel::removeMember(User *user)
+{
+	std::vector<User *>::iterator it = members.begin();
+	for (; it != members.end(); ++it)
+	{
+		if (*it == user)
+		{
+			members.erase(it);
+			break ;
+		}
+	}
+}
+
+void		Channel::removeOperator(User *user)
+{
+	std::vector<User *>::iterator it = operators.begin();
+	for (; it != operators.end(); ++it)
+	{
+		if (*it == user)
+		{
+			operators.erase(it);
+			break ;
+		}
+	}
+}
+
+void		Channel::removeInvite(User *user)
+{
+	std::vector<User *>::iterator it = invites.begin();
+	for (; it != invites.end(); ++it)
+	{
+		if (*it == user)
+		{
+			invites.erase(it);
+			break ;
+		}
+	}
 }

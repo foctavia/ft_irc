@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 11:38:24 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 14:35:51 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ std::string RPL_CREATED(User *user)
 
 std::string RPL_MYINFO(void)
 {
-	return "localhost 1.0 aiwroO OovaimnqpsrtklbeI";
+	return "localhost 1.0 aiwroO OovimnqpsrtklbeI";
 }
 
 std::string RPL_YOUREOPER() 
@@ -98,4 +98,19 @@ std::string RPL_NAMREPLY(Channel *channel)
 std::string RPL_ENDOFNAMES(std::string channel)
 {
 	return channel + " :End of /NAMES list";
+}
+
+std::string ERR_CHANOPRIVSNEEDED(std::string channel)
+{
+	return channel + " :You're not channel operator";
+}
+
+std::string RPL_TOPIC(Channel *channel)
+{
+	return channel->getName() + " :" + channel->getTopic();
+}
+
+std::string RPL_NOTOPIC(std::string channel)
+{
+	return channel + " :No topic is set";
 }
