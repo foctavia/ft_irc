@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 14:55:13 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:26:12 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("INVITE", &INVITE));
    	availableCommands.insert(std::make_pair("LIST", &LIST));
    	availableCommands.insert(std::make_pair("PART", &PART));
+   	availableCommands.insert(std::make_pair("KICK", &KICK));
+
 }
 
 Command::~Command(void) 
