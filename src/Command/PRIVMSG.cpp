@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 17:17:54 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 10:58:40 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	PRIVMSG(User *user)
 	std::string	message = accumulate(args, " ", 1);
 	message = message.substr(1, message.length() - 1);
 	
-	std::string channelPrefix("&#+!");
+	std::string channelPrefix("#");
 
 	std::vector<std::string> targets = split(args.at(0), ",");
 	for (std::vector<std::string>::iterator it = targets.begin(); it != targets.end(); ++it)

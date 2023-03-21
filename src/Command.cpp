@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 14:37:41 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 11:39:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("OPER", &OPER));
    	availableCommands.insert(std::make_pair("JOIN", &JOIN));
    	availableCommands.insert(std::make_pair("MODE", &MODE));
+   	availableCommands.insert(std::make_pair("NAMES", &NAMES));
 }
 
 Command::~Command(void) 

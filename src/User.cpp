@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 19:22:20 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 10:32:23 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,10 @@ std::string	User::formattedReply(std::string code, std::string argument)
 std::string	User::anonymousMessage(std::string command, std::string argument, std::string target)
 {
 	std::string formatted;
-	
+
 	if (_status >= STATUS_PASS)
 	{
-		formatted += "anonymous!anonymous@anonymous " + command;
+		formatted += "anonymous!anonymous@anonymous. " + command;
 		if (!target.empty())
 			formatted += " " + target;
 		formatted += " :" + argument + "\r\n";
@@ -217,4 +217,26 @@ void	User::execute()
 		_command->availableCommands[_command->getName()](this);
 	else
 		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
+}
+
+bool	User::isChannelOperator(Channel *channel)
+{
+	std::vector<User *>::iterator it = channel->operators.begin();
+	for (; it != channel->operators.end(); ++it)
+	{
+		if (*it == this)
+			return true;
+	}
+	return false;
+}
+
+bool	User::isChannelMember(Channel *channel)
+{
+	std::vector<User *>::iterator it = channel->members.begin();
+	for (; it != channel->members.end(); ++it)
+	{
+		if (*it == this)
+			return true;
+	}
+	return false;
 }

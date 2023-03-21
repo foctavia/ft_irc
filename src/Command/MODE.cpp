@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:31:43 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 19:21:25 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 10:58:26 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	unknownFlagChecker(User *user, std::string parameter)
 	return false;
 }
 
-bool	unknownFlagCheckers(User *user, Channel *channel, std::string parameter)
+bool	unknownFlagChecker(User *user, Channel *channel, std::string parameter)
 {
 	for (std::string::iterator it = parameter.begin(); it != parameter.end(); ++it)
 	{
@@ -110,16 +110,24 @@ void	channelMode(User *user)
 		return ;
 	}
 	
+	if (!target->modes['n'].empty() && !user->isChannelMember(target))
+	{
+		user->sendMessage(user->formattedReply("442", ERR_NOTONCHANNEL(user->getNickname())));
+		displayActivity(user, "442: ERR_NOTONCHANNEL", SEND);
+		return ;
+	}
+	
 	if (args.size() == 1)
 	{
 		user->sendMessage(user->formattedReply("324", RPL_CHANNELMODEIS(target)));
 		displayActivity(user, "324: RPL_CHANNELMODEIS", SEND);
 		return ;
 	}
+	
 
-	if (unknownFlagCheckers(user, target, args[1]))
+	if (unknownFlagChecker(user, target, args[1]))
 		return ;
-
+	 
 	bool sign = true;
 	for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it)
 	{
@@ -128,20 +136,31 @@ void	channelMode(User *user)
 			sign = true;
 		else if (c == '-')
 			sign = false;
-		else if (c == 'a' || c == 'p' || c == 's')
+		else if (c == 'a' && user->isChannelOperator(target))
 		{
 			if (sign == true)
-				target->modes[c] = "a";
+				target->modes[c] = std::string(1, c);
 			else
-				target->modes[c] = "";
-			
+				target->modes[c].clear();	
 		}
+		else if (c == 'p' || c == 's')
+		{
+			if (sign == true)
+			{
+				if ((c == 'p' && target->modes['s'].empty())
+					|| (c == 's' && target->modes['p'].empty()))
+					target->modes[c] = std::string(1, c);
+			}
+			else
+				target->modes[c].clear();
+		}
+		
 	}
 }
 
 bool isChannel(std::string target)
 {
-	std::string prefix = "#&+!";
+	std::string prefix = "#";
 
 	if (prefix.find(target[0]) != std::string::npos)
 		return true;

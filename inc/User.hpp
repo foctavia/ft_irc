@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 17:44:40 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 09:53:32 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ class User
 		std::string		formattedMessage(std::string command, std::string argument, std::string target);
 		std::string		formattedReply(std::string code, std::string argument);
 		std::string		anonymousMessage(std::string command, std::string argument, std::string target);
+		bool			isChannelOperator(Channel *channel);
+		bool			isChannelMember(Channel *channel);
 
 		void			execute();
 		

@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:31:08 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/20 17:59:25 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 11:41:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	createChannel(User *user, std::string name, std::string key)
 		return ;
 	}
 	
-	std::string prefix("&#+!");
+	std::string prefix("#");
 	if (prefix.find(name[0]) == std::string::npos)
 	{
 		displayActivity(user, "476: ERR_BADCHANMASK", SEND);
@@ -105,12 +105,13 @@ void	JOIN(User *user)
 				}
 			}
 			
-			
 			channelExists->sendAll(user, user->formattedMessage("JOIN", channelExists->getName(), ""));
 			user->channels.push_back(channelExists);
 			channelExists->members.push_back(user);
-			
 		}
+
+		NAMES(user);
+			
 	}
 
 	

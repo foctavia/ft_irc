@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 17:46:01 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 09:55:27 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,9 @@ std::string ERR_UNKNOWNMODE(char c, std::string channel)
 	std::string mode(1, c);
 	
 	return mode + " :is unknown mode char to me for " + channel;
+}
+
+std::string	ERR_NOTONCHANNEL(std::string channel)
+{
+	return channel + " :You're not on that channel";
 }

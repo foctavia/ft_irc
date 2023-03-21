@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 18:02:25 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 11:38:24 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,39 @@ std::string RPL_CHANNELMODEIS(Channel *channel)
 			mode += it->first;
 	}
 	return mode;
+}
+
+// = #lll :@simon
+std::string RPL_NAMREPLY(Channel *channel)
+{
+	std::string reply;
+
+	if (!channel->modes['s'].empty())
+		reply += '@';
+	else if (!channel->modes['p'].empty())
+		reply += '*';
+	else
+		reply += '=';
+	
+	reply += " " + channel->getName();
+	reply += " :";
+
+	std::vector<User *>::iterator it = channel->members.begin();
+	for (; it != channel->members.end(); ++it)
+	{
+		if (it != channel->members.begin())
+			reply += " ";
+		if ((*it)->isChannelOperator(channel))
+			reply += "@";
+		else
+			reply += " ";
+		reply += (*it)->getNickname();
+	}
+	return reply;	
+}
+
+// #lll :End of /NAMES list
+std::string RPL_ENDOFNAMES(std::string channel)
+{
+	return channel + " :End of /NAMES list";
 }
