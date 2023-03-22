@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PART.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:37 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 18:59:29 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:38:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	PART(User *user)
 				channel->removeInvite(user);
 				user->leaveChannel(channel);
 				channel->sendAll(user, user->formattedMessage("PART", reason, channel->getName()));
+				// user->sendMessage(user->formattedMessage("PART", reason, channel->getName()));
+			if (channel->members.size() == 0)
+				user->getServer()->eraseChannel(channel);
 			}
 		}
 	}

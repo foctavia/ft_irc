@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/21 16:17:14 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:44:52 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,13 @@ void		Channel::setTopic(std::string topic)
 
 void		Channel::sendAll(User *user, std::string message)
 {
-	displayActivity(user, message, SEND);
 	for (std::vector<User *>::iterator it = members.begin(); it != members.end(); ++it)
 	{
 		if (*it != user)
+		{
 			(*it)->sendMessage(message);
+			displayActivity(*it, message, SEND);
+		}
 	}
 }
 
