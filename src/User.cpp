@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 17:11:33 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:26:21 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,28 @@ User::User(struct pollfd pfd, const char *address, Server *server)
 	displayTime();
 	std::cout << "[SERVER] " << BOLD << ITALIC << "accept new connection from " << _address
 			<< " with fd " << _pfd.fd << RESET << std::endl;
+	modes.insert(std::make_pair('a', false));
+	modes.insert(std::make_pair('i', false));
+	modes.insert(std::make_pair('w', true));
+	modes.insert(std::make_pair('r', false));
+	modes.insert(std::make_pair('o', false));
+	modes.insert(std::make_pair('O', false));
 }
 
 User::~User(void)
 {
+
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		(*it)->removeMember(this);
+		(*it)->removeOperator(this);
+		(*it)->removeInvite(this);
+		sendMessage(formattedMessage("PART", "", (*it)->getName()));
+		(*it)->sendAll(this, formattedMessage("PART", "", (*it)->getName()));
+	}
+	channels.clear();
+	close(_pfd.fd);
 	delete _command;
 }
 
@@ -134,21 +152,15 @@ void	User::setConnected(bool value)
 	_connected = value;	
 }
 
-int		User::getUserMode(void) const
-{
-	return _mode;
-}
-
-void	User::setUserMode(int mode)
-{
-	_mode = mode;
-}
-
 
 /* MODIFIERS */
 
 void	User::parseMessage(std::string input)
 {	
+	// _command->setName("");
+	_command->clear();
+	// _command->getParameters().clear();
+	
 	std::vector<std::string> values = split(input, " ");
 	
 	_command->setName(values[0]);
@@ -168,6 +180,21 @@ std::string	User::formattedReply(std::string code, std::string argument)
 	return reply;
 }
 
+std::string	User::anonymousMessage(std::string command, std::string argument, std::string target)
+{
+	std::string formatted;
+
+	if (_status >= STATUS_PASS)
+	{
+		formatted += "anonymous!anonymous@anonymous. " + command;
+		if (!target.empty())
+			formatted += " " + target;
+		formatted += " :" + argument + "\r\n";
+	}
+	
+	return formatted;
+}
+
 std::string	User::formattedMessage(std::string command, std::string argument, std::string target)
 {
 	std::string formatted;
@@ -177,7 +204,10 @@ std::string	User::formattedMessage(std::string command, std::string argument, st
 		formatted += updatedId() + command;
 		if (!target.empty())
 			formatted += " " + target;
-		formatted += " :" + argument + "\r\n";
+		if (!argument.empty())
+			formatted += " :" + argument;
+		formatted += "\r\n";
+			
 	}
 	
 	return formatted;
@@ -206,4 +236,39 @@ void	User::execute()
 		_command->availableCommands[_command->getName()](this);
 	else
 		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
+}
+
+bool	User::isChannelOperator(Channel *channel)
+{
+	std::vector<User *>::iterator it = channel->operators.begin();
+	for (; it != channel->operators.end(); ++it)
+	{
+		if (*it == this)
+			return true;
+	}
+	return false;
+}
+
+bool	User::isChannelMember(Channel *channel)
+{
+	std::vector<User *>::iterator it = channel->members.begin();
+	for (; it != channel->members.end(); ++it)
+	{
+		if (*it == this)
+			return true;
+	}
+	return false;
+}
+
+void	User::leaveChannel(Channel *toLeave)
+{
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		if (*it == toLeave)
+		{
+			channels.erase(it);
+			break ;
+		}
+	}
 }

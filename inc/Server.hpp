@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 18:59:56 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:21:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Server
 		char					*getPort(void) const;
 		char					*getPassword(void) const;
 		std::map<int, User *>	getUsers(void) const;
+		char*					getStartingTime(void) const;	
 			
 	private:
 		char						*_port;
@@ -49,6 +50,7 @@ class Server
 	
 		struct addrinfo 			*_socketInfo;
 		struct timeval				_start;
+		char*						_startingTime;
 		int							_socketFd;
 
 		std::vector<struct pollfd>	_pollFds;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:31:08 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 18:59:16 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:22:37 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "irc.hpp"
 
-void	createChannel(User *user, std::string name, std::string key)
+Channel*	createChannel(User *user, std::string name, std::string key)
 {
 	Channel *channel = new Channel;
 	
@@ -21,16 +21,16 @@ void	createChannel(User *user, std::string name, std::string key)
 		displayActivity(user, "476: ERR_BADCHANMASK", SEND);
 		user->sendMessage(user->formattedReply("476", ERR_BADCHANMASK(name)));
 		delete channel;
-		return ;
+		return NULL;
 	}
 	
-	std::string prefix("&#+!");
+	std::string prefix("#");
 	if (prefix.find(name[0]) == std::string::npos)
 	{
 		displayActivity(user, "476: ERR_BADCHANMASK", SEND);
 		user->sendMessage(user->formattedReply("476", ERR_BADCHANMASK(name)));
 		delete channel;
-		return ;
+		return NULL;
 	}
 	
 	for (std::string::iterator it = name.begin() + 1; it != name.end(); ++it)
@@ -40,7 +40,7 @@ void	createChannel(User *user, std::string name, std::string key)
 			displayActivity(user, "476: ERR_BADCHANMASK", SEND);
 			user->sendMessage(user->formattedReply("476", ERR_BADCHANMASK(name)));
 			delete channel;
-			return ;
+			return NULL;
 		}
 		if (*it == ':')
 		{
@@ -59,6 +59,7 @@ void	createChannel(User *user, std::string name, std::string key)
 	channel->operators.push_back(user);
 	user->channels.push_back(channel);	
 	user->getServer()->channels.push_back(channel);
+	return channel;
 }
 
 /*
@@ -89,9 +90,9 @@ void	JOIN(User *user)
 		if (channelExists == NULL)
 		{
 			if (keys.size() > i)
-				createChannel(user, *it, keys[i]);
+				channelExists = createChannel(user, *it, keys[i]);
 			else
-				createChannel(user, *it, "");
+				channelExists = createChannel(user, *it, "");
 		}
 		else
 		{
@@ -104,10 +105,23 @@ void	JOIN(User *user)
 					return ;
 				}
 			}
+			
+			channelExists->sendAll(user, user->formattedMessage("JOIN", channelExists->getName(), ""));
 			user->channels.push_back(channelExists);
 			channelExists->members.push_back(user);
 		}
-	}
 
-	
+// if (topic.empty())
+// 		target->sendAll(user, user->formattedReply("331", RPL_NOTOPIC(target->getName())));
+// 	else
+		// target->sendAll(user, user->formattedReply("332", RPL_TOPIC(target)));
+		if (channelExists != NULL)
+		{
+			if (channelExists->getTopic().empty())
+				user->sendMessage(user->formattedReply("331", RPL_NOTOPIC(channelExists->getName())));
+			else
+				user->sendMessage(user->formattedReply("332", RPL_TOPIC(channelExists)));
+			NAMES(user);
+		}
+	}
 }

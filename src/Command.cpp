@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 19:01:26 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:02:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("KILL", &KILL));
    	availableCommands.insert(std::make_pair("OPER", &OPER));
    	availableCommands.insert(std::make_pair("JOIN", &JOIN));
+   	availableCommands.insert(std::make_pair("MODE", &MODE));
+   	availableCommands.insert(std::make_pair("NAMES", &NAMES));
+   	availableCommands.insert(std::make_pair("TOPIC", &TOPIC));
+   	availableCommands.insert(std::make_pair("INVITE", &INVITE));
+   	availableCommands.insert(std::make_pair("LIST", &LIST));
+   	availableCommands.insert(std::make_pair("PART", &PART));
+   	availableCommands.insert(std::make_pair("KICK", &KICK));
 
 }
 
@@ -50,4 +57,20 @@ void	Command::setName(std::string name)
 void	Command::setParameters(std::vector<std::string> parameters)
 {
 	_parameters = parameters;
+}
+
+void Command::clear(void)
+{
+	clearName();
+	clearParameters();
+}
+
+void Command::clearParameters(void)
+{
+	_parameters.clear();
+}
+
+void Command::clearName(void)
+{
+	_name.clear();
 }

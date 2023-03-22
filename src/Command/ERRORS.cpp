@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 18:55:11 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:24:54 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,36 @@ std::string	ERR_BADCHANMASK(std::string channel)
 std::string	ERR_BADCHANNELKEY(std::string channel)
 {
 	return channel + " :Cannot join channel (+k)";
+}
+
+std::string	ERR_NOSUCHCHANNEL(std::string channel)
+{
+	return channel + " :No such channel";
+}
+
+std::string	ERR_USERSDONTMATCH(void)
+{
+	return ":Cannot change mode for other users";
+}
+
+std::string ERR_UMODEUNKNOWNFLAG(void)
+{
+	return ":Unknown MODE flag";
+}
+
+std::string ERR_UNKNOWNMODE(char c, std::string channel)
+{
+	std::string mode(1, c);
+	
+	return mode + " :is unknown mode char to me for " + channel;
+}
+
+std::string	ERR_NOTONCHANNEL(std::string channel)
+{
+	return channel + " :You're not on that channel";
+}
+
+std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel)
+{
+	return nick + " " + channel + " :They aren't on that channel";
 }

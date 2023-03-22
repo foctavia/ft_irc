@@ -14,11 +14,17 @@ OBJ_DIR			=	obj/
 
 SRC_DIR			= 	src/
 SRC_CMD			=	Command/
+SRC_CMD_CHAN	=	$(addprefix ${SRC_CMD}, Channel/)
+
 
 SRC				=	main.cpp utils.cpp \
 					Server.cpp User.cpp Command.cpp Channel.cpp \
-					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp KILL.cpp JOIN.cpp) \
-					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp)
+					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp \
+											PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp \
+											KILL.cpp MODE.cpp) \
+					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp) \
+					$(addprefix ${SRC_CMD_CHAN}, INVITE.cpp JOIN.cpp KICK.cpp LIST.cpp \
+												NAMES.cpp PART.cpp TOPIC.cpp)
 
 OBJ				=	$(addprefix ${OBJ_DIR}, ${SRC:.cpp=.o})
 
@@ -33,10 +39,10 @@ all: $(NAME)
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cpp
 	@mkdir -p ${@D}
 	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
-	@printf	"\033[2K\r${BLUE}[Building - $<] $(END)\n"
+	@printf	"\033[2K\r${BLUE}[Building - $<] $(END)"
 
 $(NAME): $(OBJ)
-	@printf "Compiling $(NAME)"; \
+	@printf "\nCompiling $(NAME)"; \
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $@; \
 	echo $(GREEN) " OK" $(RESET)
 

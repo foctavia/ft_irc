@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:51:40 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/16 17:36:02 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:44:26 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ class Command
 		std::vector<std::string>	getParameters(void) const;
 		void						setName(std::string name);
 		void						setParameters(std::vector<std::string> parameters);
+
+		void						clear(void);
+		void						clearParameters(void);
+		void						clearName(void);
 
     private:
 		std::string					_name;

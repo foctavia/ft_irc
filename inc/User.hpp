@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 19:00:15 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:10:01 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class User
 	public:
 		std::string				input;
 		std::vector<Channel *>	channels;
+		std::map<char, bool>	modes;
 		
 		User(struct pollfd pfd, const char *address, Server *server);
 		~User();
@@ -61,7 +62,6 @@ class User
 		std::string		getServername(void) const;
 		std::string		getRealname(void) const;
 		struct timeval	getLastConnection(void) const;
-		int				getUserMode(void) const;
 		bool			isConnected(void) const;
 		void			setStatus(int status);
 		void			setHostname(std::string hostname);
@@ -71,7 +71,6 @@ class User
 		void 			setNickname (std::string nickname);
 		void			setLastConnection(struct timeval connection);
 		void			setConnected(bool value);
-		void			setUserMode(int mode);
 		
 		std::string		updatedId(void);
 		void 			buildMessage(void);
@@ -80,8 +79,13 @@ class User
 		void			sendMessage(std::string message);
 		std::string		formattedMessage(std::string command, std::string argument, std::string target);
 		std::string		formattedReply(std::string code, std::string argument);
+		std::string		anonymousMessage(std::string command, std::string argument, std::string target);
+		bool			isChannelOperator(Channel *channel);
+		bool			isChannelMember(Channel *channel);
 
 		void			execute();
+		void			leaveChannel(Channel *toLeave);
+
 		
 	private:
 		const char		*_address;
@@ -91,13 +95,12 @@ class User
 		std::string 	_hostname;
 		std::string		_servername;
 		
-		struct pollfd	_pfd;
-		struct timeval	_lastConnection;
-		Command*		_command;
-		Server*			_server;
-		int				_status;
-		bool			_connected;
-		int				_mode;
+		struct pollfd		_pfd;
+		struct timeval		_lastConnection;
+		Command*			_command;
+		Server*				_server;
+		int					_status;
+		bool				_connected;
 		
 		User(void);
 };

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 17:42:14 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/21 17:52:17 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ Server::Server(char *port, char *password)
 	std::cout << "[SERVER] " << BOLD << ITALIC << "welcome on port " << port << "!" << RESET << std::endl;
 	_cmd = new Command;
 	gettimeofday(&_start, NULL);
+	std::time_t	now = std::time(0);
+	_startingTime = ctime(&now);
 }
 
 Server::~Server(void)
 {
+	
 	clean();
 }
 
@@ -44,6 +47,12 @@ void	Server::clean(void)
 		i++;
 	}
 	_users.clear();
+	for (size_t	i = 0; i < channels.size();)
+	{
+		delete channels[i];
+		i++;
+	}
+	channels.clear();
 	delete _cmd;
 }
 
@@ -271,7 +280,7 @@ void	Server::disconnect(User* user)
 	}
 	
 	_pollFds.erase(it);
-	close(user->getFd());
+	// close(user->getFd());
 	_users.erase(user->getFd());
 	delete user;
 }
@@ -290,3 +299,8 @@ std::map<int, User *>	Server::getUsers(void) const
 {
 	return _users;
 }
+
+char*					Server::getStartingTime(void) const
+{
+	return _startingTime;
+}	
