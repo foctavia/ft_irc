@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:37 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 14:49:51 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:13:15 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,19 @@ void	PART(User *user)
 			else
 			{
 				std::string	reason;
+				
 				if (args.size() > 2)
 				{
 					reason = accumulate(args, " ", 2);
 					reason = reason.substr(1, reason.length() - 1);
 				}
+
+				user->sendMessage(user->formattedMessage("PART", reason, channel->getName()));
+				channel->sendAll(user, user->formattedMessage("PART", reason, channel->getName()));
 				channel->removeUser(user);
 				user->leaveChannel(channel);
-				channel->sendAll(user, user->formattedMessage("PART", reason, channel->getName()));
-				// user->sendMessage(user->formattedMessage("PART", reason, channel->getName()));
-			if (channel->members.size() == 0)
-				user->getServer()->eraseChannel(channel);
+				if (channel->members.size() == 0)
+					user->getServer()->eraseChannel(channel);
 			}
 		}
 	}
