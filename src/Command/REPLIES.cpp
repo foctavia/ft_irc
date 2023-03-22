@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 18:36:18 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:59:06 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,26 @@ std::string RPL_LIST(Channel *channel)
 std::string RPL_LISTEND(void)
 {
 	return " :End of /LIST";	
+}
+
+std::string RPL_INVITING(std::string channel, std::string nick)
+{
+	return channel + " " + nick;	
+}
+
+std::string RPL_INFO(std::string string)
+{
+	return string;	
+}
+
+std::string RPL_ENDOFINFO(void)
+{
+	return " :End of INFO list";	
+}
+
+std::string RPL_TIME(void)
+{
+	std::time_t	now = std::time(0);
+	std::string currentTime = ctime(&now);
+	return "localhost :" + currentTime;	
 }

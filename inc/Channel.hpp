@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/21 16:09:01 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:38:42 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ class Channel
 	public:
 		std::vector<User *>			members;
 		std::vector<User *>			invites;
+		std::vector<User *>			banned;
+		std::vector<User *>			exceptions;
+		std::vector<User *>			voicePrivilages;
 		std::vector<User *>			operators;
 		std::map<char, std::string>	modes;
 
@@ -66,10 +69,19 @@ class Channel
 		
 		void		sendAll(User *user, std::string message);
 		bool		isMember(User *user);
+		bool		isOperator(User *user);
+		bool		isInvite(User *user);
+		bool		isBanned(User *user);
+		bool		isException(User *user);
+		bool		isVoicePrivilage(User *user);
 
 		void		removeMember(User *user);
 		void		removeOperator(User *user);
 		void		removeInvite(User *user);
+		void		removeBan(User *user);
+		void		removeException(User *user);
+		void		removeVoicePrivilage(User *user);
+		void		removeUser(User *user);
 		
 	
 	private:

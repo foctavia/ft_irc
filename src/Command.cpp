@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 11:02:18 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 18:18:29 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("LIST", &LIST));
    	availableCommands.insert(std::make_pair("PART", &PART));
    	availableCommands.insert(std::make_pair("KICK", &KICK));
+   	availableCommands.insert(std::make_pair("info", &INFO));
+   	availableCommands.insert(std::make_pair("INFO", &INFO));
+   	availableCommands.insert(std::make_pair("LINKS", &LINKS));
+   	availableCommands.insert(std::make_pair("STAT", &STAT));
+   	availableCommands.insert(std::make_pair("TIME", &TIME));
+   	availableCommands.insert(std::make_pair("time", &TIME));
+   	availableCommands.insert(std::make_pair("VERSION", &VERSION));
+   	availableCommands.insert(std::make_pair("NOTICE", &NOTICE));
+
 
 }
 

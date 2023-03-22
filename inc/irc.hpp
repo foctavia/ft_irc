@@ -68,6 +68,13 @@ void	LIST(User *user);
 void	TOPIC(User *user);
 void	INVITE(User *user);
 void	KICK(User *user);
+void	INFO(User *user);
+void	ADMIN(User *user);
+void	LINKS(User *user);
+void	STAT(User *user);
+void	TIME(User *user);
+void	VERSION(User *user);
+void	NOTICE(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -89,7 +96,10 @@ std::string ERR_UNKNOWNMODE(char c, std::string channel);
 std::string	ERR_NOTONCHANNEL(std::string channel);
 std::string ERR_CHANOPRIVSNEEDED(std::string channel);
 std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel);
-
+std::string	ERR_USERONCHANNEL(std::string nick, std::string channel);
+std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
+std::string	ERR_NORECIPIENT(std::string command);
+std::string	ERR_NOTEXTTOSEND(void);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
@@ -104,5 +114,9 @@ std::string RPL_TOPIC(Channel *channel);
 std::string RPL_NOTOPIC(std::string channel);
 std::string RPL_LIST(Channel *channel);
 std::string RPL_LISTEND(void);
+std::string RPL_INVITING(std::string channel, std::string nick);
+std::string RPL_INFO(std::string string);
+std::string RPL_ENDOFINFO(void);
+std::string RPL_TIME(void);
 
 #endif

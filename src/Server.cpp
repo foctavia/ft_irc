@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 17:52:17 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:38:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,3 +304,18 @@ char*					Server::getStartingTime(void) const
 {
 	return _startingTime;
 }	
+
+void					Server::eraseChannel(Channel* channel)
+{
+	std::vector<Channel *>::iterator it = channels.begin();
+	for (; it != channels.end(); ++it)
+	{
+		if (*it == channel)
+			break;
+	}
+	if (it != channels.end())
+	{
+		channels.erase(it);
+		delete channel;
+	}
+}

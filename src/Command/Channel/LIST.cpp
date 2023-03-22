@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:29 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 19:24:02 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:15:29 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ void	LIST(User *user)
 	std::cout << "\033[1;32minside LIST\033[0m;" << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
-
-	if (!args.empty())
-	{
-		std::cout << "args size is " << args.size() << std::endl;
-		std::cout << "args are not empty" << std::endl;
-		std::cout << "args[0] = |" << args[0] << "|" << std::endl;
-	}
 	
 	if (args.size() == 1 && args[0] == "")
 	{
