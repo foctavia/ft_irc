@@ -89,6 +89,7 @@ std::string ERR_UNKNOWNMODE(char c, std::string channel);
 std::string	ERR_NOTONCHANNEL(std::string channel);
 std::string ERR_CHANOPRIVSNEEDED(std::string channel);
 std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel);
+std::string	ERR_USERONCHANNEL(std::string nick, std::string channel);
 
 
 std::string RPL_WELCOME(User *user);
@@ -104,5 +105,6 @@ std::string RPL_TOPIC(Channel *channel);
 std::string RPL_NOTOPIC(std::string channel);
 std::string RPL_LIST(Channel *channel);
 std::string RPL_LISTEND(void);
+std::string RPL_INVITING(std::string channel, std::string nick);
 
 #endif

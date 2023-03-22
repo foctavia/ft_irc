@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:31:43 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 14:22:36 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:46:07 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,13 @@ void	channelMode(User *user)
 			sign = true;
 		else if (c == '-')
 			sign = false;
-		else if (c == 'p' || c == 's')
+		else if (c == 'p' || c == 's' || c == 'i')
 		{
 			if (sign == true)
 			{
 				if ((c == 'p' && target->modes['s'].empty())
-					|| (c == 's' && target->modes['p'].empty()))
+					|| (c == 's' && target->modes['p'].empty())
+					|| c == 'i')
 					target->modes[c] = std::string(1, c);
 			}
 			else
@@ -161,7 +162,6 @@ void	channelMode(User *user)
 			else
 				target->modes[c].clear();
 		}
-		
 	}
 }
 

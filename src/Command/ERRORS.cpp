@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 18:24:54 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:24:54 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,9 @@ std::string	ERR_NOTONCHANNEL(std::string channel)
 std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel)
 {
 	return nick + " " + channel + " :They aren't on that channel";
+}
+
+std::string	ERR_USERONCHANNEL(std::string nick, std::string channel)
+{
+	return nick + " " + channel + " :is already on channel";
 }
