@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 11:24:54 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 18:18:22 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,19 @@ std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel)
 std::string	ERR_USERONCHANNEL(std::string nick, std::string channel)
 {
 	return nick + " " + channel + " :is already on channel";
+}
+
+std::string	ERR_CANNOTSENDTOCHAN(std::string channel)
+{
+	return channel + " :Cannot send to channel";
+}
+
+std::string	ERR_NORECIPIENT(std::string command)
+{
+	return ":No recipient given (" + command + ")";
+}
+
+std::string	ERR_NOTEXTTOSEND(void)
+{
+	return ":No text to send";
 }

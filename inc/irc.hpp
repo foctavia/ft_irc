@@ -74,6 +74,7 @@ void	LINKS(User *user);
 void	STAT(User *user);
 void	TIME(User *user);
 void	VERSION(User *user);
+void	NOTICE(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -96,7 +97,9 @@ std::string	ERR_NOTONCHANNEL(std::string channel);
 std::string ERR_CHANOPRIVSNEEDED(std::string channel);
 std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel);
 std::string	ERR_USERONCHANNEL(std::string nick, std::string channel);
-
+std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
+std::string	ERR_NORECIPIENT(std::string command);
+std::string	ERR_NOTEXTTOSEND(void);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
