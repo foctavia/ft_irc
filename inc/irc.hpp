@@ -68,6 +68,12 @@ void	LIST(User *user);
 void	TOPIC(User *user);
 void	INVITE(User *user);
 void	KICK(User *user);
+void	INFO(User *user);
+void	ADMIN(User *user);
+void	LINKS(User *user);
+void	STAT(User *user);
+void	TIME(User *user);
+void	VERSION(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -106,5 +112,8 @@ std::string RPL_NOTOPIC(std::string channel);
 std::string RPL_LIST(Channel *channel);
 std::string RPL_LISTEND(void);
 std::string RPL_INVITING(std::string channel, std::string nick);
+std::string RPL_INFO(std::string string);
+std::string RPL_ENDOFINFO(void);
+std::string RPL_TIME(void);
 
 #endif
