@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PART.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:37 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 17:19:57 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:59:29 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,17 @@ void	PART(User *user)
 			}
 			else
 			{
+				std::string	reason;
+				if (args.size() > 2)
+				{
+					reason = accumulate(args, " ", 2);
+					reason = reason.substr(1, reason.length() - 1);
+				}
 				channel->removeMember(user);
 				channel->removeOperator(user);
 				channel->removeInvite(user);
 				user->leaveChannel(channel);
-				user->sendMessage(user->formattedMessage("PART", "", channel->getName()));
-				channel->sendAll(user, user->formattedMessage("PART", "", channel->getName()));
-				// displayActivity(user, user->formattedMessage("PART", "", channel->getName()), SEND);
+				channel->sendAll(user, user->formattedMessage("PART", reason, channel->getName()));
 			}
 		}
 	}

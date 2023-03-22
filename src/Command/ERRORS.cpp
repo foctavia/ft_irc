@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 09:55:27 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:24:54 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,9 @@ std::string ERR_UNKNOWNMODE(char c, std::string channel)
 std::string	ERR_NOTONCHANNEL(std::string channel)
 {
 	return channel + " :You're not on that channel";
+}
+
+std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel)
+{
+	return nick + " " + channel + " :They aren't on that channel";
 }
