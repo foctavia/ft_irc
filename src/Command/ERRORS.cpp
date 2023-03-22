@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 18:18:22 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/22 19:02:05 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,9 @@ std::string	ERR_NORECIPIENT(std::string command)
 std::string	ERR_NOTEXTTOSEND(void)
 {
 	return ":No text to send";
+}
+
+std::string	ERR_INVITEONLYCHAN(std::string channel)
+{
+	return channel + " :Cannot join channel (+i)";
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 14:38:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:39:15 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,7 @@ class User;
 
 class Channel
 {
-	// enum channelMode
-	// {
-	// 	CREATOR,		// O
-	// 	OPERATOR,		// o
-	// 	VOICE,			// v
-	// 	ANONYMOUS,		// a
-	// 	INVITE_ONLY,	// i
-	// 	MODERATED,		// m
-	// 	NO_MESSAGES, 	// n
-	// 	QUIET,			// q
-	// 	PRIVATE,		// p
-	// 	SECRET,			// s
-	// 	SERVER_REOP,	// r
-	// 	TOPIC,			// t
-	// 	KEY,			// k
-	// 	LIMIT,			// l
-	// 	BAN_MASK,		// b
-	// 	EXCEPTION_MASK,	// e
-	// 	INVITATION_MASK	// I
-	// };
 
-	
 	public:
 		std::vector<User *>			members;
 		std::vector<User *>			invites;

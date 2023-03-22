@@ -100,6 +100,7 @@ std::string	ERR_USERONCHANNEL(std::string nick, std::string channel);
 std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
 std::string	ERR_NORECIPIENT(std::string command);
 std::string	ERR_NOTEXTTOSEND(void);
+std::string	ERR_INVITEONLYCHAN(std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();

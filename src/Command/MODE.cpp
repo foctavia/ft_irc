@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MODE.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:31:43 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 11:46:07 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 19:07:49 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,6 @@ void	channelMode(User *user)
 			else
 				target->modes[c].clear();
 		}
-		else if (c == 'i')
-		{
-			
-		}
 		else if (c == 'l')
 		{
 			if (sign == true)
@@ -163,6 +159,8 @@ void	channelMode(User *user)
 				target->modes[c].clear();
 		}
 	}
+	user->sendMessage(user->formattedReply("324", RPL_CHANNELMODEIS(target)));
+	displayActivity(user, "324: RPL_CHANNELMODEIS", SEND);
 }
 
 bool isChannel(std::string target)
