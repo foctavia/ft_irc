@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 11:00:43 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:02:18 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ void	Command::setParameters(std::vector<std::string> parameters)
 
 void Command::clear(void)
 {
-	_name.clear();
+	clearName();
+	clearParameters();
+}
+
+void Command::clearParameters(void)
+{
 	_parameters.clear();
+}
+
+void Command::clearName(void)
+{
+	_name.clear();
 }
