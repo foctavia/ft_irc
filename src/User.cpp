@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 14:50:17 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:13:38 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,22 +173,8 @@ std::string	User::formattedReply(std::string code, std::string argument)
 	std::string reply;
 	
 	reply += updatedId() + code + " " + _nickname + " " + argument + "\r\n";
-	return reply;
-}
-
-std::string	User::anonymousMessage(std::string command, std::string argument, std::string target)
-{
-	std::string formatted;
-
-	if (_status >= STATUS_PASS)
-	{
-		formatted += "anonymous!anonymous@anonymous. " + command;
-		if (!target.empty())
-			formatted += " " + target;
-		formatted += " :" + argument + "\r\n";
-	}
 	
-	return formatted;
+	return reply;
 }
 
 std::string	User::formattedMessage(std::string command, std::string argument, std::string target)

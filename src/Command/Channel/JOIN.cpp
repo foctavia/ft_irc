@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:31:08 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 10:22:37 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:54:27 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ Channel*	createChannel(User *user, std::string name, std::string key)
 	Parameters: ( <channel> *( "," <channel> ) [ <key> *( "," <key> ) ] ) / "0"
 */
 
+std::string	reply(User *user, std::string code, std::string argument)
+{
+	std::string reply;
+	
+	reply += "irc.server.com" + code + " " + user->updatedId() + " " + argument + "\r\n";
+	
+	return reply;
+}
+
 void	JOIN(User *user)
 {
 	std::vector<std::string> args = user->getCommand()->getParameters();
@@ -106,21 +115,25 @@ void	JOIN(User *user)
 				}
 			}
 			
-			channelExists->sendAll(user, user->formattedMessage("JOIN", channelExists->getName(), ""));
 			user->channels.push_back(channelExists);
 			channelExists->members.push_back(user);
 		}
 
-// if (topic.empty())
-// 		target->sendAll(user, user->formattedReply("331", RPL_NOTOPIC(target->getName())));
-// 	else
-		// target->sendAll(user, user->formattedReply("332", RPL_TOPIC(target)));
+
 		if (channelExists != NULL)
 		{
+			channelExists->sendAll(user, user->formattedMessage("JOIN", channelExists->getName(), ""));
+			user->sendMessage(user->formattedMessage("JOIN", channelExists->getName(), ""));
 			if (channelExists->getTopic().empty())
+			{
+				displayActivity(user, user->formattedReply("331", RPL_NOTOPIC(channelExists->getName())), SEND);
 				user->sendMessage(user->formattedReply("331", RPL_NOTOPIC(channelExists->getName())));
+			}
 			else
+			{
+				displayActivity(user, user->formattedReply("332", RPL_TOPIC(channelExists)), SEND);
 				user->sendMessage(user->formattedReply("332", RPL_TOPIC(channelExists)));
+			}
 			NAMES(user);
 		}
 	}
