@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:31:08 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 15:54:27 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:03:00 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,13 @@ void	JOIN(User *user)
 					user->sendMessage(user->formattedReply("475", ERR_BADCHANNELKEY("OPER")));
 					return ;
 				}
+			}
+			
+			if (!channelExists->modes['i'].empty() && !channelExists->isInvite(user))
+			{
+				displayActivity(user, "473: ERR_INVITEONLYCHAN", SEND);
+				user->sendMessage(user->formattedReply("473", ERR_INVITEONLYCHAN(channelExists->getName())));
+				return ;
 			}
 			
 			user->channels.push_back(channelExists);

@@ -69,8 +69,6 @@ void	TOPIC(User *user);
 void	INVITE(User *user);
 void	KICK(User *user);
 void	INFO(User *user);
-void	ADMIN(User *user);
-void	LINKS(User *user);
 void	STAT(User *user);
 void	TIME(User *user);
 void	VERSION(User *user);
@@ -100,6 +98,7 @@ std::string	ERR_USERONCHANNEL(std::string nick, std::string channel);
 std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
 std::string	ERR_NORECIPIENT(std::string command);
 std::string	ERR_NOTEXTTOSEND(void);
+std::string	ERR_INVITEONLYCHAN(std::string channel);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
@@ -118,5 +117,6 @@ std::string RPL_INVITING(std::string channel, std::string nick);
 std::string RPL_INFO(std::string string);
 std::string RPL_ENDOFINFO(void);
 std::string RPL_TIME(void);
+std::string RPL_VERSION(void);
 
 #endif

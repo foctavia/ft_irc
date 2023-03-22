@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MODE.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:31:43 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 11:46:07 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 19:12:24 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,26 @@ void	userMode(User *user)
 	displayActivity(user, "221: UMODEIS", SEND);	
 }
 
+size_t		countFlagsNeedingKeys(std::string flags)
+{
+	std::string	requireKeys = "klovb";
+	int 		keys = 0;
+	
+	for (std::string::iterator it = flags.begin(); it != flags.end(); ++it)
+	{
+		if (requireKeys.find(*it) != std::string::npos)
+			keys++;
+	}
+	return keys;
+}
+
+bool	checkKeysMatchFlags(size_t nbKeys, std::vector<std::string> args)
+{
+	if (args.size() - 2 != nbKeys)
+		return false;
+	return true;
+}
+
 void	channelMode(User *user)
 {
 	std::vector<std::string> args = user->getCommand()->getParameters();
@@ -127,16 +147,25 @@ void	channelMode(User *user)
 
 	if (unknownFlagChecker(user, target, args[1]))
 		return ;
-	 
+
+	
+	size_t nbKeys = countFlagsNeedingKeys(args[1]);
+	if (checkKeysMatchFlags(nbKeys, args) == false)
+	{
+		return ;
+	}
+	
+	
 	bool sign = true;
-	for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it)
+	int i = 0;
+	for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it, i++)
 	{
 		char c = *it;
 		if (c == '+')
 			sign = true;
 		else if (c == '-')
 			sign = false;
-		else if (c == 'p' || c == 's' || c == 'i')
+		else if (c == 'p' || c == 's' || c == 'i' || c == 't')
 		{
 			if (sign == true)
 			{
@@ -148,10 +177,6 @@ void	channelMode(User *user)
 			else
 				target->modes[c].clear();
 		}
-		else if (c == 'i')
-		{
-			
-		}
 		else if (c == 'l')
 		{
 			if (sign == true)
@@ -162,7 +187,14 @@ void	channelMode(User *user)
 			else
 				target->modes[c].clear();
 		}
+		else if (c == 'I') // list invitation masks
+		{
+			
+		}
+		
 	}
+	user->sendMessage(user->formattedReply("324", RPL_CHANNELMODEIS(target)));
+	displayActivity(user, "324: RPL_CHANNELMODEIS", SEND);
 }
 
 bool isChannel(std::string target)

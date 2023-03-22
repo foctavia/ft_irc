@@ -30,8 +30,8 @@ SRC				=	main.cpp utils.cpp \
 						INVITE.cpp JOIN.cpp KICK.cpp LIST.cpp \
 						NAMES.cpp PART.cpp TOPIC.cpp) \
 					$(addprefix ${SRC_CMD_SERVER}, \
-						INFO.cpp LINKS.cpp STAT.cpp \
-						TIME.cpp VERSION.cpp)
+						INFO.cpp STAT.cpp TIME.cpp \
+						VERSION.cpp)
 
 OBJ				=	$(addprefix ${OBJ_DIR}, ${SRC:.cpp=.o})
 
