@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 14:59:06 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 15:14:42 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,4 +157,9 @@ std::string RPL_TIME(void)
 	std::time_t	now = std::time(0);
 	std::string currentTime = ctime(&now);
 	return "localhost :" + currentTime;	
+}
+
+std::string RPL_VERSION(void)
+{
+	return "1.0 localhost :yo";	
 }
