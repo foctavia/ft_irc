@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 18:39:15 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/22 19:29:31 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Channel
 		std::vector<User *>			invites;
 		std::vector<User *>			banned;
 		std::vector<User *>			exceptions;
-		std::vector<User *>			voicePrivilages;
+		std::vector<User *>			voicePrivileges;
 		std::vector<User *>			operators;
 		std::map<char, std::string>	modes;
 
@@ -52,14 +52,14 @@ class Channel
 		bool		isInvite(User *user);
 		bool		isBanned(User *user);
 		bool		isException(User *user);
-		bool		isVoicePrivilage(User *user);
+		bool		hasVoicePrivilege(User *user);
 
 		void		removeMember(User *user);
 		void		removeOperator(User *user);
 		void		removeInvite(User *user);
 		void		removeBan(User *user);
 		void		removeException(User *user);
-		void		removeVoicePrivilage(User *user);
+		void		removeVoicePrivilege(User *user);
 		void		removeUser(User *user);
 		
 	

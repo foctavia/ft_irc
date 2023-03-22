@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   REPLIES.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 15:14:42 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 19:19:04 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ std::string RPL_CREATED(User *user)
 
 std::string RPL_MYINFO(void)
 {
-	return "localhost 1.0 aiwroO OovimnqpsrtklbeI";
+	return "localhost 1.0 aiwro ovimnpstklbeI";
 }
 
 std::string RPL_YOUREOPER() 

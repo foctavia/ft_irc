@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NOTICE.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:12:52 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 14:41:13 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:29:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	channelNotice(User *user, std::string name, std::string message)
 	else if (channel != NULL && !channel->modes['n'].empty() && !channel->isMember(user))
 		return ;
 	else if (channel != NULL && ((!channel->modes['m'].empty() && !channel->isOperator(user) && channel->modes['v'].empty())
-		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->isVoicePrivilage(user))))
+		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->hasVoicePrivilege(user))))
 		return ;
 	else if (channel != NULL && ((!channel->modes['b'].empty() && channel->isBanned(user) && channel->modes['e'].empty()) 
 		|| (!channel->modes['b'].empty() && channel->isBanned(user) && !channel->modes['e'].empty() && !channel->isException(user))))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 14:50:00 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:29:39 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ bool		Channel::isException(User *user)
 	return false;
 }
 
-bool		Channel::isVoicePrivilage(User *user)
+bool		Channel::hasVoicePrivilege(User *user)
 {
 	for (std::vector<User *>::iterator it = voicePrivilages.begin(); it != voicePrivilages.end(); ++it)
 	{
@@ -231,7 +231,7 @@ void		Channel::removeException(User *user)
 	}
 }
 
-void		Channel::removeVoicePrivilage(User *user)
+void		Channel::removeVoicePrivilege(User *user)
 {
 	std::vector<User *>::iterator it = voicePrivilages.begin();
 	for (; it != voicePrivilages.end(); ++it)
@@ -251,5 +251,5 @@ void		Channel::removeUser(User *user)
 	removeInvite(user);
 	removeBan(user);
 	removeException(user);
-	removeVoicePrivilage(user);
+	removeVoicePrivilege(user);
 }

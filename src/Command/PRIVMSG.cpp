@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 14:40:49 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:29:50 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	channelPrivMsg(User *user, std::string name, std::string message)
 		return ;
 	}
 	else if (channel != NULL && ((!channel->modes['m'].empty() && !channel->isOperator(user) && channel->modes['v'].empty())
-		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->isVoicePrivilage(user))))
+		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->hasVoicePrivilege(user))))
 	{
 		displayActivity(user, "404: ERR_CANNOTSENDTOCHAN", SEND);
 		user->sendMessage(user->formattedReply("404", ERR_CANNOTSENDTOCHAN(channel->getName())));
