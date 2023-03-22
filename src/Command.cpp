@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/21 19:20:15 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 09:44:59 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ void	Command::setParameters(std::vector<std::string> parameters)
 
 void Command::clear(void)
 {
-	_name.clear();
+	clearName();
+	clearParameters();
+}
+
+void Command::clearParameters(void)
+{
 	_parameters.clear();
+}
+
+void Command::clearName(void)
+{
+	_name.clear();
 }

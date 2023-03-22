@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 19:29:39 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 10:26:21 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,9 @@ void	User::setConnected(bool value)
 
 void	User::parseMessage(std::string input)
 {	
-	_command->setName("");
-	_command->getParameters().clear();
+	// _command->setName("");
+	_command->clear();
+	// _command->getParameters().clear();
 	
 	std::vector<std::string> values = split(input, " ");
 	
@@ -235,8 +236,6 @@ void	User::execute()
 		_command->availableCommands[_command->getName()](this);
 	else
 		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
-	
-	_command->clear();
 }
 
 bool	User::isChannelOperator(Channel *channel)
