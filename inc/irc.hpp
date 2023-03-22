@@ -68,6 +68,7 @@ void	LIST(User *user);
 void	TOPIC(User *user);
 void	INVITE(User *user);
 void	KICK(User *user);
+void	NOTICE(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);
@@ -89,7 +90,9 @@ std::string ERR_UNKNOWNMODE(char c, std::string channel);
 std::string	ERR_NOTONCHANNEL(std::string channel);
 std::string ERR_CHANOPRIVSNEEDED(std::string channel);
 std::string	ERR_USERNOTINCHANNEL(std::string nick, std::string channel);
-
+std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
+std::string	ERR_NORECIPIENT(std::string command);
+std::string	ERR_NOTEXTTOSEND(void);
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();

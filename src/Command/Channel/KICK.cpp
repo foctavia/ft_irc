@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:24 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 18:59:42 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:25:18 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ void	KICK(User *user)
 								reason = accumulate(args, " ", 2);
 								reason = reason.substr(1, reason.length() - 1);
 							}
-							channel->removeMember(target);
-							channel->removeOperator(target);
-							channel->removeInvite(target);
+							channel->removeUser(target);
 							target->leaveChannel(channel);
 							channel->sendAll(user, user->formattedMessage("KICK", reason, channel->getName() + " " + target->getNickname()));
 						}

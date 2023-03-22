@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 11:02:18 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 11:14:04 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("LIST", &LIST));
    	availableCommands.insert(std::make_pair("PART", &PART));
    	availableCommands.insert(std::make_pair("KICK", &KICK));
+   	availableCommands.insert(std::make_pair("NOTICE", &NOTICE));
+
 
 }
 

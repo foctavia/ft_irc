@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/21 16:17:14 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 13:53:43 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,56 @@ bool		Channel::isMember(User *user)
 	return false;
 }
 
+bool		Channel::isOperator(User *user)
+{
+	for (std::vector<User *>::iterator it = operators.begin(); it != operators.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
+}
+
+bool		Channel::isInvite(User *user)
+{
+	for (std::vector<User *>::iterator it = invites.begin(); it != invites.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
+}
+
+bool		Channel::isBanned(User *user)
+{
+	for (std::vector<User *>::iterator it = banned.begin(); it != banned.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
+}
+
+bool		Channel::isException(User *user)
+{
+	for (std::vector<User *>::iterator it = exceptions.begin(); it != exceptions.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
+}
+
+bool		Channel::isVoicePrivilage(User *user)
+{
+	for (std::vector<User *>::iterator it = voicePrivilages.begin(); it != voicePrivilages.end(); ++it)
+	{
+		if (*it == user)
+			return true;
+	}
+	return false;
+}
+
 void		Channel::removeMember(User *user)
 {
 	std::vector<User *>::iterator it = members.begin();
@@ -151,4 +201,53 @@ void		Channel::removeInvite(User *user)
 			break ;
 		}
 	}
+}
+
+void		Channel::removeBan(User *user)
+{
+	std::vector<User *>::iterator it = banned.begin();
+	for (; it != banned.end(); ++it)
+	{
+		if (*it == user)
+		{
+			banned.erase(it);
+			break ;
+		}
+	}
+}
+
+void		Channel::removeException(User *user)
+{
+	std::vector<User *>::iterator it = exceptions.begin();
+	for (; it != exceptions.end(); ++it)
+	{
+		if (*it == user)
+		{
+			exceptions.erase(it);
+			break ;
+		}
+	}
+}
+
+void		Channel::removeVoicePrivilage(User *user)
+{
+	std::vector<User *>::iterator it = voicePrivilages.begin();
+	for (; it != voicePrivilages.end(); ++it)
+	{
+		if (*it == user)
+		{
+			voicePrivilages.erase(it);
+			break ;
+		}
+	}
+}
+
+void		Channel::removeUser(User *user)
+{
+	removeMember(user);
+	removeOperator(user);
+	removeInvite(user);
+	removeBan(user);
+	removeException(user);
+	removeVoicePrivilage(user);
 }

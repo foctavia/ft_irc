@@ -21,7 +21,7 @@ SRC				=	main.cpp utils.cpp \
 					Server.cpp User.cpp Command.cpp Channel.cpp \
 					$(addprefix ${SRC_CMD}, NICK.cpp PASS.cpp USER.cpp QUIT.cpp \
 											PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp \
-											KILL.cpp MODE.cpp) \
+											KILL.cpp MODE.cpp NOTICE.cpp) \
 					$(addprefix ${SRC_CMD}, ERRORS.cpp REPLIES.cpp) \
 					$(addprefix ${SRC_CMD_CHAN}, INVITE.cpp JOIN.cpp KICK.cpp LIST.cpp \
 												NAMES.cpp PART.cpp TOPIC.cpp)

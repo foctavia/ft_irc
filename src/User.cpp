@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 10:26:21 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:25:06 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ User::~User(void)
 	std::vector<Channel *>::iterator it = channels.begin();
 	for (; it != channels.end(); ++it)
 	{
-		(*it)->removeMember(this);
-		(*it)->removeOperator(this);
-		(*it)->removeInvite(this);
+		(*it)->removeUser(this);
 		sendMessage(formattedMessage("PART", "", (*it)->getName()));
 		(*it)->sendAll(this, formattedMessage("PART", "", (*it)->getName()));
 	}
