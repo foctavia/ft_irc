@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:34:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 10:10:01 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:19:55 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ class User
 		void			sendMessage(std::string message);
 		std::string		formattedMessage(std::string command, std::string argument, std::string target);
 		std::string		formattedReply(std::string code, std::string argument);
+
 		std::string		anonymousMessage(std::string command, std::string argument, std::string target);
 		bool			isChannelOperator(Channel *channel);
 		bool			isChannelMember(Channel *channel);

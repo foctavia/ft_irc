@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 13:25:06 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:50:17 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,9 +155,7 @@ void	User::setConnected(bool value)
 
 void	User::parseMessage(std::string input)
 {	
-	// _command->setName("");
 	_command->clear();
-	// _command->getParameters().clear();
 	
 	std::vector<std::string> values = split(input, " ");
 	
@@ -206,8 +204,7 @@ std::string	User::formattedMessage(std::string command, std::string argument, st
 			formatted += " :" + argument;
 		formatted += "\r\n";
 			
-	}
-	
+	}	
 	return formatted;
 }
 

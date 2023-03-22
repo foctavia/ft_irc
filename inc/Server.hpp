@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:25:40 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 13:21:18 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:34:44 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ class Server
 		void		checkConnection(void);
 		User*		findUserNickname(std::string nickname);
 		Channel*	findChannel(std::string name);
+		
+		void		eraseChannel(Channel *channel);
+		
 
 
 		char					*getPort(void) const;
