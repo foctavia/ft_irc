@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 14:59:41 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/22 15:42:20 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("KICK", &KICK));
    	availableCommands.insert(std::make_pair("info", &INFO));
    	availableCommands.insert(std::make_pair("INFO", &INFO));
-   	availableCommands.insert(std::make_pair("LINKS", &LINKS));
-   	availableCommands.insert(std::make_pair("STAT", &STAT));
    	availableCommands.insert(std::make_pair("TIME", &TIME));
    	availableCommands.insert(std::make_pair("time", &TIME));
    	availableCommands.insert(std::make_pair("VERSION", &VERSION));
+   	availableCommands.insert(std::make_pair("version", &VERSION));
 
 }
 
