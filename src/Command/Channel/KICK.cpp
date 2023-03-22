@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:24 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 13:25:18 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:13:11 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 
 void	KICK(User *user)
 {
-	// std::cout << "\033[1;32minside KICK\033[0m;" << std::endl;
+	std::cout << "\033[1;32minside KICK\033[0m;" << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
-
 	if (args.size() < 2)
 	{
 		displayActivity(user, "461: ERR_NEEDMOREPARAMS", SEND);
@@ -59,9 +58,10 @@ void	KICK(User *user)
 			if (channel != NULL)
 			{
 				std::vector<std::string> targets = split(args.at(1), ",");
-				for (std::vector<std::string>::iterator it = channels.begin(); it != channels.end(); ++it)
+				for (std::vector<std::string>::iterator it = targets.begin(); it != targets.end(); ++it)
 				{
 					User	*target = user->getServer()->findUserNickname(*it);
+					std::cout << *it << " ";
 					if (target != NULL)
 					{
 						if (!channel->isMember(target))
@@ -76,11 +76,15 @@ void	KICK(User *user)
 							if (args.size() > 2)
 							{
 								reason = accumulate(args, " ", 2);
-								reason = reason.substr(1, reason.length() - 1);
+								if (reason.at(0) == ':')
+									reason = reason.substr(1, reason.length() - 1);
 							}
+							target->sendMessage(target->formattedMessage("PART", reason, channel->getName()));
+							displayActivity(user, user->formattedMessage("KICK", reason, channel->getName() + " " + target->getNickname()), SEND);
+							user->sendMessage(user->formattedMessage("KICK", reason, channel->getName() + " " + target->getNickname()));
+							channel->sendAll(user, user->formattedMessage("KICK", reason, channel->getName() + " " + target->getNickname()));
 							channel->removeUser(target);
 							target->leaveChannel(channel);
-							channel->sendAll(user, user->formattedMessage("KICK", reason, channel->getName() + " " + target->getNickname()));
 						}
 					}
 				}
