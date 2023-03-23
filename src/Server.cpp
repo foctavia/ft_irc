@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 15:14:41 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:19:02 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	Server::addSocket(int newFd)
 	
 	tmp.fd = newFd;
 	tmp.events = POLLIN;
-	
+	tmp.revents = 0;
+
 	_pollFds.push_back(tmp);
 }
 
@@ -178,7 +179,7 @@ void	Server::run(void)
 		
 		for (size_t i = 0; i < _pollFds.size(); i++)
 		{
-			if (_pollFds[i].revents & POLLIN || _pollFds[i].revents & POLLOUT)
+			if (_pollFds[i].revents & POLLIN)
 			{
 				if (_pollFds[i].fd == _socketFd)
 					newConnection();
