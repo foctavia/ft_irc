@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 12:07:50 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:08:10 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,11 @@ void	User::setConnected(bool value)
 
 /* MODIFIERS */
 
-void	User::parseMessage(std::string input)
+void	User::parseMessage(std::string cmd)
 {	
 	_command->clear();
 	
-	std::vector<std::string> values = split(input, " ");
+	std::vector<std::string> values = split(cmd, " ");
 	
 	_command->setName(values[0]);
 

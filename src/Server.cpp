@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 16:19:02 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:10:13 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,35 +215,51 @@ void	Server::newConnection(void)
 
 void	Server::receiveMessage(struct pollfd pfd)
 {
-	User *user = (*_users.find(pfd.fd)).second;
+	User *user;
+	
+	std::map<int, User *>::iterator it = _users.find(pfd.fd);
+	if (it == _users.end())
+		user = NULL;
+	else 
+		user = (*it).second;
 	
 	char buffer[512];
 	memset(buffer, 0, sizeof buffer);
 
-	int nbytes = recv(user->getFd(), buffer, sizeof buffer, 0);
+	int nbytes = recv(pfd.fd, buffer, sizeof buffer, 0);
 
-	if (nbytes == 0)
+	if (user != NULL && nbytes == 0)
 		disconnect(user);
 	else if (nbytes < 0)
 		throw std::runtime_error("recv()");
-	else
+	else if (user != NULL)
 	{
-		std::string copy(buffer);
-		if (copy.find("\r\n") == std::string::npos)
+		user->input.append(buffer);
+		if (user->input.find("\n") == std::string::npos)
+			return ;
+		if (user->input.find("\r\n") == std::string::npos)
 		{
-			copy.erase(copy.end() - 1);
-			copy.append("\r\n");
+			user->input.erase(user->input.end() - 1);
+			user->input.append("\r\n");
 		}
-		size_t pos;
-		while ((pos = copy.find("\r\n")) != std::string::npos)
+		size_t pos = 0;
+		while (user != NULL && !user->input.empty() && (pos = user->input.find("\r\n")) != std::string::npos)
 		{
-			std::string cmd = copy.substr(0, pos);
+			std::string cmd = user->input.substr(0, pos);
 			displayActivity(user, cmd, RECEIVE);
 			
-			copy.erase(0, pos + 2);
+			user->input.erase(0, pos + 2);
 			user->parseMessage(cmd);
+			std::string stopper = user->getCommand()->getName();
 			user->execute();
+			if (stopper == "QUIT")
+			{
+				user = NULL;
+				break ;
+			}
 		}
+		if (user != NULL && !user->input.empty())
+			user->input = "";
 	}
 }
 
@@ -286,6 +302,7 @@ void	Server::disconnect(User* user)
 	// close(user->getFd());
 	_users.erase(user->getFd());
 	delete user;
+	user = NULL;
 }
 
 char*					Server::getPort(void) const
