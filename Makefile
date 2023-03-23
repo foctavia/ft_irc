@@ -23,7 +23,7 @@ SRC				=	main.cpp utils.cpp \
 					$(addprefix ${SRC_CMD}, \
 						NICK.cpp PASS.cpp USER.cpp QUIT.cpp \
 						PRIVMSG.cpp PING.cpp PONG.cpp OPER.cpp \
-						KILL.cpp MODE.cpp NOTICE.cpp) \
+						KILL.cpp MODE.cpp NOTICE.cpp DIE.cpp) \
 					$(addprefix ${SRC_CMD}, \
 						ERRORS.cpp REPLIES.cpp) \
 					$(addprefix ${SRC_CMD_CHAN}, \

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 14:42:12 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:14:41 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,16 +168,10 @@ void	Server::run(void)
 
 	while (1)
 	{
-		// if (g_running == false)
-		// 	return ; 
+		if (g_running == false)
+			return ; 
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT * 1000) == -1)
-		{
-			// if (errno == EINTR)
-			// 	break;
-			// else
 				throw std::runtime_error("poll()");
-		}
-			// return ;
 			
 		if (!_users.empty())
 			checkConnection();
@@ -191,8 +185,6 @@ void	Server::run(void)
 				else
 					receiveMessage(_pollFds[i]);
 			}
-			if (_pollFds[i].revents & POLLNVAL)
-				break ;
 		}
 	}
 }

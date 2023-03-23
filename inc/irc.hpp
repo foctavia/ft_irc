@@ -73,7 +73,7 @@ void	STAT(User *user);
 void	TIME(User *user);
 void	VERSION(User *user);
 void	NOTICE(User *user);
-void	EXIT(User *user);
+void	DIE(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);

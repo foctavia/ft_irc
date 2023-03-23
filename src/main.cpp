@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 14:40:16 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:18:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_running = false;
-		std::cout << "Bye Bye" << std::endl;
-		
+		g_running = false;		
 	}
 }
 
