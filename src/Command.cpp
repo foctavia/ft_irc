@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 19:12:50 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:07:49 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("VERSION", &VERSION));
    	availableCommands.insert(std::make_pair("version", &VERSION));
    	availableCommands.insert(std::make_pair("NOTICE", &NOTICE));
+   	availableCommands.insert(std::make_pair("die", &DIE));
+
 
 }
 
 Command::~Command(void) 
 {
-
+	
 }
 
 std::string	Command::getName(void) const

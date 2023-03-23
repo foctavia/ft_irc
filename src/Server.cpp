@@ -6,11 +6,12 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 14:38:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:14:41 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+extern bool g_running; 
 
 Server::Server(char *port, char *password)
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
@@ -25,7 +26,6 @@ Server::Server(char *port, char *password)
 
 Server::~Server(void)
 {
-	
 	clean();
 }
 
@@ -168,8 +168,10 @@ void	Server::run(void)
 
 	while (1)
 	{
+		if (g_running == false)
+			return ; 
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT * 1000) == -1)
-			throw std::runtime_error("poll()");
+				throw std::runtime_error("poll()");
 			
 		if (!_users.empty())
 			checkConnection();
