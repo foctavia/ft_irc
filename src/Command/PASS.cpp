@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:26 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/17 11:15:28 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:05 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	PASS(User *user)
 {
-	// std::cout << "\033[1;32minside PASS\033[0m;" << std::endl;
 	
 	if (user->getStatus() > STATUS_NEW)
 	{

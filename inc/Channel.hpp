@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:16:01 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 18:39:15 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:56:39 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Channel
 		std::vector<User *>			invites;
 		std::vector<User *>			banned;
 		std::vector<User *>			exceptions;
-		std::vector<User *>			voicePrivilages;
+		std::vector<User *>			voicePrivileges;
 		std::vector<User *>			operators;
 		std::map<char, std::string>	modes;
 
@@ -39,11 +39,11 @@ class Channel
 		std::string getKey(void) const;
 		std::string getMask(void) const;
 		std::string	getTopic(void) const;
-		int			getMaxUsers(void) const;
+		size_t		getMaxUsers(void) const;
 		void		setName(std::string name);
 		void		setKey(std::string key);
 		void		setMask(std::string mask);
-		void		setMaxUsers(int max);
+		void		setMaxUsers(size_t max);
 		void		setTopic(std::string topic);
 		
 		void		sendAll(User *user, std::string message);
@@ -52,14 +52,14 @@ class Channel
 		bool		isInvite(User *user);
 		bool		isBanned(User *user);
 		bool		isException(User *user);
-		bool		isVoicePrivilage(User *user);
+		bool		hasVoicePrivilege(User *user);
 
 		void		removeMember(User *user);
 		void		removeOperator(User *user);
 		void		removeInvite(User *user);
 		void		removeBan(User *user);
 		void		removeException(User *user);
-		void		removeVoicePrivilage(User *user);
+		void		removeVoicePrivilege(User *user);
 		void		removeUser(User *user);
 		
 	
@@ -68,7 +68,7 @@ class Channel
 		std::string	_key; // password
 		std::string	_mask; // password
 		std::string	_topic;
-		int			_max_users;
+		size_t		_maxUsers;
 		
 		
 };

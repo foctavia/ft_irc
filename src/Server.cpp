@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:26:02 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 14:38:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:19:02 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+extern bool g_running; 
 
 Server::Server(char *port, char *password)
 	: _port(port), _password(password), _socketInfo(NULL), _socketFd(-1)
@@ -25,7 +26,6 @@ Server::Server(char *port, char *password)
 
 Server::~Server(void)
 {
-	
 	clean();
 }
 
@@ -113,7 +113,8 @@ void	Server::addSocket(int newFd)
 	
 	tmp.fd = newFd;
 	tmp.events = POLLIN;
-	
+	tmp.revents = 0;
+
 	_pollFds.push_back(tmp);
 }
 
@@ -168,15 +169,17 @@ void	Server::run(void)
 
 	while (1)
 	{
+		if (g_running == false)
+			return ; 
 		if (poll(&_pollFds[0], _pollFds.size(), TIMEOUT * 1000) == -1)
-			throw std::runtime_error("poll()");
+				throw std::runtime_error("poll()");
 			
 		if (!_users.empty())
 			checkConnection();
 		
 		for (size_t i = 0; i < _pollFds.size(); i++)
 		{
-			if (_pollFds[i].revents & POLLIN || _pollFds[i].revents & POLLOUT)
+			if (_pollFds[i].revents & POLLIN)
 			{
 				if (_pollFds[i].fd == _socketFd)
 					newConnection();

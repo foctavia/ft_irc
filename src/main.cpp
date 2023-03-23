@@ -6,15 +6,27 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:24:28 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/15 15:11:04 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:18:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "irc.hpp"
 # include "Server.hpp"
+# include <csignal>
+
+bool g_running = true;
+
+void	handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_running = false;		
+	}
+}
 
 int main(int argc, char **argv)
 {
+	signal(SIGINT, handler);
 	if (argc != 3)
 	{
 		std::cerr << "wrong number of arguments provided\nusage: ./ircserv <port> <password>" << std::endl;

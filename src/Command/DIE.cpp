@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   QUIT.cpp                                           :+:      :+:    :+:   */
+/*   DIE.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:59:56 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/23 16:09:29 by foctavia         ###   ########.fr       */
+/*   Created: 2023/03/23 15:05:06 by sbeylot           #+#    #+#             */
+/*   Updated: 2023/03/23 15:08:22 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
 
-/*
-	Command: QUIT
-	Parameters: [<reason>]
-*/
+extern bool g_running;
 
-void	QUIT(User *user)
+void	DIE(User *user)
 {
-	
-	if (send(user->getFd(), "\n", 2, MSG_NOSIGNAL) == -1)
-		perror("send");
-		
-	user->getServer()->disconnect(user);
+	if (user->modes['o'] == false)
+		return ;
+	if (user->modes['o'] == true)
+	{
+		g_running = false;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:34 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/21 18:45:40 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:10:03 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	TOPIC(User *user)
 {
-	std::cout << "\033[1;32minside TOPIC\033[0m;" << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
 
@@ -69,8 +68,6 @@ void	TOPIC(User *user)
 	
 	std::string topic = accumulate(args, " ", 1);
 	topic = topic.substr(1, topic.length() - 1);
-	
-	std::cout << "topic to be set as = " << topic << std::endl;
 	
 	target->setTopic(topic);
 	

@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:12:52 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 14:41:13 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:08:57 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	channelNotice(User *user, std::string name, std::string message)
 	else if (channel != NULL && !channel->modes['n'].empty() && !channel->isMember(user))
 		return ;
 	else if (channel != NULL && ((!channel->modes['m'].empty() && !channel->isOperator(user) && channel->modes['v'].empty())
-		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->isVoicePrivilage(user))))
+		|| (!channel->modes['m'].empty() && !channel->isOperator(user) && !channel->modes['v'].empty() && !channel->hasVoicePrivilege(user))))
 		return ;
 	else if (channel != NULL && ((!channel->modes['b'].empty() && channel->isBanned(user) && channel->modes['e'].empty()) 
 		|| (!channel->modes['b'].empty() && channel->isBanned(user) && !channel->modes['e'].empty() && !channel->isException(user))))
@@ -47,7 +47,6 @@ void	channelNotice(User *user, std::string name, std::string message)
 
 void	NOTICE(User *user)
 {
-	// std::cout << "\033[1;32minside NOTICE\033[0m;" << std::endl;
 	
 	std::vector<std::string>	args = user->getCommand()->getParameters();
 	if (args[0].empty() || (args.size() < 2 && args.at(1)[0] != ':'))

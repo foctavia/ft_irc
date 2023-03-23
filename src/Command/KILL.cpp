@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   KILL.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:37:00 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/20 14:48:55 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/23 16:08:52 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	KILL(User *user)
 {
-	// std::cout << "\033[1;32minside KILL\033[0m;" << std::endl;
 	
 	if (user->modes.at('o') == true)
 	{

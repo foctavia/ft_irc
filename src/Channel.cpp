@@ -6,32 +6,25 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:29:05 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/22 14:50:00 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:58:13 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Channel.hpp"
 
 Channel::Channel(void)
-	: _topic(""), _max_users(0)
+	: _topic(""), _maxUsers(0)
 {
-	modes.insert(std::make_pair('O', ""));
 	modes.insert(std::make_pair('o', ""));
 	modes.insert(std::make_pair('v', ""));
-	modes.insert(std::make_pair('a', ""));
 	modes.insert(std::make_pair('i', ""));
 	modes.insert(std::make_pair('m', ""));
 	modes.insert(std::make_pair('n', "n"));
-	modes.insert(std::make_pair('q', ""));
 	modes.insert(std::make_pair('p', ""));
 	modes.insert(std::make_pair('s', ""));
-	modes.insert(std::make_pair('r', ""));
 	modes.insert(std::make_pair('t', ""));
 	modes.insert(std::make_pair('k', ""));
 	modes.insert(std::make_pair('l', ""));
-	modes.insert(std::make_pair('b', ""));
-	modes.insert(std::make_pair('e', ""));
-	modes.insert(std::make_pair('I', ""));
 }
 
 Channel::~Channel(void)
@@ -57,9 +50,9 @@ std::string Channel::getMask(void) const
 	return _mask;
 }
 
-int			Channel::getMaxUsers(void) const
+size_t		Channel::getMaxUsers(void) const
 {
-	return _max_users;
+	return _maxUsers;
 }
 
 std::string	Channel::getTopic(void) const
@@ -83,9 +76,9 @@ void		Channel::setMask(std::string mask)
 	_mask = mask;
 }
 
-void		Channel::setMaxUsers(int max)
+void		Channel::setMaxUsers(size_t max)
 {
-	_max_users = max;
+	_maxUsers = max;
 }
 
 void		Channel::setTopic(std::string topic)
@@ -156,9 +149,9 @@ bool		Channel::isException(User *user)
 	return false;
 }
 
-bool		Channel::isVoicePrivilage(User *user)
+bool		Channel::hasVoicePrivilege(User *user)
 {
-	for (std::vector<User *>::iterator it = voicePrivilages.begin(); it != voicePrivilages.end(); ++it)
+	for (std::vector<User *>::iterator it = voicePrivileges.begin(); it != voicePrivileges.end(); ++it)
 	{
 		if (*it == user)
 			return true;
@@ -231,14 +224,14 @@ void		Channel::removeException(User *user)
 	}
 }
 
-void		Channel::removeVoicePrivilage(User *user)
+void		Channel::removeVoicePrivilege(User *user)
 {
-	std::vector<User *>::iterator it = voicePrivilages.begin();
-	for (; it != voicePrivilages.end(); ++it)
+	std::vector<User *>::iterator it = voicePrivileges.begin();
+	for (; it != voicePrivileges.end(); ++it)
 	{
 		if (*it == user)
 		{
-			voicePrivilages.erase(it);
+			voicePrivileges.erase(it);
 			break ;
 		}
 	}
@@ -251,5 +244,5 @@ void		Channel::removeUser(User *user)
 	removeInvite(user);
 	removeBan(user);
 	removeException(user);
-	removeVoicePrivilage(user);
+	removeVoicePrivilege(user);
 }

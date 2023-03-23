@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:10:47 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/17 11:25:14 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:08 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	PING(User *user)
 {
-	// std::cout << "\033[1;32minside PING\033[0m;" << std::endl;
 	
 	if (user->getCommand()->getParameters().empty())
 	{
