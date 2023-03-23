@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:32 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 15:26:32 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:59 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	NAMES(User *user)
 {
-	// std::cout << "\033[1;32minside NAMES\033[0m;" << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
 	if (args.empty())

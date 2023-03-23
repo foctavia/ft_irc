@@ -99,6 +99,9 @@ std::string	ERR_CANNOTSENDTOCHAN(std::string channel);
 std::string	ERR_NORECIPIENT(std::string command);
 std::string	ERR_NOTEXTTOSEND(void);
 std::string	ERR_INVITEONLYCHAN(std::string channel);
+std::string	ERR_KEYSET(std::string channel);
+std::string	ERR_CHANNELISFULL(std::string channel);
+
 
 std::string RPL_WELCOME(User *user);
 std::string RPL_YOUREOPER();
@@ -106,7 +109,7 @@ std::string RPL_YOURHOST(void);
 std::string RPL_CREATED(User *user); 
 std::string RPL_MYINFO(void);
 std::string RPL_UMODEIS(User *user);
-std::string RPL_CHANNELMODEIS(Channel *channel);
+std::string RPL_CHANNELMODEIS(User *user, Channel *channel);
 std::string RPL_NAMREPLY(Channel *channel);
 std::string RPL_ENDOFNAMES(std::string channel);
 std::string RPL_TOPIC(Channel *channel);

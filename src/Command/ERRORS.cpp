@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ERRORS.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:34:00 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 19:02:05 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:54:12 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,14 @@ std::string	ERR_NOTEXTTOSEND(void)
 std::string	ERR_INVITEONLYCHAN(std::string channel)
 {
 	return channel + " :Cannot join channel (+i)";
+}
+
+std::string	ERR_KEYSET(std::string channel)
+{
+	return channel + " :Channel key already set";
+}
+
+std::string	ERR_CHANNELISFULL(std::string channel)
+{
+	return channel + " :Cannot join channel (+l)";
 }

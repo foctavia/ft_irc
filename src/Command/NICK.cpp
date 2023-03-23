@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:28:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/20 15:32:18 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/23 16:08:33 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 void	NICK(User *user)
 {
-	// std::cout << "\033[1;32minside NICK\033[0m;" << std::endl;
-
+	
 	if (user->getCommand()->getParameters().empty())
 	{
 		displayActivity(user, "431: ERR_NONICKNAMEGIVEN", SEND);

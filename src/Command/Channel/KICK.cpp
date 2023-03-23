@@ -6,7 +6,7 @@
 /*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:24 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 18:13:11 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:50 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 
 void	KICK(User *user)
 {
-	std::cout << "\033[1;32minside KICK\033[0m;" << std::endl;
-
 	std::vector<std::string> args = user->getCommand()->getParameters();
 	if (args.size() < 2)
 	{
@@ -61,7 +59,6 @@ void	KICK(User *user)
 				for (std::vector<std::string>::iterator it = targets.begin(); it != targets.end(); ++it)
 				{
 					User	*target = user->getServer()->findUserNickname(*it);
-					std::cout << *it << " ";
 					if (target != NULL)
 					{
 						if (!channel->isMember(target))

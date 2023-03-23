@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OPER.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:08:41 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/20 14:48:29 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:01 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	OPER(User *user)
 {
-	// std::cout << GREEN << "inside OPER" << RESET << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
 	

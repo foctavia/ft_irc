@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   REPLIES.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:37:22 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 19:19:04 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:30:55 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ std::string RPL_UMODEIS(User *user)
 	return mode;
 }
 
-std::string RPL_CHANNELMODEIS(Channel *channel)
+std::string RPL_CHANNELMODEIS(User *user, Channel *channel)
 {
 	std::string mode = channel->getName() + " +";
 
@@ -61,6 +61,19 @@ std::string RPL_CHANNELMODEIS(Channel *channel)
 	{
 		if (!it->second.empty())
 			mode += it->first;
+	}
+	if (user->isChannelMember(channel))
+	{
+		if (!channel->modes['k'].empty())
+			mode += " " + channel->getKey();
+		if (!channel->modes['l'].empty())
+		{
+			std::stringstream stream;
+			stream << channel->getMaxUsers();
+			std::string maxusers;
+			stream >> maxusers;
+			mode += " " + maxusers;
+		}
 	}
 	return mode;
 }

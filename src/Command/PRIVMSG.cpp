@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:41:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/22 19:29:50 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:24 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ void	channelPrivMsg(User *user, std::string name, std::string message)
 
 void	PRIVMSG(User *user)
 {
-	// std::cout << "\033[1;32minside PRIVMSG\033[0m;" << std::endl;
-	
+
 	std::vector<std::string>	args = user->getCommand()->getParameters(); 
 	if (args[0].empty() || (args.size() < 2 && args.at(1)[0] != ':'))
 	{

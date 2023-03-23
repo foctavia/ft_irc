@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIST.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:29 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 11:15:29 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:55 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 */
 void	LIST(User *user)
 {
-	std::cout << "\033[1;32minside LIST\033[0m;" << std::endl;
-
 	std::vector<std::string> args = user->getCommand()->getParameters();
 	
+		
 	if (args.size() == 1 && args[0] == "")
 	{
 		std::vector<Channel *>::iterator it = user->channels.begin();
@@ -39,7 +38,7 @@ void	LIST(User *user)
 		for (; it != channels.end(); ++it)
 		{
 			Channel *channelExists = user->getServer()->findChannel(*it);
-			if (channelExists != NULL)
+			if (channelExists != NULL && channelExists->modes['s'].empty())
 			{
 				user->sendMessage(user->formattedReply("322", RPL_LIST(channelExists)));
 				displayActivity(user, "322: RPL_LIST", SEND);

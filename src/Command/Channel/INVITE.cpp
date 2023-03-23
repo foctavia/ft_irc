@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   INVITE.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:27 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/22 18:53:10 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:09:38 by foctavia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void	INVITE(User *user)
 {
-	std::cout << "\033[1;32minside INVITE\033[0m;" << std::endl;
 
 	std::vector<std::string> args = user->getCommand()->getParameters();
 
