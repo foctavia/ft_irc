@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:38:52 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/23 17:08:10 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:40:30 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,6 @@ void	User::execute()
 {
 	if (_command->availableCommands.find(_command->getName()) != _command->availableCommands.end())
 		_command->availableCommands[_command->getName()](this);
-	else
-		displayActivity(NULL, "command " + _command->getName() + " not found!", NONE);
 }
 
 bool	User::isChannelOperator(Channel *channel)

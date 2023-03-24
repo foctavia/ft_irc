@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bot.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:52:14 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/24 11:22:10 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:26:14 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,38 @@
 class Bot
 {
 	public:
+		typedef void(*callCommand)(Bot *bot);
+
+		int									socketFd;
+		std::string							dest;
+		std::vector<std::string>			jokes;
+		
 		Bot(char *port, char *password, char *nick);
 		~Bot(void);
 
 		int		getListenerSocket(void);
 		void	run(void);
+		void	connection(void);
+		void	receiveMessage(void);
+		void	parseMessage(std::string buffer);
+		void	floodUser(void);
+
+
 
 	private:
 	
-		char	*_port;
-		char	*_password;
-		char	*_nick;
+		char		*_port;
+		std::string	_password;
+		std::string	_nick;
+		
+		struct timeval	_start;
 
-		struct addrinfo	*_serverInfo;
-		int				_socketFd;
+		struct addrinfo						*_serverInfo;
+		std::map<std::string, callCommand>	_command;
+		std::vector<std::string>			_users;
 
 		Bot(void);
 };
 
+// void	HELP();
 #endif

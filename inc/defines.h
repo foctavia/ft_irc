@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:22:59 by owalsh            #+#    #+#             */
-/*   Updated: 2023/03/17 15:27:08 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:53:29 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define DEFINES_H
 
 # define BACKLOG 10
-# define TIMEOUT 300 // in second
-# define PINGTIME 600 // in second
+# define TIMEOUT 10 // in second
+# define PINGTIME 20 // in second
 
 # define SEND 11
 # define RECEIVE 12
