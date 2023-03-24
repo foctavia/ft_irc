@@ -6,34 +6,16 @@ BLUE			= \033[1;34m
 END				= \e[0m
 
 # Variables
-NAME			=	ircserv
+NAME			=	bot
 CXX				=	c++ -std=c++98
 CXXFLAGS		=	-Wall -Wextra -Werror -g3
 
 OBJ_DIR			=	obj/
 
-SRC_DIR			= 	src/
-SRC_CMD			=	Command/
-SRC_CMD_CHAN	=	$(addprefix ${SRC_CMD}, Channel/)
-SRC_CMD_SERVER	=	$(addprefix ${SRC_CMD}, Server/)
-SRC_CMD_USER	=	$(addprefix ${SRC_CMD}, User/)
+SRC_DIR			= 	
 
 
-SRC				=	main.cpp utils.cpp \
-					Server.cpp User.cpp Command.cpp Channel.cpp \
-					$(addprefix ${SRC_CMD}, \
-						DIE.cpp ERRORS.cpp KICK.cpp \
-						PING.cpp PONG.cpp REPLIES.cpp) \
-					$(addprefix ${SRC_CMD_CHAN}, \
-						INVITE.cpp JOIN.cpp KILL.cpp LIST.cpp \
-						NAMES.cpp PART.cpp TOPIC.cpp) \
-					$(addprefix ${SRC_CMD_SERVER}, \
-						INFO.cpp STAT.cpp TIME.cpp \
-						VERSION.cpp) \
-					$(addprefix ${SRC_CMD_USER}, \
-						MODE.cpp NICK.cpp NOTICE.cpp OPER.cpp \
-						PASS.cpp PRIVMSG.cpp QUIT.cpp \
-						USER.cpp)
+SRC				=	main.cpp Bot.cpp
 
 OBJ				=	$(addprefix ${OBJ_DIR}, ${SRC:.cpp=.o})
 

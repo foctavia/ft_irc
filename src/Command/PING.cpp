@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PING.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:10:47 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/23 16:09:08 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:42:19 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ void	PING(User *user)
 	
 	displayActivity(user, "PONG", SEND);
 	user->sendMessage(user->formattedMessage("PONG", user->getNickname(), ""));
+}
+
+void	BOT(User *user)
+{
+	std::cout <<"possible" << std::endl;
+	(void)user;
+
 }
