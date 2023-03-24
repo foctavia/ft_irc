@@ -6,7 +6,7 @@
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/24 12:19:53 by owalsh           ###   ########.fr       */
+/*   Updated: 2023/03/24 15:42:12 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("NOTICE", &NOTICE));
    	availableCommands.insert(std::make_pair("DIE", &DIE));
    	availableCommands.insert(std::make_pair("die", &DIE));
-	availableCommands.insert(std::make_pair("BOT", &BOT));
-   	availableCommands.insert(std::make_pair("bot", &BOT));
 
 }
 
