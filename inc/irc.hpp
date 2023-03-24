@@ -74,6 +74,7 @@ void	TIME(User *user);
 void	VERSION(User *user);
 void	NOTICE(User *user);
 void	DIE(User *user);
+void	BOT(User *user);
 
 std::string ERR_UNKNOWNCOMMAND(std::string command);
 std::string ERR_ERRONEUSNICKNAME(std::string nickname);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: foctavia <foctavia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:57:18 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/03/23 17:00:07 by foctavia         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:41:43 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ Command::Command(void)
    	availableCommands.insert(std::make_pair("NOTICE", &NOTICE));
    	availableCommands.insert(std::make_pair("DIE", &DIE));
    	availableCommands.insert(std::make_pair("die", &DIE));
-
+	availableCommands.insert(std::make_pair("BOT", &BOT));
+   	availableCommands.insert(std::make_pair("bot", &BOT));
 
 }
 

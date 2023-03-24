@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PING.cpp                                           :+:      :+:    :+:   */
+/*   BOT.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: owalsh <owalsh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 12:10:47 by foctavia          #+#    #+#             */
-/*   Updated: 2023/03/24 10:42:19 by owalsh           ###   ########.fr       */
+/*   Created: 2023/03/24 11:12:53 by owalsh            #+#    #+#             */
+/*   Updated: 2023/03/24 11:26:19 by owalsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "irc.hpp"
 
-/*
-	Command: PING
-	Parameters: <token>
-*/
-
-void	PING(User *user)
+void BOT(User *user)
 {
-	
-	if (user->getCommand()->getParameters().empty())
+	if (user->getServer()->findUserNickname("Felicia") != NULL)
 	{
-		user->sendMessage(user->formattedReply("409", ERR_NOORIGIN(user->getNickname())));
+		displayActivity(user, "433: ERR_NICKNAMEINUSE", SEND);
+		user->sendMessage(user->formattedReply("433", ERR_NICKNAMEINUSE("Felicia")));
 		return ;
 	}
+
+	Bot *bot = new Bot;
+
 	
-	displayActivity(user, "PONG", SEND);
-	user->sendMessage(user->formattedMessage("PONG", user->getNickname(), ""));
-}
-
-void	BOT(User *user)
-{
-	std::cout <<"possible" << std::endl;
-	(void)user;
-
 }
